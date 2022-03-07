@@ -1,0 +1,28 @@
+<template>
+    <c-mortgage-los-section-controller>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto"
+                if:true={showBorrower} padding="horizontal-small">
+                <c-mortgage-los-section-subtitle text="Previous Employment - Borrower" icon={BorrowerIconURL}
+                    if:true={showExtraBorrowerTitle}>
+                </c-mortgage-los-section-subtitle>
+                <c-mortgage-los-employments-view-mode role="borrower" handle-edit={handleEdit}
+                    icon-url={BorrowerIconURL} participant-employments={borrowerEmployments.employments}>
+                </c-mortgage-los-employments-view-mode>
+                <c-add-button title="Add Previous Employment" click-handler={addAditionalBorrowerCurrentEmployment}>Add
+                    Previous Employment</c-add-button>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto"
+                if:true={showCoBorrower} padding="horizontal-small">
+                <c-mortgage-los-section-subtitle text="Previous Employment - Co-Borrower" icon={CoBorrowerIconURL}
+                    if:true={showExtraCoBorrowerTitle}>
+                </c-mortgage-los-section-subtitle>
+                <c-mortgage-los-employments-view-mode role="coBorrower" handle-edit={handleEdit}
+                    icon-url={CoBorrowerIconURL} participant-employments={coBorrowerEmployments.employments}>
+                </c-mortgage-los-employments-view-mode>
+                <c-add-button title="Add Previous Employment" click-handler={addAditionalCoBorrowerCurrentEmployment}>
+                    Add Previous Employment</c-add-button>
+            </lightning-layout-item>
+        </lightning-layout>
+    </c-mortgage-los-section-controller>
+</template>

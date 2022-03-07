@@ -1,0 +1,54 @@
+<template>
+  <div class="slds-file slds-file_card slds-has-title">
+    <figure>
+      <a href="javascript:void(0);" class="slds-file__crop" onclick={handlePreviewFile}>
+        <span class="slds-assistive-text">Preview:</span>
+        <img src={previewSrc} alt={description} />
+      </a>
+      <figcaption class="slds-file__title slds-file__title_card">
+        <div class="slds-media slds-media_small slds-media_center">
+          <div class="slds-media__figure slds-line-height_reset">
+            <template if:true={isPdf}>
+              <span class="slds-icon_container" title="pdf">
+                <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                  <use xlink:href="/apexpages/slds/latest/assets/icons/doctype-sprite/svg/symbols.svg#pdf"></use>
+                </svg>
+                <span class="slds-assistive-text">pdf</span>
+              </span>
+            </template>
+            
+            <template if:false={isPdf}>
+              <span class="slds-icon_container" title="image">
+                <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                  <use xlink:href="/apexpages/slds/latest/assets/icons/doctype-sprite/svg/symbols.svg#image"></use>
+                </svg>
+                <span class="slds-assistive-text">image</span>
+              </span>
+            </template>
+          </div>
+          <div class="slds-media__body">
+            <span class="slds-file__text" title={fileNamePreview}>{fileNamePreview}</span>
+          </div>
+        </div>
+      </figcaption>
+    </figure>
+
+    <div class="slds-file__actions-menu">
+      <div class="slds-button-group" role="group">
+        <a href={fileSrc} class="slds-button slds-button_icon slds-button_icon slds-button_icon-x-small" title="Download" download>
+          <svg class="slds-button__icon" aria-hidden="true">
+            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#download"></use>
+          </svg>
+          <span class="slds-assistive-text">Download</span>
+        </a>
+        <!-- <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-x-small" aria-haspopup="true"
+          title="More Actions">
+          <svg class="slds-button__icon" aria-hidden="true">
+            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+          </svg>
+          <span class="slds-assistive-text">More Actions</span>
+        </button> -->
+      </div>
+    </div>
+  </div>
+</template>

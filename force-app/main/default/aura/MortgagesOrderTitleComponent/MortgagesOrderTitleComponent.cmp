@@ -1,0 +1,165 @@
+<aura:component controller="MortgagesOrderTitleController"
+  implements="force:LightningQuickActionWithoutHeader,force:LightningQuickAction,lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+  extends="c:MortgagesGraphQLComponent" access="global">
+  <aura:attribute name="sObjectName" type="String" />
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="submission" type="Object" />
+  <aura:attribute name="orderUuid" type="String" />
+  <aura:attribute name="env" type="String" />
+  <lightning:workspaceAPI aura:id="workspace"/>
+
+  <aura:attribute name="showSpruceDocuments" type="Boolean" default="true" />
+  <aura:attribute name="showPayload" type="Boolean" default="false" />
+
+  <aura:attribute name="requiredDocumentTypes" type="List" />
+  <aura:attribute name="dropdownOptions" type="List" />
+  <aura:attribute name="attachedSpruceDocuments" type="List" />
+  <aura:attribute name="willBeAttachedDocuments" type="Map" default="{}" />
+  <aura:attribute name="willBeUnAttachedDocuments" type="Map" default="{}" />
+
+  <aura:attribute name="name" type="String" />
+  <aura:attribute name="address" type="String" />
+  <aura:attribute name="loanNumber" type="String" />
+  <aura:attribute name="estimatedClosingDate" type="String" />
+  <aura:attribute name="loanAmount" type="String" />
+  <aura:attribute name="phoneNumber" type="String" />
+  <aura:attribute name="email" type="String" />
+
+  <!-- <lightning:messageChannel
+        type="SpruceMessageChannel__c"
+        aura:id="spruceMessageChannel"
+    /> -->
+
+  <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+  <aura:html tag="style">
+    .slds-modal__container{
+      max-height: 50rem;
+      width: 100%;
+      max-width: 70rem;
+    }
+
+    .slds-modal__content{
+      height: 40rem !important;
+      max-height: 50rem !important;
+    }
+  </aura:html>
+
+  <!-- Attached Spruce documents start -->
+  <aura:if isTrue="{!v.showSpruceDocuments}">
+    <header class="slds-modal__header">
+      <h2 id="modal-heading-01" class="slds-modal__title">Order Title</h2>
+    </header>
+
+    <article class="slds-tile">
+      <div class="slds-tile__detail slds-p-around_medium">
+        <dl class="slds-list_horizontal slds-wrap slds-p-left_x-small">
+          <table style="width: 100%">
+            <thead style="text-align: center;">
+              <tr style="border-bottom: 2px solid #dddbda; line-height: 4em;">
+                <th style="width: 30%;">Spruce Requirement</th>
+                <th style="width: 50%;">Document Selection</th>
+                <th>Preview document</th>
+              </tr>
+            </thead>
+            <tbody aura:id="document-list">
+              <aura:iteration items="{!v.attachedSpruceDocuments}" var="document">
+                <aura:if isTrue="{! !empty(document)}">
+                  <tr style="border-bottom: 2px solid #dddbda;">
+                    <td style="width: 30%;">{!document.formattedName}</td>
+
+                    <td style="width: 50%; padding-bottom: 2em;">
+                      <lightning:combobox 
+                        name="{!document.documentType}" 
+                        label="Selected document"
+                        placeholder="Select a document" 
+                        options="{!v.dropdownOptions}" 
+                        required="true"
+                        value="{!document.filename}"
+                        onchange="{!c.handleDocumentChange}"
+                        aura:id="documentSelectCombobox"
+                        autocomplete="text"
+                        message-when-value-missing="Document must be selected"
+                        />
+                    </td>
+
+                    <td style="text-align: center;">
+                        <lightning:formattedUrl 
+                          value="{!document.documentLink}" 
+                          label="View" 
+                          aura:id="documentLink"
+                          target="_blank"
+                          title="{!document.documentType}" />
+                    </td>
+                  </tr>
+                </aura:if> 
+              </aura:iteration>
+            </tbody>
+          </table>
+        </dl>
+      </div>
+    </article>
+    <lightning:button label="Cancel" onclick="{!c.closeModal}" />
+    <lightning:button label="Save and Return Later" onclick="{!c.saveSpruceDocs}" />
+    <lightning:button class="slds-button_brand" label="Create order" onclick="{!c.submitSpruceDocuments}" />
+  </aura:if>
+  <!-- Attached Spruce documents end -->
+
+  <aura:if isTrue="{!v.showPayload}">
+    <header class="slds-modal__header">
+      <h2 id="modal-heading-01" class="slds-modal__title">Order Title from Spruce</h2>
+    </header>
+
+    <div class="slds-text-heading_small slds-text-align_center slds-p-bottom_large slds-col">
+      Open title for the following property and borrower(s)
+    </div>
+
+    <article class="slds-tile">
+      <div class="slds-tile__detail slds-p-around_medium">
+        <dl class="slds-list_horizontal slds-wrap slds-p-left_x-small">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name Label">Name:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Name value">
+            <lightning:formattedText value="{!v.name}" />
+          </dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Address label">Address:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Address value">
+            <lightning:formattedText value="{!v.address}" />
+          </dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Loan label">Loan:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Loan value">
+            <lightning:formattedText value="{!v.loanNumber}" />
+          </dd>
+
+          <aura:if isTrue="{!v.submission.vertical == 'HomePurchase'}">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Estimated closing date label">
+              Estimated closing date:</dt>
+            <dd class="slds-item_detail slds-truncate" title="Estimated closing date value">
+              <lightning:formattedText value="{!v.estimatedClosingDate}" />
+            </dd>
+          </aura:if>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Loan Amount label">Loan Amount:
+          </dt>
+          <dd class="slds-item_detail slds-truncate" title="Loan Amount value">
+            <lightning:formattedText value="{!v.loanAmount}" />
+          </dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Phone number label">Phone number:
+          </dt>
+          <dd class="slds-item_detail slds-truncate" title="Phone number value">
+            <lightning:formattedText value="{!v.phoneNumber}" />
+          </dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Email label">Email:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Email value">
+            <lightning:formattedText value="{!v.email}" />
+          </dd>
+        </dl>
+      </div>
+    </article>
+    <lightning:button label="Cancel" onclick="{!c.closeModal}" />
+    <lightning:button class="slds-button_brand" label="Order Title from Spruce" onclick="{!c.createOrder}" />
+  </aura:if>
+</aura:component>

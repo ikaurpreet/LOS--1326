@@ -1,0 +1,19 @@
+.add-icon {
+    --sds-c-icon-color-foreground-default: var(--lwc-brandPrimaryActive);
+}
+
+.los-c__income-sources_title-container {
+    height: 30px;
+    margin: 4px 0px;
+    width: 100%;
+}
+
+.los-c__income-sources {
+    display: flex;
+    align-items: center;
+}
+
+.info_container {
+    display: flex;
+    align-items: center;
+}

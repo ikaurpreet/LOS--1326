@@ -1,0 +1,10 @@
+<template>
+    <c-mortgage-los-section-controller>
+        <c-mortgage-los-assets-and-liabilities-summary-view-mode handle-edit={handleEditClick}
+            jointly-assets-liabilities={jointlyAssetsLiabilities} variant={variant} if:true={showBorrower}>
+        </c-mortgage-los-assets-and-liabilities-summary-view-mode>
+        <c-mortgage-los-assets-and-liabilities-summary-view-mode handle-edit={handleEditClick}
+            jointly-assets-liabilities={jointlyAssetsLiabilities} variant={variant} if:true={showCoBorrower}>
+        </c-mortgage-los-assets-and-liabilities-summary-view-mode>
+    </c-mortgage-los-section-controller>
+</template>

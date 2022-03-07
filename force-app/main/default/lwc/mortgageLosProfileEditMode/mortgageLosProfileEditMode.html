@@ -1,0 +1,99 @@
+<template>
+  <c-mortgage-los-section-subtitle text={sectionSubtitle} icon={iconUrl}>
+  </c-mortgage-los-section-subtitle>
+
+  <div class="slds-form" role="list">
+    <c-mortgage-los-form-element-control label={participant.firstName.label}>
+      <lightning-input variant="label-hidden" required type="text" data-name-input="firstName" onchange={handleInputChange}
+        value={participant.firstName.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.middleNameInitial.label}>
+      <lightning-input variant="label-hidden" type="text" data-name-input="middleNameInitial"
+        onchange={handleInputChange} value={participant.middleNameInitial.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.lastName.label}>
+      <lightning-input variant="label-hidden" required type="text" data-name-input="lastName" onchange={handleInputChange}
+        value={participant.lastName.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.suffixType.label}>
+      <lightning-combobox variant="label-hidden" onchange={handleInputChange} data-name-input="suffixType"
+        value={participant.suffixType.value} placeholder="Select an option" options={suffixOptions}>
+      </lightning-combobox>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.ssn.label}>
+      <lightning-input variant="label-hidden" required pattern="^\d{3}-\d{2}-\d{4}$" placeholder="###-##-####"
+      message-when-pattern-mismatch="Not a valid SSN" onchange={handleSSNChange} type="text" data-name-input="ssn"
+        value={participant.ssn.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.dob.label}>
+      <lightning-input variant="label-hidden" 
+        required 
+        onchange={handleInputChange} 
+        min={minDate} max={maxDate} 
+        data-name-input="dob" 
+        type="date"
+        message-when-range-overflow={DOBMessageWhenPatternMismatch}
+        message-when-range-underflow={DOBMessageWhenPatternMismatch}
+        value={participant.dob.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.citizenship.label}>
+      <lightning-combobox variant="label-hidden" required onchange={handleInputChange} data-name-input="citizenship"
+        value={participant.citizenship.value} placeholder="Select an option" options={citizenOptions}>
+      </lightning-combobox>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.maritalType.label}>
+      <lightning-combobox variant="label-hidden" required onchange={handleInputChange} data-name-input="maritalType"
+        value={participant.maritalType.value} placeholder="Select an option" options={maritalOptions}>
+      </lightning-combobox>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.dependentsNumber.label}>
+      <lightning-input variant="label-hidden" type="number" data-name-input="dependentsNumber"
+        onchange={handleInputChange} value={participant.dependentsNumber.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.dependentsAges.label}
+      help-text="Separeted by comma">
+      <lightning-input onchange={handleInputChange} pattern="^[0-9,]*$" variant="label-hidden" type="text" data-name-input="dependentsAges"
+        value={participant.dependentsAges.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.homePhone.label}>
+      <lightning-input variant="label-hidden" message-when-pattern-mismatch="Not a valid phone number" pattern="^\(\d{3}\)\s\d{3}-\d{4}$" onchange={handlePhoneChange} type="text" data-name-input="homePhone"
+        value={participant.homePhone.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.phone.label}>
+      <lightning-input variant="label-hidden" message-when-pattern-mismatch="Not a valid phone number" pattern="^\(\d{3}\)\s\d{3}-\d{4}$" required onchange={handlePhoneChange} type="text" data-name-input="phone"
+        value={participant.phone.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.workPhone.label}>
+      <lightning-input variant="label-hidden" message-when-pattern-mismatch="Not a valid phone number" pattern="^\(\d{3}\)\s\d{3}-\d{4}$" onchange={handlePhoneChange} type="text" data-name-input="workPhone"
+        value={participant.workPhone.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+
+    <c-mortgage-los-form-element-control label={participant.email.label}>
+      <lightning-input variant="label-hidden" message-when-type-mismatch="You have entered an invalid email" required onchange={handleInputChange} type="email" data-name-input="email"
+        value={participant.email.value}>
+      </lightning-input>
+    </c-mortgage-los-form-element-control>
+  </div>
+</template>

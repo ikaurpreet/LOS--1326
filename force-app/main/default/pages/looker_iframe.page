@@ -1,0 +1,7 @@
+<apex:page standardController="User">
+<apex:iframe src="https://credible.looker.com/embed/looks/{!$User.Look__c}?allow_login_screen=true"
+  width="1400px" height="600px" id="account_app_usage" scrolling="true"/>    
+  <style>
+{align="center"}
+</style>
+</apex:page>

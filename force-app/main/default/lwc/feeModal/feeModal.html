@@ -1,0 +1,137 @@
+<template>
+    <template if:true={isOpen}>
+        <header class="slds-align_absolute-center slds-card">
+            <h2 id="modal-heading-0" class="slds-text-heading_medium slds-hyphenate">Add Fee First</h2>
+        </header>
+        <lightning-combobox
+            name="selectFee"
+            label="Select Fee"
+            value=""
+            placeholder="Select Fee"
+            options={options}
+            onchange={handleChange}
+            required
+        ></lightning-combobox>
+    <footer>
+        <button type="button" class="slds-button slds-button_neutral">Cancel</button>
+        <button type="button" class="slds-button slds-button_brand">Save</button>
+    </footer>
+    </template>
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+            <div class="slds-modal__container1">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Fee</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="modal-body slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-combobox
+                            name="selectFee"
+                            label="Select Fee"
+                            value=""
+                            placeholder="Select Fee"
+                            options={options}
+                            onchange={handleChange}
+                            required
+                    ></lightning-combobox>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick={submitDetails} title="Save">Save</button>
+                </footer>
+            </div>
+    </template>
+    <template if:true={isSecondModalOpen}>
+        
+        <!-- Modal/Popup Box LWC starts here -->
+        <div class="slds-modal__container1">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeSecondModal}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Add Fee</h2>
+            </header>
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="modal-body slds-p-around_medium slds-border_bottom" id="modal-content-id-2">
+                <lightning-combobox
+                    name="selectedFee"
+                    label="Selected Fee"
+                    value={feeValue}
+                    placeholder={feeValue}
+                    options={options}
+                    disabled
+                ></lightning-combobox>
+                <lightning-layout horizontal-align="center" padding-top="50px">
+                    <lightning-layout-item size="4" padding-left="50px">
+                        <lightning-combobox
+                            name="paidBy"
+                            label="Paid By"
+                            value={paidBy}
+                            placeholder={paidBy}
+                            options={paidByOptions}
+                            onchange={handlePaidBy}
+                        ></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4" padding-left="50px">
+                        <lightning-combobox
+                            name="paidTo"
+                            label="Paid To"
+                            value={paidTo}
+                            placeholder={paidTo}
+                            options={paidToOptions}
+                            onchange={handlePaidBy}
+                        ></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4" padding-left="50px" padding-right="50px">
+                        <lightning-combobox
+                            name="payableAt"
+                            label="Payable At"
+                            value={payableAt}
+                            placeholder={payableAt}
+                            options={payableAtOptions}
+                            onchange={handlePayableAt}
+                        ></lightning-combobox>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-checkbox-group 
+                    padding-top="50px"    
+                    name="APR"
+                    options={checkboxOptions}
+                    value={checkboxValue}
+                    onchange={handleCheckboxChange}>
+                </lightning-checkbox-group>
+            </div>
+            <div class="modal-body slds-p-around_medium" id="modal-content-id-3">
+                <b><h4>Calculations</h4></b><br>
+                <lightning-layout horizontal-align="center" padding-top="50px">
+                    <lightning-layout-item size="4" padding-left="50px">
+                        <lightning-input type="number" name="months" label="Months" value={months} onchange={handleMonthChange}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4" padding-left="50px">
+                        <lightning-input type="number" name="amountPerDay" label="Amount per day" value={amountPerDay} onchange={handleAmount}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4" padding-left="50px">
+                        <lightning-input type="number" name="totalAmount" label="Total Amount" value={totalAmount} disabled></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-input type="text" name="cushion" label="Cushion" value={cushion} onchange={handleCushionChange}></lightning-input>
+                <lightning-input type="date" name="dueDate1" label="Due Date 1" value={dueDate1} onchange={handleDueDateChange}></lightning-input>
+            </div>
+            <div class="due-date" id="modal-content-id-4">
+                <lightning-button icon-name="utility:new" label="Add Due Date" title="addDueDate" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+            <!-- Modal/Popup Box LWC footer starts here -->
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={closeSecondModal} title="Cancel">Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={saveDetails} title="Save">Save</button>
+            </footer>
+        </div>
+
+    </template>
+  </template>

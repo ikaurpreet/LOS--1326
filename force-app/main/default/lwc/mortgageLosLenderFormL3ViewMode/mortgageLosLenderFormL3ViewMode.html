@@ -1,0 +1,67 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <c-mortgage-los-input-view-mode label="Mortgage Type Applied For" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.loanType}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Amoritization Type" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.amortizationType}>
+            </c-mortgage-los-input-view-mode>
+
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Terms of Loan">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-input-view-mode if:true={isPurchase} data-testid="estimatedValue" label="Purchase Price"
+                handle-edit={handleEdit} value={lenderData.property.estimatedValueWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Total Loan Amount" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.totalLoanAmountWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Note Rate" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.rateWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode if:true={showQualRate} label="Qual Rate" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.qualifyingInterestRateWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Loan Term" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.loanTermWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode if:true={showDueIn} label="Due in" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.armFixedTermWithMask}>
+            </c-mortgage-los-input-view-mode>
+        </lightning-layout-item>
+
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Proposed Monthly Payment for Property">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-input-view-mode label="First Mortgage (P&I)" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.principalInterestWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Subordinate Lien(s) (P&I)" handle-edit={handleEdit}
+                value={lenderData.property.resubordinatedLiensWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Homeowner's Insurance" handle-edit={handleEdit}
+                value={lenderData.property.monthlyInsuranceFeeWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Property Taxes" handle-edit={handleEdit}
+                value={lenderData.property.monthlyTaxesWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Mortgage Insurance" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.pmiMonthlyPaymentWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Association/Project Dues (Condo, Co-Op, PUD)"
+                handle-edit={handleEdit} value={lenderData.property.monthlyHomeownersFeeWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Other" handle-edit={handleEdit}
+                value={lenderData.property.otherMonthlyCostsWithMask}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Total" handle-edit={handleEdit} data-testid="total" value={total}>
+            </c-mortgage-los-input-view-mode>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

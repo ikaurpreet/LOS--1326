@@ -1,0 +1,26 @@
+<template>
+    <lightning-tabset variant="vertical">
+        <lightning-tab label="Overview">
+            <c-mortgage-Los-Overview idfromparent={recordId}></c-mortgage-Los-Overview>
+        </lightning-tab>
+        <template if:true={showUrlaTab}>
+            <lightning-tab if:true={showUrlaTab} label="1003">
+                <c-mortgage-los-urla record-id={recordId}></c-mortgage-los-urla>
+            </lightning-tab>
+        </template>
+        <lightning-tab label="Tasks">
+            <c-mortgage-los-submission-tasks record-id={recordId}></c-mortgage-los-submission-tasks>
+        </lightning-tab>
+        <lightning-tab label="Documents">
+            <c-mortgages-submission-documents record-id={recordId}></c-mortgages-submission-documents>
+        </lightning-tab>
+        <lightning-tab label="Contacts">
+            <c-mortgage-los-contacts record-id={recordId}></c-mortgage-los-contacts>
+        </lightning-tab>
+        <template if:true={showEligibilityTab}>
+            <lightning-tab label="Eligibility">
+                <c-mortgage-los-update-eligibility record-id={recordId}></c-mortgage-los-update-eligibility>
+            </lightning-tab>
+        </template>
+    </lightning-tabset>
+</template>

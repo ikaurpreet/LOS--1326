@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Borrower Declarations">
+        <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode="readonly" columns="2" fields={fields_borrower}>
+        </lightning-record-form>
+    </lightning-card>
+    <template if:true={cosigned}>
+        <lightning-card title="Co-Borrower Declarations">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode="readonly" columns="2" fields={fields_co_borrower}>
+            </lightning-record-form>
+        </lightning-card>
+    </template>
+</template>

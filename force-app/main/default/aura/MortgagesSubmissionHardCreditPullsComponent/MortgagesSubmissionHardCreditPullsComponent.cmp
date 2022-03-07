@@ -1,0 +1,61 @@
+<aura:component controller="GraphQLProxyController" extends="c:MortgagesGraphQLComponent">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="columns" type="List" access="PRIVATE" />
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="participantType" type="String" default="borrower"/>
+    <aura:attribute name="reportType" type="String"/>
+    <aura:attribute name="submissionUuid" type="String"/>
+    <aura:attribute name="canHardPull" type="Boolean" default="true"/>
+    <aura:attribute name="hardCreditPulls" type="Array"/>
+    <aura:attribute name="hardCreditPull" type="Object"/>
+    <aura:attribute name="loading" type="Boolean" default="false"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:attribute name="success" type="String"/>
+    
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+    </aura:if>
+  
+    <aura:if isTrue="{!v.error != null}">
+        <ui:message title="Error" severity="error">
+            {!v.error}
+        </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.success != null}">
+        <ui:message title="Success" severity="info">
+            {!v.success}
+        </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.canHardPull}">
+        <lightning:button
+          aura:id="rerun-hard-credit-pull"
+          class="slds-m-right_xx-small"
+          variant="destructive"
+          label="Re-run Hard Credit Pull"
+          title="Re-run Hard Credit Pull"
+          onclick="{!c.rerunHardCreditPull}"
+        >
+          <aura:if isTrue="{!v.loading == 'rerunHardCreditPull' }">
+              <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+          </aura:if>
+          Re-run Hard Credit Pull
+        </lightning:button>
+      </aura:if>
+    <lightning:datatable
+        columns="{!v.columns}"
+        data="{!v.hardCreditPulls}"
+        keyField="uuid"
+        maxRowSelection="1"
+        onrowselection="{!c.onHardCreditPullSelected}"
+    />
+
+    <aura:if isTrue="{!v.hardCreditPulls.length == 0}">
+        <div class="slds-align_absolute-center slds-m-vertical_medium slds-text-title">
+            No Hard Credit Pulls
+        </div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.hardCreditPull != null}">
+        <c:MortgagesHardCreditPullDetailsDownloadComponent hardCreditPull="{!v.hardCreditPull}" env="{!v.env}" reportType="{!v.reportType}"/>
+    </aura:if>
+</aura:component>

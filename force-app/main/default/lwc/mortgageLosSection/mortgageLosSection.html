@@ -1,0 +1,34 @@
+<template>
+  <div class="c-los__section slds-border_top slds-border_left slds-border_right slds-border_bottom">
+    <article class="slds-card">
+      <div class="slds-card__header slds-grid slds-m-around_none">
+        <header class={headerClass}>
+          <div if:true={icon} class="slds-media__figure">
+            <lightning-icon icon-name={icon} size="small"></lightning-icon>
+          </div>
+          <div class="slds-media__body">
+            <h2 class="slds-card__header-title">
+              <span>{title}</span>
+            </h2>
+          </div>
+          <div if:true={delAction} class="slds-media__figure slds-grow-none">
+            <lightning-icon size="small" onclick={delAction} icon-name="utility:delete" alternative-text="Delete" title="Delete"></lightning-icon>
+          </div>
+        </header>
+      </div>
+      <div onsectioncontroller__loading={startLoading} onsectioncontroller__ready={finishLoading}
+        onsectioncontroller__error={showErrorMessage} data-testid="section-event-handler" class={bodyClass}>
+        <div if:true={loadingSection} role="status" class="slds-spinner slds-spinner_small">
+          <span class="slds-assistive-text">Loading</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+        <c-mortgage-los-alert if:true={showingErrorMessage} message="Unable to load, refresh page" variant="error">
+        </c-mortgage-los-alert>
+        <div class="slds-p-horizontal_xx-small">
+          <slot></slot>
+        </div>
+      </div>
+    </article>
+  </div>
+</template>

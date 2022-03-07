@@ -1,0 +1,27 @@
+.field {
+  height: 60px;
+}
+
+.date-time-field {
+  height: 84px;
+}
+.no-label-field {
+  height: 36px;
+  margin-bottom: var(--lwc-varSpacingVerticalXSmall, spacingXSmall);
+  padding: 0 var(--lwc-varSpacingXxSmall, spacingXxSmall);
+  display: block;
+}
+
+.backgroundInverse {
+  position: fixed;
+  background-color: rgba(22, 50, 92, 0.3);
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.cancel{
+  margin-left: 20px;
+}

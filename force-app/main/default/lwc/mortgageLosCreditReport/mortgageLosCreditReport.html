@@ -1,0 +1,36 @@
+<template>
+  <c-mortgage-los-section-controller>
+    <lightning-layout>
+      <lightning-layout-item flexibility="auto" class="slds-p-horizontal_small slds-m-bottom_medium">
+        <div class="slds-form__row">
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element" if:true={showCreditReportDetails}>
+              <template if:true={creditReportFailed}>
+                <c-mortgage-los-help-text icon="action:approval">
+                  Credit report ordered on {humanCreditReportDate} failed. Cause: {creditReportDetailsDescription}. <a
+                    href="javascript:void" onclick={runNewCreditReport}>Order Report Again.</a>
+                </c-mortgage-los-help-text>
+              </template>
+              <template if:false={creditReportFailed}>
+                <c-mortgage-los-help-text icon="action:approval">
+                  Credit report ordered on {humanCreditReportDate}. <a
+                    href="javascript:void" onclick={runNewCreditReport}>Order Report Again. </a>
+                </c-mortgage-los-help-text>
+                <button class="slds-button slds-button_outline-brand" onclick={openCreditReport}>
+                  <lightning-icon size="x-small" class="new-window-icon slds-m-right_x-small" icon-name="utility:new_window"
+                    alternative-text="New icon" title="Add Assets"></lightning-icon>
+                  View Credit Report
+                </button>
+              </template>
+            </div>
+            <div class="slds-form-element " if:false={showCreditReportDetails}>
+              No hard credit report ordered. <a href="javascript:void"
+                onclick={runNewCreditReport}>Order New Credit Report.</a>
+            </div>
+          </div>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+    <lightning-spinner size="small" if:true={creditReportUrlLoading}></lightning-spinner>
+  </c-mortgage-los-section-controller>
+</template>

@@ -1,0 +1,348 @@
+<aura:component controller="MortgagesSubmissionController" extends="c:MortgagesGraphQLComponent" implements="flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:attribute name="submissionUuid" type="String"/>
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="submission" type="Object"/>
+    <aura:attribute name="enableEncompassQueue" type="Boolean" default="false"/>
+    <aura:attribute name="enableReKey" type="Boolean" default="false"/>
+    <aura:attribute name="loading" type="Boolean" default="false"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:attribute name="preApprovalLettersColumns" type="Object"/>
+    <aura:attribute name="preApprovalLettersData" type="Object"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="showLpaTab" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <h3 class="slds-section-title--divider">Purchase Submission</h3>
+    <aura:if isTrue="{!v.submission != null}">
+        <lightning:tabset selectedTabId="general">
+            <lightning:tab label="General" id="general">
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Uuid:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.uuid}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">ID:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.id}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Created At:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.createdAt}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Status:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.status}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Products created at:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.meta.productsCreatedAt}</dd>
+                </dl>
+            </lightning:tab>
+            <lightning:tab label="Actions" id="actions">
+                <c:MortgagesSubmissionActionsComponent submission="{!v.submission}" env="{!v.env}"/>
+            </lightning:tab>
+            <lightning:tab label="Eligibilties" id="eligibilties">
+                <c:MortgagesSubmissionEligibilitiesComponent submission="{!v.submission}" env="{!v.env}"/>
+            </lightning:tab>
+            <lightning:tab label="Purchase Property" id="refinance-property">
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Uuid">Uuid:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.uuid}</dd>
+                </dl>
+                
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Estimated value">Estimated value:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.estimatedValue}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Estimated closing date">Estimated closing date:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.estimatedClosingDate}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Down payment">Down payment:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.downPayment}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Down payment source">Down payment source:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.downPaymentSource}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Down payment from assets">Down payment from assets:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.downPaymentFromAssets}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Property type">Property type:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.propertyType}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Number of units">Number of units:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.numberOfUnits}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Homeowners fee">Homeowners fee:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.homeownersFee}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Occupancy type">Occupancy type:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.occupancyType}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Contract accepted date">Contract accepted date:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.contractAcceptedDate}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="LTV">LTV:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.ltv}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Monthly taxes">Monthly taxes:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.monthlyTaxes}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Monthly insurance">Monthly insurance:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.monthlyInsurance}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Prepaids cost">Prepaids cost:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.prepaidsCost}</dd>
+                </dl>
+
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Escrows cost">Escrows cost:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.escrowsCost}</dd>
+                </dl>
+
+                <lightning:accordion aura:id="accordion" allowMultipleSectionsOpen="true">
+                    <lightning:accordionSection name="address" label="Address">
+                        <c:MortgagesParticipantComponent data="{!v.submission.purchaseProperty.address}" component="address"/>                      
+                    </lightning:accordionSection>
+                    <aura:if isTrue="{!v.submission.purchaseProperty.realEstateAgent != null}">
+                        <lightning:accordionSection name="address" label="Real Estate Agent">
+                            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First name">First name:</dt>
+                                <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.realEstateAgent.firstName}</dd>
+                            </dl>
+                            
+                            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First name">Last name:</dt>
+                                <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.realEstateAgent.lastName}</dd>
+                            </dl>
+
+                            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First name">Email:</dt>
+                                <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.realEstateAgent.email}</dd>
+                            </dl>
+
+                            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First name">Phone number:</dt>
+                                <dd class="slds-item_detail slds-truncate">{!v.submission.purchaseProperty.realEstateAgent.phoneNumber}</dd>
+                            </dl>
+                        </lightning:accordionSection>
+                    </aura:if>
+                </lightning:accordion>
+            </lightning:tab>
+            <aura:if isTrue="{!v.submission.selectedProduct != null}">
+                <lightning:tab label="Selected Product" id="selected-product">
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="External Id">External Id:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.externalProductId}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >APR:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.apr}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Rate:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.rate}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Type:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.loanType}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Amortization Type:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.amortizationType}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Lock Period:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.lockPeriod}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Monthly Payment:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.monthlyPayment}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Principal Interest:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.principalInterest}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Term:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.loanTerm}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >ARM Fixed Term:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.armFixedTerm}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >ARM Subsequent Change Period:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.armSubsequentChangePeriod}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Min Required Assets:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.minRequiredAssets}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Product Name:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.loanProductInfo.name}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Lender Name:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.loanProductInfo.lender.name}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Lender NMLS:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.loanProductInfo.lender.nmls}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Underwriting Fee:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.underwritingFee}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Other Lender Fee:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.otherLenderFee}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Appraisal Fee:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.appraisalFee}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Title Settlement Recording Fee:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.titleSettlementRecordingFee}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Points:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.points}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Closing Cost:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.closingCost}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Total Cost:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.totalCost}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Total Loan Amount:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.totalLoanAmount}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >Best Product:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.bestProduct}</dd>
+                    </dl>
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" >PMI Monthly Payment:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.pmiMonthlyPayment}</dd>
+                    </dl>
+                    <aura:if isTrue="{!v.submission.selectedProduct.splitFees.transferTaxes != null}">
+                        <h3>Transfer Taxes Fees</h3>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Buyer:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.splitFees.transferTaxes.buyer}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Seller:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.splitFees.transferTaxes.seller}</dd>
+                        </dl>
+                    </aura:if>
+                    <aura:if isTrue="{!v.submission.selectedProduct.splitFees.ownersTitle != null}">
+                        <h3>Owners Title Fees</h3>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Buyer:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.splitFees.ownersTitle.buyer}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Seller:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.splitFees.ownersTitle.seller}</dd>
+                        </dl>
+                    </aura:if>
+                    <aura:if isTrue="{!v.submission.selectedProduct.splitFees.other != null}">
+                        <h3>Other Fees</h3>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Buyer:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.splitFees.other.buyer}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Seller:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.submission.selectedProduct.splitFees.other.seller}</dd>
+                        </dl>
+                    </aura:if>
+                </lightning:tab>
+            </aura:if>
+            <aura:if isTrue="{!v.submission.preApprovalLetters != null}">
+                <lightning:tab label="Pre Approval Letters" id="pre-approval-letters">
+                    <lightning:datatable
+                        keyField="id"
+                        data="{! v.preApprovalLettersData }"
+                        columns="{! v.preApprovalLettersColumns }"
+                        hideCheckboxColumn="true"/>
+                </lightning:tab>
+            </aura:if>
+            <!-- <aura:if isTrue="{!v.submission.tasks != null}"> -->
+                <!-- <lightning:tab label="Tasks" id="tasks">
+                    <c:MortgagesTasksComponent submissionUuid="{!v.submission.uuid}" env="{!v.env}"/>
+                </lightning:tab> -->
+            <!-- </aura:if> -->
+            <lightning:tab label="Encompass Data" id="encompass-data">
+                <c:MortgagesSubmissionEncompassComponent submissionUuid="{!v.submission.uuid}" env="{!v.env}"/>
+            </lightning:tab>
+            <aura:if isTrue="{!v.enableEncompassQueue}">
+                <lightning:tab label="Encompass Queue" id="encompass-queue">
+                    <c:MortgagesSubmissionEncompassQueueComponent submissionUuid="{!v.submission.uuid}" env="{!v.env}"/>
+                </lightning:tab>
+            </aura:if>
+            <lightning:tab label="Audit Third Party" id="audit-third-party">
+                <c:MortgagesAuditThirdPartyComponent env="{!v.env}" submission="{!v.submission}"/>
+            </lightning:tab>
+            <aura:if isTrue="{!v.enableReKey}">
+                <aura:if isTrue="{!v.submission.selectedProduct.rateLocked == false}">
+                    <lightning:tab label="Re-key" id="re-key">
+                        <c:MortgagesRekeyComponent submission="{!v.submission}"  env="{!v.env}"/>
+                    </lightning:tab>
+                </aura:if>
+            </aura:if>
+            <lightning:tab label="Audit Third Party" id="audit-third-party">
+                <c:MortgagesAuditThirdPartyComponent env="{!v.env}" submission="{!v.submission}"/>
+            </lightning:tab>
+            <aura:if isTrue="{!v.env == 'DEVELOP'}">
+                <aura:if isTrue="{!v.submission.status == 'brokerProcessing'}">
+                    <lightning:tab label="Export 3.4 file" id="selected-export-3-4">
+                        <c:MortgagesExportFileComponent env="{!v.env}" submission="{!v.submission}"/>
+                    </lightning:tab>
+                </aura:if>
+            </aura:if>  
+            <lightning:tab label="Disclosure Soft-pull details" id="disclosure-details">
+                <c:MortgagesSubmissionDisclosuresComponent env="{!v.env}" submission="{!v.submission}"/>
+            </lightning:tab>
+            <lightning:tab label="VPA" id="vpa">
+                <c:homePurchaseVpa uuid="{!v.submission.uuid}" recordId="{!v.recordId}" showBothParticipants="true"/>
+            </lightning:tab>
+        </lightning:tabset>
+        <c:MortgagesPurchaseBorrowerComponent data="{!v.submission.borrower}" realEstate="{!v.submission.borrowerRealEstate}"  submissionUuid="{!v.submission.uuid}"  env="{!v.env}"/>
+        <aura:if isTrue="{!v.submission.coBorrower != null}">
+            <c:MortgagesCoBorrowerComponent data="{!v.submission.coBorrower}" realEstate="{!v.submission.coBorrowerRealEstate}" submissionUuid="{!v.submission.uuid}"  env="{!v.env}"/>
+        </aura:if>
+    </aura:if>
+</aura:component>

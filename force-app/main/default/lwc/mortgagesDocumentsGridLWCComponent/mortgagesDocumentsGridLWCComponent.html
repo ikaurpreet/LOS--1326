@@ -1,0 +1,224 @@
+<template>
+        <template if:true={authErrorMessage}>
+            <lightning-card title="Authentication Error">
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert" style="justify-content: left;">
+                    {authErrorMessage}
+                </div>
+                <template if:true={authId}>
+                    <div class="slds-m-horizontal_small slds-m-top_small">
+                        <lightning-button label="Sign In" variant="brand" title="Sign In" onclick={authClickHandler}>
+                            Sign In
+                        </lightning-button>
+                    </div>
+                </template>
+            </lightning-card>
+        </template>
+        <template if:false={authErrorMessage}>
+            <lightning-card  title={title} icon-name="standard:opportunity">
+                <template if:true={authError}>
+                    <lightning-card title="Authentication Error">
+                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                            {authError}
+                        </div>
+                        <template if:true={authId}>
+                            <div class="slds-m-horizontal_small slds-m-top_small">
+                                <lightning-button variant="brand" label="Sign In" title="Sign In" onclick={authClickHandler} class="slds-m-left_x-small"></lightning-button>
+                            </div>
+                        </template>
+                    </lightning-card>
+                </template>
+
+                <template if:true={uploadedFile}>
+                    <c-mortgages-upload-document-modal
+                        onclose_upload_modal={closeUploadModal}
+                        onsuccessfull_document_upload={closeUploadModalSuccess}
+                        document-id={documentId}
+                        record-id={recordId}
+                        file-number={fileNumber}
+                        files-count={filesCount}></c-mortgages-upload-document-modal>
+                </template>
+
+                <template if:true={renderFoldersSelect}>
+                    <lightning-combobox
+                        class="slds-show_inline-block folders-select-combobox"
+                        name="folder"
+                        label="Folder"
+                        slot="actions"
+                        value={folder}
+                        placeholder="Select folder"
+                        options={folderOptions}
+                        onchange={changeFolder}></lightning-combobox>
+                </template>
+
+                <template if:true={renderRequestNewDocument}>
+                    <c-new-document-modal
+                        slot="actions"
+                        class="slds-show_inline-block slds-var-m-right_medium slds-var-m-left_medium"
+                        record-id={recordId}>
+                    </c-new-document-modal>
+                </template>
+
+                <template if:true={showUpload}>
+                    <lightning-file-upload
+                        class="slds-show_inline-block multiple-file-upload"
+                        label="Attach files"
+                        name="fileUploader"
+                        slot="actions"
+                        accept={acceptedFormats}
+                        record-id={fileRecord}
+                        onuploadfinished={handleUploadFinished}
+                        multiple>
+                    </lightning-file-upload>
+                </template>
+
+                <template if:true={loading}>
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                </template>
+                <template if:true={error}>
+                    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                        <h2>{error}</h2>
+                    </div>
+                </template>
+                <template if:false={error}>
+
+
+                <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_edit slds-table_fixed-layout slds-table_resizable-cols slds-tree slds-table_tree documents-data" role="treegrid">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <!-- Set up columns -->
+                            <template for:each={gridColumns} for:item="column">
+                                <th key={column.label} aria-label={column.label} aria-sort="none" class="slds-has-button-menu slds-is-resizable slds-is-sortable" scope="col">
+                                    <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                        <span class="slds-assistive-text">Sort by: </span>
+                                        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                        <span class="slds-truncate" title={column.label}>{column.label}</span>
+                                        </div>
+                                    </a>
+                                    <div class="slds-resizable">
+                                        <span class="slds-resizable__handle">
+                                            <span class="slds-resizable__divider short__divider"></span>
+                                        </span>
+                                    </div>
+                                </th>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <template if:true={gridData} for:each={gridData} for:item="data">
+                            <tr key={data.documentGroup} aria-expanded="true" aria-level="1" aria-posinset="2" aria-selected="false" aria-setsize="4" class="slds-hint-parent">
+                                <th class="slds-tree__item" data-label="Account Name" scope="row">
+                                <div class="slds-truncate" title="Acme Corporation">
+                                    {data.name}
+                                </div>
+                                </th>
+                                <td role="gridcell"></td>
+                                <td role="gridcell"></td>
+                                <td role="gridcell"></td>
+                                <td role="gridcell"></td>
+                            </tr>
+                            <template for:each={data.versions} for:item="document" for:index="index">
+                                <tr key={document.id} aria-level="2" aria-posinset="1" aria-selected="false" aria-setsize="1" class="slds-hint-parent data-version" data-uploaded={document.uploadedAt}>
+                                    <th class="slds-tree__item"  scope="row">
+                                    <div class="slds-truncate" title={document.fileName}>
+                                        <template if:false={document.reviewer}>
+                                            <span class="slds-badge slds-theme_success slds-m-right_x-small">New</span>
+                                        </template>
+                                        <a href="javascript:void(0);" onclick={handlePreviewDocument} data-item-id={document.id} tabindex="-1">{document.fileName}</a>
+                                    </div>
+                                    </th>
+                                    <td role="gridcell">
+                                    <div class="slds-truncate" title={document.source}>{document.source}</div>
+                                    </td>
+                                    <td role="gridcell">
+                                    <div class="slds-truncate" title={document.uploadedAt}>
+                                        <lightning-formatted-date-time value={document.uploadedAt} year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit" hour12="true"></lightning-formatted-date-time>
+                                        </div>
+                                    </td>
+                                    <td role="gridcell" class="slds-cell-wrap">
+                                        <template if:true={document.formattedNotes}>
+                                            <a href="javascript:void(0);" onclick={handleAddNote} data-item-id={document.id} title={document.formattedNotes}>{document.formattedNotes}</a>
+                                        </template>
+                                        <template if:false={document.formattedNotes}>
+                                            <a href="javascript:void(0);" onclick={handleAddNote} data-item-id={document.id}>Add notes</a>
+                                        </template>
+                                    </td>
+                                    <td role="gridcell">
+                                        <template if:true={document.driveUploadDate}>
+                                            <div class="slds-truncate" title={document.driveUploadDate}>
+                                                <lightning-formatted-url value={document.driveLink} tooltip={document.driveLink} target="_blank" label={document.driveUploadDate}></lightning-formatted-url>
+                                            </div>
+                                        </template>
+                                        <template if:false={document.driveUploadDate}>
+                                            <div onclick={handleAddToDrive} class="pointer" data-item-id={document.id}>Add to drive</div>
+                                        </template>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+            </lightning-card>
+            <template if:true={isNotesModalOpen}>
+                <!-- Modal/Popup Box LWC starts here -->
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <!-- Modal/Popup Box LWC header here -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Note</h2>
+                        </header>
+                        <!-- Modal/Popup Box LWC body starts here -->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <lightning-textarea
+                            onchange={handleCommentChanges}
+                            value={activeDocumentNoteText}
+                            placeholder="please type your comment here...">
+                        </lightning-textarea>
+                        </div>
+                        <!-- Modal/Popup Box LWC footer starts here -->
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_brand" onclick={submitDetails} title="Submit">Submit</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+            <template if:true={isDownloadFileModalOpen}>
+                <!-- Modal/Popup Box LWC starts here -->
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-10" aria-modal="true" aria-describedby="modal-content-id-10" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <!-- Modal/Popup Box LWC header here -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeDownloadFileModal}>
+                                <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-11" class="slds-text-heading_medium slds-hyphenate">Download File</h2>
+                        </header>
+                        <!-- Modal/Popup Box LWC body starts here -->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-12">
+                          <h3 class="slds-text-heading_small slds-hyphenate">Document is too large to be previewed online, please download it</h3>
+                        </div>
+                        <!-- Modal/Popup Box LWC footer starts here -->
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_brand" onclick={downloadDocumentDirectly} title="Download">Download</button>
+                            <button class="slds-button slds-button_neutral" onclick={closeDownloadFileModal} title="Cancel">Cancel</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+              </template>
+        </template>
+    </template>

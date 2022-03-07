@@ -1,0 +1,16 @@
+.los-c__section-container {
+  height: 30px;
+  margin: 4px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.los-c__section-subtitle {
+  display: flex;
+  align-items: flex-start;
+}
+
+.los-c__section-subtitle img {
+  margin-right: 4px;
+}

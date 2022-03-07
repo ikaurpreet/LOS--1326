@@ -1,0 +1,9 @@
+[class*='slds-icon-action-'] {
+    padding: var(--lwc-spacingXxSmall,0.25rem);
+}
+
+.slds-icon_container_circle .slds-icon {
+    width: .875rem;
+    height: .875rem;
+    line-height: var(--lwc-lineHeightReset,1);
+}

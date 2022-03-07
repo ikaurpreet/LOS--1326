@@ -1,0 +1,30 @@
+<aura:component>
+    <aura:attribute name="member" type="Object"/>
+
+    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">User Id:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.member.encompassUserId}</dd>
+    </dl>
+
+    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">First name:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.member.firstName}</dd>
+    </dl>
+    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Last name:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.member.lastName}</dd>
+    </dl>
+    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Email:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.member.email}</dd>
+    </dl>
+    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Nmls:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.member.nmls}</dd>
+    </dl>
+
+    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Calendly Link:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.member.calendlyLink}</dd>
+    </dl>
+</aura:component>

@@ -1,0 +1,28 @@
+<aura:component controller="MortgagesEncompassQueueController" extends="c:MortgagesGraphQLComponent">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="submissionUuid" type="String"/>
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="loading" type="Boolean"/>
+    <aura:attribute name="messages" type="Object"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="columns" type="Object"/>
+    
+    <aura:if isTrue="{!v.message != null}">
+        <ui:message title="Success" severity="info" closable="false">
+            {!v.message}
+        </ui:message>
+    </aura:if>
+    <lightning:datatable
+          columns="{!v.columns}"
+          data="{!v.messages}"
+          keyField="messageId"
+          onrowaction="{!c.onRowAction}"
+          hideCheckboxColumn="true"
+      />
+    <aura:if isTrue="{!v.messages.length == 0}">
+      <div class="slds-align_absolute-center slds-m-vertical_medium slds-text-title">
+        No messages
+      </div>
+    </aura:if>
+</aura:component>

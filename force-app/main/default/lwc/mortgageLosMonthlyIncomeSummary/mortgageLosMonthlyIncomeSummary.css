@@ -1,0 +1,32 @@
+th,
+tr:last-of-type {
+  background-color: rgb(250, 250, 249);
+}
+td {
+  border: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+}
+
+td,
+th {
+  padding: 5px 12px;
+}
+
+table {
+    margin-left: 24px;
+    width: 70%;
+}
+
+tr th, tr td {
+  width: 180px;
+}
+
+tr:first-child {
+  border-top: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+  border-left: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+  border-right: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+}
+
+.disable-td {
+  background-color: rgb(250, 250, 249);
+  cursor: not-allowed;
+}

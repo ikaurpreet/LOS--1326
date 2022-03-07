@@ -1,0 +1,95 @@
+<template>
+    <div class="slds-theme_default">
+        <template if:false={hideButton}>
+            <lightning-button label="Request New Document" variant="brand-outline" onclick={openModal}></lightning-button>
+        </template>
+        <template if:true={isOpened}>
+            <div>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </template>
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" id="abort_upload_document" onclick={closeModal}>
+                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                  <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Request New Document</h2>
+                        </header>
+
+                        <div class="slds-modal__content slds-var-p-around_medium" id="new-document-form">
+                                  <lightning-radio-group name="ownerGroup"
+                                class="slds-var-m-around_medium slds-form-element"
+                                label="Select Document Owner"
+                                options={ownerOptions}
+                                value={ownerValue}
+                                onchange={handleOwnerChange}
+                                required
+                                disabled={ownerDisabled}
+                                type="radio">
+                            </lightning-radio-group>
+                            <lightning-radio-group name="categoryGroup"
+                                label="Select Document Category"
+                                class="slds-var-m-around_medium slds-form-element"
+                                options={categoryOptions}
+                                value={categoryValue}
+                                onchange={handleCategoryChange}
+                                required
+                                type="button">
+                            </lightning-radio-group>
+                            <lightning-combobox 
+                                name="nameCombobox" 
+                                class="slds-var-m-around_medium"
+                                label="Select Document Name"
+                                placeholder="Document Name" 
+                                options={documentNameOptions}
+                                value={documentId}
+                                onchange={handleDocumentChange}
+                                autocomplete="text"
+                                required>
+                            </lightning-combobox>
+                            <lightning-input 
+                                type="text"
+                                name="customDocumentName" 
+                                value={nameValue} 
+                                label="Enter custom document name"
+                                onchange={handleCustomDocumentNameChange}
+                                class="slds-var-m-around_medium slds-form-element document-name-input"
+                                required>
+                            </lightning-input>
+                            <lightning-input-rich-text
+                                class="slds-var-m-around_medium slds-form-element"
+                                label={instructionsLabel}
+                                label-visible="true"
+                                value={instructionsValue}
+                                onchange={handleInstructionsChange}
+                                onblur={validateInstructions}
+                                onfocus={validateInstructions}
+                                disabled-categories="FORMAT_BODY,ALIGN_TEXT,INSERT_CONTENT"
+                                formats={instructionTextFormats}
+                                message-when-bad-input={instructionsErrorMessage}
+                                valid={instructionsValidity}
+                                required>
+                            </lightning-input-rich-text>
+                            <lightning-textarea
+                                name="reasonText"
+                                value={reasonValue}
+                                onchange={handleReasonChange}
+                                class="slds-var-m-around_medium slds-form-element"
+                                label="Internal reporting: Provide a reason for the request (Optional)">
+                            </lightning-textarea>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button label="Request Condition" variant="brand" onclick={requestDocument} disabled={loading}></lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+    </div>
+</template>

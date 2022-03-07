@@ -1,0 +1,28 @@
+<aura:component extensible="true">
+    <aura:attribute name="authId" type="String" />
+    <aura:attribute name="authErrorMessage" type="String" />
+    <aura:attribute name="error" type="String"/>
+    <aura:attribute name="loading" type="Boolean"/>
+    
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+    </aura:if>
+    <aura:if isTrue="{!v.error != null}">
+      <ui:message title="Error" severity="error">
+          {!v.error}
+      </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.authErrorMessage == null}">
+        {!v.body}
+        <aura:set attribute="else">
+          <lightning:card title="Authentication Error">
+              <ui:message title="Error" severity="error" class="slds-m-horizontal_small">
+                  {!v.authErrorMessage}
+              </ui:message>
+              <aura:if isTrue="{!v.authId != null}">
+                  <div class="slds-m-horizontal_small slds-m-top_small"><lightning:button variant="brand" label="Sign In" title="Sign In" onclick="{! c._authClickHandler }" /></div>
+              </aura:if>
+          </lightning:card>
+        </aura:set>
+    </aura:if>
+</aura:component>

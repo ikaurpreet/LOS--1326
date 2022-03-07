@@ -1,0 +1,4 @@
+.slds-form-element_edit .slds-form-element__static, .slds-form-element--edit .slds-form-element__static {
+    min-height: calc(var(--lwc-varFontSize7,1.25rem) + 1px);
+    vertical-align: bottom;
+}

@@ -1,0 +1,86 @@
+<aura:component controller="MortgagesSubmissionController" extends="c:MortgagesGraphQLComponent" implements="flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="envs" type="List"/>
+    <aura:attribute name="vertical" type="String" default=""/>
+    <aura:attribute name="submissions" type="Object"/>
+    <aura:attribute name="columns" type="List" access="PRIVATE" />
+    <aura:attribute name="statuses" type="List" access="PRIVATE" />
+    <aura:attribute name="status" type="String" />
+    <aura:attribute name="limit" type="Integer" default="20" />
+    <aura:attribute name="offset" type="Integer" default="0"/>
+    <aura:attribute name="sortBy" type="String" default="createdAt"/>
+    <aura:attribute name="sortDirection" type="String" default="desc"/>
+    <aura:attribute name="totalCount" type="String"/>
+    <aura:attribute name="pageLoading" type="Boolean"/>
+    <aura:attribute name="tableLoading" type="Boolean"/>
+    <aura:attribute name="disableLoading" type="Boolean" default="false"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <lightning:navigation aura:id="nav" />
+    <div class="slds-box slds-theme_default">
+      <div class="slds-grid slds-m-bottom_xx-small">
+        <div class="slds-col slds-p-bottom_x-small slds-align-bottom">
+          <aura:if isTrue="{!and(v.totalCount != null, v.totalCount != 0)}">
+              DISPLAYING RESULTS 1 - {!v.submissions.length} OF {!v.totalCount} IN TOTAL
+          </aura:if>
+          <aura:if isTrue="{!v.totalCount == 0}">
+              NO SUBMISSIONS
+          </aura:if>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink">
+            <div onkeyup="{! c.handleKeyUp }">
+              <lightning:input
+                aura:id="enter-search"
+                name="enter-search"
+                label="Search when user hits the 'enter' key"
+                type="search"
+              />
+            </div>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+          <lightning:select aura:id="env" name="env" label="Environment" onchange="{! c.onChangeEnv }" value="{!v.env}">
+            <aura:iteration items="{!v.envs}" var="env">
+                <option text="{!env}" value="{!env}"/>
+            </aura:iteration>
+          </lightning:select>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+          <lightning:select aura:id="vertical" name="vertical" label="Vertical" onchange="{! c.onChangeVertical }" value="{!v.vertical}">
+            <option value="">Any</option>
+            <option value="refinance">Refinance</option>
+            <option value="purchase">Purchase</option>
+          </lightning:select>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small" style="width: 100px;">
+          <lightning:select aura:id="status" name="status" label="Status" onchange="{! c.onChangeStatus }" value="{!v.status}">
+            <option text="Any" value=""/>
+            <aura:iteration items="{!v.statuses}" var="status">
+                <option text="{!status.label}" value="{!status.value}"/>
+            </aura:iteration>
+          </lightning:select>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+            <lightning:buttonIcon iconName="utility:loop" class="slds-m-left_xx-small" variant="border-filled" onclick="{!c.reload}" alternativeText="Reload" />
+        </div>
+      </div>
+      <div style="height: 400px;">
+        <lightning:datatable
+            columns="{!v.columns}"
+            data="{!v.submissions}"
+            keyField="uuid"
+            sortedBy="{! v.sortBy }"
+            sortedDirection="{! v.sortDirection }"
+            onsort="{! c.updateColumnSorting }"
+            hideCheckboxColumn="true"
+            enableInfiniteLoading="true"
+            loadMoreOffset="20"
+            onrowaction="{!c.handleRowAction}"
+            isLoading="{!v.tableLoading}"
+            onloadmore="{!c.loadMore}"
+        />
+        <aura:if isTrue="{!v.pageLoading}">
+          <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+        </aura:if>
+      </div>
+    </div>
+</aura:component>

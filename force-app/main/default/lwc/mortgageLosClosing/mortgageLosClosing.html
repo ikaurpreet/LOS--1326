@@ -1,0 +1,16 @@
+<template>
+    <lightning-tabset>
+        <lightning-tab label="Closing">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode="view" columns="2" fields={fields_1}>
+            </lightning-record-form>
+            <template if:true={showTable}>
+                <c-related-list records={items} columndata={columns} title="Closed Loans">
+                </c-related-list>
+            </template>
+        </lightning-tab>
+        <lightning-tab label="Withdraw/Declines">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode="view" columns="2" fields={fields_2}>
+            </lightning-record-form>
+        </lightning-tab>
+    </lightning-tabset>
+</template>

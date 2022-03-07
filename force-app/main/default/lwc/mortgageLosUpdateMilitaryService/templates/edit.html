@@ -1,0 +1,30 @@
+<template>
+  <c-mortgage-los-section-controller uncontrolled>
+    <lightning-layout>
+      <lightning-layout-item flexibility="auto" if:true={showBorrower} class="slds-size_1-of-2 slds-p-bottom_medium"
+        padding="horizontal-small">
+        <c-mortgage-los-military-service-edit-mode expiration-date={borrowerExpirationDateOfService}
+          service-state={borrowerServiceState} service-description={borrowerServiceDescription}
+          description-label={descriptionLabel} status-label={statuslabel}
+          handle-service-state-change={handleBorrowerServiceStateChange}
+          handle-expiration-date-change={handleBorrowerExpirationDateChange}
+          handle-service-description-change={handleBorrowerServiceDescriptionChange} icon-url={BorrowerIconURL}
+          section-subtitle="Military Service - Borrower">
+        </c-mortgage-los-military-service-edit-mode>
+      </lightning-layout-item>
+      <lightning-layout-item flexibility="auto" if:true={showCoBorrower} class="slds-size_1-of-2 slds-p-bottom_medium"
+        padding="horizontal-small">
+        <c-mortgage-los-military-service-edit-mode expiration-date={coBorrowerExpirationDateOfService}
+          service-state={coBorrowerServiceState} service-description={coBorrowerServiceDescription}
+          description-label={descriptionLabel} status-label={statuslabel}
+          handle-service-state-change={handleCoBorrowerServiceStateChange}
+          handle-expiration-date-change={handleCoBorrowerExpirationDateChange}
+          handle-service-description-change={handleCoBorrowerServiceDescriptionChange} icon-url={CoBorrowerIconURL}
+          section-subtitle="Military Service - Co-Borrower">
+        </c-mortgage-los-military-service-edit-mode>
+      </lightning-layout-item>
+    </lightning-layout>
+    <c-mortgage-los-section-actions oncancelevent={handleCancelClick} onsaveevent={handleSaveClick}>
+    </c-mortgage-los-section-actions>
+  </c-mortgage-los-section-controller>
+</template>

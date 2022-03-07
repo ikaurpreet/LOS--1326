@@ -1,0 +1,20 @@
+<template>
+    <c-mortgage-los-section-controller>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto"
+                if:true={showBorrower} padding="horizontal-small">
+                <c-mortgage-los-property-and-money-view-mode submission-type={submissionType} role="borrower"
+                    declarations={borrowerDeclarations.declarations} handle-edit={handleEdit}
+                    icon-url={BorrowerIcon}>
+                </c-mortgage-los-property-and-money-view-mode>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto"
+                if:true={showCoBorrower} padding="horizontal-small">
+                <c-mortgage-los-property-and-money-view-mode submission-type={submissionType} role="coBorrower"
+                    declarations={coBorrowerDeclarations.declarations} handle-edit={handleEdit}
+                    icon-url={CoBorrowerIcon}>
+                </c-mortgage-los-property-and-money-view-mode>
+            </lightning-layout-item>
+        </lightning-layout>
+    </c-mortgage-los-section-controller>
+</template>

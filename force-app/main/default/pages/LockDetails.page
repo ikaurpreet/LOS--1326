@@ -1,0 +1,40 @@
+<apex:page standardController="Opportunity">
+    <style>
+        #col1,#col2{width:49%;display:inline-block;text-align:center}
+    </style>
+    
+    <apex:form >
+        <div id="col1">
+        
+                <apex:outputText style="width:100%; text-align:left; font-size:72px; font-weight:800; color:rgb(153,51,255)" value="{!TODAY()-Opportunity.Lock_Loan_Date__c}"></apex:outputText>
+                <apex:outputText style="width:100%; text-align:center; font-size:18px; font-weight:600; color:rgb(42,151,240)" value="days locked"><br/></apex:outputText>
+
+        </div>
+        <div id="col2">
+        
+                <apex:outputText style="width:100%; text-align:center; font-size:72px; font-weight:800; color:rgb(75,202,129)" value="{!Opportunity.Lock_Expiration_Date__c-TODAY()}"></apex:outputText>
+                <apex:outputText style="width:100%; text-align:center; font-size:18px; font-weight:600; color:rgb(42,151,240)" value="days remaining"><br/></apex:outputText>
+
+        </div>
+    </apex:form>
+           
+
+<div style="text-align:center">
+ 
+
+
+<apex:outputText style="width:100%; text-align:left; font-size:18px; font-weight:600; color:rgb(42,151,240)" value="Locked Date: {0,date,MMM' 'd', 'yyyy}"><br/><br/><br/>
+<apex:param value="{!Opportunity.Lock_Loan_Date__c}" />
+
+</apex:outputText>
+
+<apex:outputText style="width:100%; text-align:left; font-size:18px; font-weight:600; color:rgb(42,151,240)" value="Expiration Date: {0,date,MMM' 'd', 'yyyy}"><br/><br/>
+<apex:param value="{!Opportunity.Lock_Expiration_Date__c}" />
+
+</apex:outputText>
+<apex:outputText style="width:100%; text-align:left; font-size:18px; font-weight:600; color:rgb(42,151,240)" rendered="{!AND( Opportunity.of_Lock_Extensions__c != 0, Opportunity.of_Lock_Extensions__c != NULL )}" value="Days Lock Extended: {!TEXT(Opportunity.Days_Lock_Extended__c)}. Extended {!TEXT(Opportunity.of_Lock_Extensions__c)} time(s)"><br/><br/></apex:outputText>
+
+<apex:outputText style="width:100%; text-align:left; font-size:18px; font-weight:600; color:rgb(42,151,240)" rendered="{!AND( Opportunity.Submission_Type__c = 'HomePurchase', Opportunity.Days_to_Estimated_Purchase_Close__c != NULL )}" value="Days to Close: {!TEXT(Opportunity.Days_to_Estimated_Purchase_Close__c)}"><br/><br/></apex:outputText>
+</div>
+
+</apex:page>

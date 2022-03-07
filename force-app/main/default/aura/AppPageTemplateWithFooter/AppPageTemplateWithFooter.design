@@ -1,0 +1,8 @@
+<design:component label="Header, 2 Columns, Footer">
+    <flexipage:template>
+        <flexipage:region name="header" defaultWidth="LARGE" />
+        <flexipage:region name="column1" defaultWidth="MEDIUM" />
+        <flexipage:region name="column2" defaultWidth="MEDIUM" />
+        <flexipage:region name="footer" defaultWidth="LARGE" />
+    </flexipage:template>
+</design:component>

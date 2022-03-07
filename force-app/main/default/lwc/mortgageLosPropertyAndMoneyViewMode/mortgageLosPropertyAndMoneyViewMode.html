@@ -1,0 +1,86 @@
+<template>
+    <div>
+        <c-mortgage-los-section-subtitle text={sectionPropertyTitle} icon={iconUrl}>
+        </c-mortgage-los-section-subtitle>
+
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="A. Will you occupy the property as your primary residence?" value={declarations.permanentResidence}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input if:true={declarations.permanentResidence} handle-edit={handleEdit}
+            data-testid="permanentResidence"
+            label="a. Have you had an ownership interest in another property in the last three years?"
+            value={declarations.ownershipInterest}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-input-view-mode if:true={declarations.ownershipInterest} handle-edit={handleEdit}
+            variant="split-60" data-testid="occupancy" label="a. (1) What type of property did you own?"
+            value={occupancy}>
+        </c-mortgage-los-input-view-mode>
+        <c-mortgage-los-input-view-mode if:true={declarations.ownershipInterest} handle-edit={handleEdit}
+            variant="split-60" data-testid="ownership" label="a. (2) How did you hold title to the property?"
+            value={ownership}>
+        </c-mortgage-los-input-view-mode>
+        <c-mortgage-los-yes-no-input disabled={isRefi} handle-edit={handleEdit}
+            label="B. Do you have a family relationship or business affiliation with the seller of the property?"
+            value={declarations.relationshipWithSeller}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="C. Are you borrowing any money for this real estate transaction (e.g., money for your closing costs or down payment) or obtaining any money from another party, such as the seller or realtor, that you have not disclosed on this loan application?"
+            value={declarations.borrowMoneyFromAnotherParty}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-input-view-mode if:true={declarations.borrowMoneyFromAnotherParty} variant="split-60"
+            handle-edit={handleEdit} label="What is the amount of this money?" value={amount}>
+        </c-mortgage-los-input-view-mode>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="D1. Have you or will you be applying for a mortgage loan on another property (not the property securing this loan) on or before closing this transaction that is not disclosed on this loan application?"
+            value={declarations.mortgageLoanOnAnotherProperty}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="D2. Have you or will you be applying for any new credit (e.g., installment loan, credit card, etc.) on or before closing this loan that is not disclosed on this application?"
+            value={declarations.applyNewCredit}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="E. Will this property be subject to a lien that could take priority over the first mortgage lien, such as a clean energy lien paid through your property taxes (e.g., the Property Assessed Clean Energy Program)?"
+            value={declarations.priorityOverFirstMortgageLien}>
+        </c-mortgage-los-yes-no-input>
+    </div>
+
+    <div class="slds-m-top_large">
+        <c-mortgage-los-section-subtitle text={sectionFinancesTitle} icon={iconUrl}>
+        </c-mortgage-los-section-subtitle>
+
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="F. Are you a co-signer or guarantor on any debt or loan that is not disclosed on this application?"
+            value={declarations.cosignerOrGuarantor}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="G. Are there any outstanding judgments against you?" value={declarations.outstandingJudgements}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="H. Are you currently delinquent or in default on a Federal debt?"
+            value={declarations.delinquentLoansFederalDebt}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="I. Are you a party to a lawsuit in which you potentially have any personal financial liability?"
+            value={declarations.partyToLawsuitPersonalLiability}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="J. Have you conveyed title to any property in lieu of foreclosure in the past 7 years?"
+            value={declarations.conveyedPropertyInLieuForeclosure}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input handle-edit={handleEdit}
+            label="K. Within the past 7 years, have you completed a pre-foreclosure sale or short sale, whereby the property was sold to a third party and the Lender agreed to accept less than the outstanding mortgage balance due?"
+            value={declarations.preForeclosureSale}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input label="L. Have you had property foreclosed upon in the last 7 years?"
+            handle-edit={handleEdit} value={declarations.propertyForeclosedUpon7Years}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-yes-no-input if:false={declarations.declaredBankruptcy}
+            label="M. Have you declared bankruptcy within the past 7 years?" handle-edit={handleEdit}
+            value={declarations.declaredBankruptcy}>
+        </c-mortgage-los-yes-no-input>
+        <c-mortgage-los-input-view-mode if:true={declarations.declaredBankruptcy} variant="split-60"
+            handle-edit={handleEdit} value={typesOfBankruptcy} data-testid="typesOfBankruptcy"
+            label="M. Have you declared bankruptcy within the past 7 years?">
+        </c-mortgage-los-input-view-mode>
+    </div>
+</template>

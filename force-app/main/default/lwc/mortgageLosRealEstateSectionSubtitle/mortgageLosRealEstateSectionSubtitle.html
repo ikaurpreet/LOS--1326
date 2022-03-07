@@ -1,0 +1,12 @@
+<template>
+  <div class="los-c__section-container">
+    <div class="los-c__section-subtitle">
+      <img src={borrowerIconUrl}>
+      <template if:false={isSingleOwnership}>
+        +
+        <img src={coBorrowerIconUrl}>
+      </template>
+      <p>{subtitleText}</p>
+    </div>
+  </div>
+</template>

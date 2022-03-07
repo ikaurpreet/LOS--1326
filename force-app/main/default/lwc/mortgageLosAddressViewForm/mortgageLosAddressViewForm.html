@@ -1,0 +1,13 @@
+<template>
+    <c-mortgage-los-section-subtitle text={title} icon={iconUrl}>
+    </c-mortgage-los-section-subtitle>
+
+    <div class="slds-form" role="list">
+        <c-mortgage-los-input-view-mode label="Address" value={fullCurrentAddress} handle-edit={handleEdit}>
+        </c-mortgage-los-input-view-mode>
+        <c-mortgage-los-input-view-mode label={howLongAtAddressLabel} value={timeInCurrentAddress}
+            handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+        <c-mortgage-los-input-view-mode label="Ownership" value={getHousingStatusLabel} handle-edit={handleEdit}>
+        </c-mortgage-los-input-view-mode>
+    </div>
+</template>

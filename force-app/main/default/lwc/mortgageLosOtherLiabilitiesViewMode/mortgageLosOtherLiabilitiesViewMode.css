@@ -1,0 +1,25 @@
+.add-icon {
+    --sds-c-icon-color-foreground-default: var(--lwc-brandPrimaryActive);
+}
+
+.slds-table_cell-buffer tr>td:first-child
+.slds-table_cell-buffer tr>th:first-child {
+    padding-left: 0;
+}
+
+.los-table_bordered {
+    border-top: 0;
+}
+
+.los-col_fixed_small {
+    width: 5.25rem;
+}
+
+.los-col_fixed_medium {
+    width: 8.25rem;
+}
+
+.info_container {
+    display: flex;
+    align-items: center;
+}

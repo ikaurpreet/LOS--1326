@@ -1,0 +1,108 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Due from Borrower(s)">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-input-view-mode if:true={isPurchase} label="Sales Contract Price" handle-edit={handleEdit}
+                value={lenderData.property.estimatedValue} data-testid="sales_price">
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode if:false={isPurchase}
+                label="For Refinance: Balance of Mortgage Loans on the Property to be paid off in the Transaction"
+                value={lenderData.property.estimatedLiensToBePaidOff} data-testid="balance">
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Credit Cards and Other Debts Paid Off"
+                value={lenderData.creditCardsAndOtherDebts}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode
+                label="Borrower Closing Costs (including Prepaid and Initial Escrow Payments)" handle-edit={handleEdit}
+                value={lenderData.feeManagement.totalClosingCosts}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Discount Points" handle-edit={handleEdit}
+                value={lenderData.feeManagement.discount}>
+            </c-mortgage-los-input-view-mode>
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-input-view-mode label="Total Due from Borrower(s)" data-testid="totalDueFromBorrower"
+                    value={totalDueFromBorrower}>
+                </c-mortgage-los-input-view-mode>
+            </div>
+
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Total Mortgage Loans">
+                </c-mortgage-los-section-subtitle>
+            </div>
+            <c-mortgage-los-input-view-mode label="Loan Amount" handle-edit={handleEdit}
+                value={lenderData.selectedProduct.totalLoanAmount}>
+            </c-mortgage-los-input-view-mode>
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-input-view-mode label="Total Mortgage Loans"
+                    value={lenderData.selectedProduct.totalLoanAmount}>
+                </c-mortgage-los-input-view-mode>
+            </div>
+        </lightning-layout-item>
+
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Total Credits">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-input-view-mode label="Seller Credits" handle-edit={handleEdit}
+                value={lenderData.feeManagement.sellerCredits}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Total of Other Credits" variant="no-border"
+                value={totalOfOtherCredits}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="1. Total Closing Costs Paid by Lender and Other"
+                handle-edit={handleEdit} variant="no-border" value={lenderData.feeManagement.totalPaidClosingCosts}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="2. Total of Other Assets Applied to Loan" handle-edit={handleEdit}
+                variant="no-border" value={lenderData.feeManagement.totalOtherAssets}>
+            </c-mortgage-los-input-view-mode>
+            <template for:each={lenderData.feeManagement.additionalCredits} for:item="addlCredit">
+                <c-mortgage-los-input-view-mode key={addlCredit.creditType} label={addlCredit.label}
+                    handle-edit={handleEdit} variant="no-border" value={addlCredit.amount}>
+                </c-mortgage-los-input-view-mode>
+            </template>
+            <!--<a
+                class="slds-text-link slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                Add Additional Credit</a>-->
+            <div class="slds-text-body_small slds-text-align_left slds-box slds-theme_shade">Note: Add Additional Credit
+                in Edit Mode </div>
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-input-view-mode label="Total Credits" value={totalCredits} data-testid="totalCredits">
+                </c-mortgage-los-input-view-mode>
+            </div>
+
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Calculation">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-input-view-mode label="Total Due from Borrower(s)" value={totalDueFromBorrower}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Less Total Mortgage Loans and Total Credits"
+                value={lessTotalAndTotalCredits}>
+            </c-mortgage-los-input-view-mode>
+
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div
+                        class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                        <span class="slds-form-element__label">
+                            <b>{cashLabel}</b> <br> Note: This amount does not include reserves or other funds that may
+                            be required
+                            by the Lender to be verified
+                        </span>
+                        <div class="slds-form-element__control">
+                            <div class={cashClassName} data-testid="calculationCash">{cash}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

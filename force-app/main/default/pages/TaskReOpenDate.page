@@ -1,0 +1,5 @@
+<apex:page standardController="Custom_Task__c">
+<apex:outputText style="color:orange; font-size:15px; font-weight:800; color:rgb(0,128,0)" value="Task is set to re-open on {0,date,MM'/'dd'/'yyyy}">
+<apex:param value="{!Custom_Task__c.Re_Open_Task_Date__c}" />
+</apex:outputText>
+</apex:page>

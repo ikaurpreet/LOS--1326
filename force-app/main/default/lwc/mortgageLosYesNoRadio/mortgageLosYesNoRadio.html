@@ -1,0 +1,16 @@
+<template>
+    <div class="slds-form__row">
+        <div class="slds-form__item">
+            <div class={className}>
+                <span class="slds-form-element__label">{label}</span>
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element__static">
+                        <lightning-radio-group disabled={disabled} required={required} options={options}
+                            onchange={handleStateChange} variant="label-hidden" value={yesOrNo} type="radio">
+                        </lightning-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

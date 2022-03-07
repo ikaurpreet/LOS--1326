@@ -1,0 +1,233 @@
+<aura:component controller="MortgagesEligibilityController" extends="c:MortgagesGraphQLComponent">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="columns" type="List" access="PRIVATE" />
+    <aura:attribute name="eligibility" type="Object"/>
+    <aura:attribute name="submission" type="Object"/>
+    <aura:attribute name="products" type="Object"/>
+    <aura:attribute name="product" type="Object"/>
+    <aura:attribute name="onlyBest" type="Boolean" default="false"/>
+    <aura:attribute name="lender" type="String" default=""/>
+    <aura:attribute name="loanType" type="String" default=""/>
+    <aura:attribute name="totalCount" type="String"/>
+    <aura:attribute name="limit" type="Integer" access="PRIVATE" default="20" />
+    <aura:attribute name="offset" type="Integer" default="0"/>
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="sortBy" type="String" default="lenderName"/>
+    <aura:attribute name="sortDirection" type="String" default="asc"/>
+    <aura:attribute name="pageLoading" type="Boolean"/>
+    <aura:attribute name="tableLoading" type="Boolean"/>
+    <aura:attribute name="productActions" type="Array"/>
+    <aura:attribute name="disableLoading" type="Boolean" default="false"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:registerEvent name="productAction" type="c:MortgagesProductEvent"/>
+    
+    <div class="slds-grid slds-m-bottom_xx-small" onkeyup="{! c.handleKeyUp }">
+      <div class="slds-col slds-p-bottom_x-small slds-align-bottom">
+        <aura:if isTrue="{!and(v.totalCount != null, v.totalCount != 0)}">
+            DISPLAYING RESULTS 1 - {!v.products.length} OF {!v.totalCount} IN TOTAL
+        </aura:if>
+        <aura:if isTrue="{!v.totalCount == 0}">
+            NO PRODUCTS
+        </aura:if>
+      </div>
+      <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+        <lightning:select aura:id="lender" label="Lender" onchange="{!c.lenderHandle}" >
+          <option text="All" value=""/>
+          <aura:iteration items="{!v.eligibility.lenders}" var="lender">
+              <option text="{!lender.name}" value="{!lender.slug}"/>
+          </aura:iteration>
+        </lightning:select>
+      </div>
+      <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+        <lightning:select aura:id="loan-type" name="loan-type" label="Loan Type" onchange="{! c.loanTypeHandle }" value="{!v.loanType}">
+          <option text="All" value=""/>
+          <aura:iteration items="{!v.eligibility.loanTypes}" var="loanType">
+              <option text="{!loanType.label}" value="{!loanType.slug}"/>
+          </aura:iteration>
+        </lightning:select> 
+      </div>
+      <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink slds-m-left_xx-small">
+          <lightning:input aura:id="rate" label="Rate" name="rate" placeholder="" required="false" />
+      </div>
+      <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink slds-m-left_xx-small">
+          <lightning:input aura:id="apr" label="APR" name="apr" placeholder="" required="false" />
+      </div>
+      <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink slds-m-left_xx-small">
+          <lightning:input aura:id="monthly_payment" label="Monthly payment" name="monthly_payment" placeholder="" required="false" />
+      </div>
+      <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink slds-m-left_xx-small">
+          <lightning:buttonStateful
+              labelWhenOff="All Products"
+              labelWhenOn="Best Products"
+              labelWhenHover="All products"
+              iconNameWhenHover="utility:table"
+              variant="{!v.onlyBest ? 'brand' : 'neutral'}"
+              iconNameWhenOff="utility:table"
+              iconNameWhenOn="utility:check"
+              state="{! v.onlyBest }"
+              onclick="{! c.onlyBestHandle }"
+          />
+      </div>
+      <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+          <lightning:buttonIcon iconName="utility:loop" class="slds-m-left_xx-small" variant="border-filled" onclick="{!c.reload}" alternativeText="Reload" />
+      </div>
+    </div>
+    <div style="height: 300px;">
+      <lightning:datatable
+          columns="{!v.columns}"
+          data="{!v.products}"
+          keyField="id"
+          sortedBy="{! v.sortBy }"
+          sortedDirection="{! v.sortDirection }"
+          onsort="{! c.updateColumnSorting }"
+          enableInfiniteLoading="true"
+          loadMoreOffset="20"
+          onrowaction="{!c.handleRowAction}"
+          isLoading="{!v.tableLoading}"
+          onloadmore="{!c.loadMore}"
+          maxRowSelection="1"
+          onrowselection="{!c.onProductSelected}"
+      />
+      <aura:if isTrue="{!v.pageLoading}">
+        <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+      </aura:if>
+    </div>
+
+    <aura:if isTrue="{!v.product != null}">
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                
+                <div class="slds-media__body">
+                  <h2 class="slds-card__header-title">
+                    <p class="slds-card__header-link slds-truncate">
+                      {!v.product.loanProductInfo.name}
+                    </p>
+                  </h2>
+                </div>
+                <aura:if isTrue="{!v.productActions != null}">            
+                    <div class="slds-no-flex">
+                        <div class="slds-grid">
+                            <aura:iteration items="{!v.productActions}" var="action">
+                                <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+                                    <lightning:button variant="brand" label="{!action}" onclick="{!c.handleProductAction}"/>
+                                </div>
+                            </aura:iteration>                            
+                        </div>
+                    </div>
+                </aura:if>
+              </header>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+              <div class="slds-box slds-brand-band slds-brand-band_none">
+                  <lightning:layout verticalAlign="stretch" multipleRows="true" class="x-large">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box">
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="External Id">Product Id:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.id}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="External Id">External Id:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.externalProductId}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >APR:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.apr}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Rate:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.rate}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Type:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.loanType}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Amortization Type:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.amortizationType}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Lock Period:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.lockPeriod}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Monthly Payment:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.monthlyPayment}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Principal Interest:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.principalInterest}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Term:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.loanTerm}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >ARM Fixed Term:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.armFixedTerm}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >ARM Subsequent Change Period:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.armSubsequentChangePeriod}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Min Required Assets:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.minRequiredAssets}</dd>
+                        </dl>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box">
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Lender Name:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.loanProductInfo.lender.name}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Loan Lender NMLS:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.loanProductInfo.lender.nmls}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Underwriting Fee:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.underwritingFee}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Other Lender Fee:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.otherLenderFee}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Appraisal Fee:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.appraisalFee}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Title Settlement Recording Fee:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.titleSettlementRecordingFee}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Points:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.points}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Closing Cost:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.closingCost}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Total Cost:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.totalCost}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Total Loan Amount:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.totalLoanAmount}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >Best Product:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.bestProduct}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate" >PMI Monthly Payment:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.product.pmiMonthlyPayment}</dd>
+                        </dl>
+                    </lightning:layoutItem>
+                  </lightning:layout> 
+              </div>
+            </div>
+          </article>
+    </aura:if>
+</aura:component>

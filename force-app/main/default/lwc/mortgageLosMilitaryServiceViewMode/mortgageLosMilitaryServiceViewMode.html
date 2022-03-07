@@ -1,0 +1,30 @@
+<template>
+  <c-mortgage-los-section-subtitle text={sectionSubtitle} icon={iconUrl}>
+  </c-mortgage-los-section-subtitle>
+
+  <div class="slds-form" role="list">
+    <c-mortgage-los-input-view-mode label={statusLabel} value={serviceLabel} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+
+    <div class="slds-form__row" if:true={showDescriptionSection}>
+      <div class="slds-form__item" role="listitem">
+        <div class={editClass}>
+          <fieldset class="slds-form-element slds-form-element_horizontal slds-is-editing slds-form-element_stacked">
+            <legend class="slds-form-element__legend slds-form-element__label">{descriptionLabel}</legend>
+            <div class="slds-form-element__control">
+              <template for:each={descriptionOptions} for:item="option">
+                <div key={option.value} class="slds-checkbox slds-var-m-bottom_x-small">
+                  <input type="checkbox" name="default" value={option.value} checked="" disabled="" />
+                  <label class="slds-checkbox__label">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-form-element__label">{option.label}</span>
+                  </label>
+                </div>
+              </template>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</template>

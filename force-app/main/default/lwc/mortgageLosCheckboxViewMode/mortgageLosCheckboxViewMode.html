@@ -1,0 +1,20 @@
+<template>
+  <div class="slds-form__row">
+    <div class="slds-form__item" role="listitem">
+      <div class={editClass}>
+        <span class="slds-form-element__label" for={checkboxElementId}>{label}</span>
+        <div class="slds-form-element__control">
+          <div class="slds-form-element__static">
+            <span class="slds-checkbox">
+              <input type="checkbox" id={checkboxElementId} name="label" value="option" checked={status} />
+              <span class="slds-checkbox_faux"></span>
+            </span>
+          </div>
+          <template if:true={editable}>
+            <c-mortgage-los-edit-btn oneditevent={handleEdit}></c-mortgage-los-edit-btn>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

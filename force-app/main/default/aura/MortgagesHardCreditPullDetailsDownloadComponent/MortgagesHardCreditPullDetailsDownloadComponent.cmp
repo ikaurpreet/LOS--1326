@@ -1,0 +1,105 @@
+<aura:component controller="GraphQLProxyController" extends="c:MortgagesGraphQLComponent">
+    <ltng:require scripts="{!$Resource.FileSaver}"></ltng:require>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="selectedTab" type="String" default="details"/>
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="hardCreditPull" type="Object"/>
+    <aura:attribute name="reportType" type="String"/>
+    <aura:attribute name="sourceTypes" type="Object"/>
+    <aura:attribute name="sourceType" type="Object"/>
+    <aura:attribute name="requestTypes" type="Object"/>
+    <aura:attribute name="requestType" type="Object"/>
+    <aura:attribute name="previewReady" type="Boolean" default="false"/>
+    <aura:attribute name="previewSource" type="String" />
+    <aura:attribute name="previewName" type="String" />
+    <aura:attribute name="loading" type="Boolean" default="false"/>
+    <aura:attribute name="error" type="String"/>
+
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+    </aura:if>
+    <aura:if isTrue="{!v.error != null}">
+        <ui:message title="Error" severity="error">
+            {!v.error}
+        </ui:message>
+    </aura:if>
+    <lightning:tabset selectedTabId="{!v.selectedTab}">
+        <lightning:tab label="Details" id="details" onactive="{!c.onTabSelected}">
+            <aura:if isTrue="{!v.hardCreditPull != null}">
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Uuid:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.uuid}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Report Type:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.reportType}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Vendor Order Identifier:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.vendorOrderIdentifier}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Status:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.status}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Outcome:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.outcome}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Description:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.description}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Failed reasons:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.failedReasons}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Error:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.error}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Error message:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.errorMessage}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Created At:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.hardCreditPull.createdAt}</dd>
+                </dl>
+            </aura:if>
+        </lightning:tab>
+    
+    <aura:if isTrue="{!v.hardCreditPull.uuid != null}">
+        <lightning:tab label="Raw Response/Request" id="rawSources" onactive="{!c.onTabSelected}">
+            <div class="slds-grid slds-m-bottom_xx-small">
+                <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-bottom slds-shrink">
+                    <lightning:radioGroup name="requestType"
+                        label="Request Type:"
+                        options="{!v.requestTypes}"
+                        value="{!v.requestType}"
+                        onchange="{!c.handleChange}"
+                        type="button"/>
+                    <lightning:radioGroup name="sourceType"
+                        label="Type:"
+                        options="{!v.sourceTypes}"
+                        value="{!v.sourceType}"
+                        onchange="{!c.handleChange}"
+                        type="button"/>
+                </div>
+            </div>     
+            <div class="slds-grid">
+                <aura:if isTrue="{!v.previewReady}">
+                    <c:MortgagesSourceViewer name="{!v.previewName}" source="{!v.previewSource}" />
+                </aura:if>
+                <!-- TODO: Update statuses once BE merged
+                <aura:if isTrue="{!and(!v.sourceType == 'request', !v.requestTypes == 'order')}">
+                    <c:MortgagesSourceViewer name="{!v.hardCreditPull.uuid + '-request.xml'}" source="{!v.hardCreditPull.order.request}" />
+                </aura:if>
+                <aura:if isTrue="{!v.sourceType == 'closingCorpResponse'}">
+                    <c:MortgagesSourceViewer name="{!v.hardCreditPull.uuid + '-response.xml'}" source="{!v.hardCreditPull.closingCorpResponse}" />
+                </aura:if> -->
+            </div>                   
+        </lightning:tab>
+    </aura:if>
+    </lightning:tabset>
+</aura:component>

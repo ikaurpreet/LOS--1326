@@ -1,0 +1,34 @@
+<template>
+    <c-mortgage-los-section-controller>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto"
+                if:true={showBorrower}>
+                <div class="slds-p-horizontal_small">
+                    <c-mortgage-los-help-text if:true={showBorrowerHelptext}
+                        icon={borrowerCurrentAddressRequirementIcon}>
+                        {borrowerCurrentAddressRequirementText}</c-mortgage-los-help-text>
+                </div>
+                <c-mortgage-los-address-view-mode icon-url={BorrowerIconURL} handle-edit={handleEditClick}
+                    participant={borrowerAddress} role="borrower" with-current-address={_borrowerWithCurrentAddress}
+                    handle-add-former-address={handleEditWithExtraFormerAddress}
+                    handle-add-current-address={handleEditWithExtraCurrentAddress}
+                    section-subtitle={borrowerSectionSubtitles}>
+                </c-mortgage-los-address-view-mode>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto"
+                if:true={showCoBorrower}>
+                <div class="slds-p-horizontal_small">
+                    <c-mortgage-los-help-text if:true={showCoBorrowerHelptext}
+                        icon={coBorrowerCurrentAddressRequirementIcon}>{coBorrowerCurrentAddressRequirementText}
+                    </c-mortgage-los-help-text>
+                </div>
+                <c-mortgage-los-address-view-mode with-current-address={_coBorrowerWithCurrentAddress}
+                    handle-add-former-address={handleEditWithExtraFormerAddress}
+                    handle-add-current-address={handleEditWithExtraCurrentAddress} icon-url={CoBorrowerIconURL}
+                    handle-edit={handleEditClick} role="coBorrower" participant={coBorrowerAddress}
+                    section-subtitle={coBorrowerSectionSubtitles}>
+                </c-mortgage-los-address-view-mode>
+            </lightning-layout-item>
+        </lightning-layout>
+    </c-mortgage-los-section-controller>
+</template>

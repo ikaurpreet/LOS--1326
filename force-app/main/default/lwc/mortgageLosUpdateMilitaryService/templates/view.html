@@ -1,0 +1,22 @@
+<template>
+  <c-mortgage-los-section-controller>
+    <lightning-layout>
+      <lightning-layout-item flexibility="auto" class="slds-size_1-of-2 slds-p-bottom_medium" if:true={showBorrower}
+        padding="horizontal-small">
+        <c-mortgage-los-military-service-view-mode expiration-date={borrowerExpirationDateOfService}
+          service-state={borrowerServiceState} service-description={borrowerServiceDescription}
+          description-label={descriptionLabel} status-label={statuslabel} icon-url={BorrowerIconURL}
+          handle-edit={handleEditClick} section-subtitle="Military Service - Borrower">
+        </c-mortgage-los-military-service-view-mode>
+      </lightning-layout-item>
+      <lightning-layout-item flexibility="auto" class="slds-size_1-of-2 slds-p-bottom_medium" if:true={showCoBorrower}
+        padding="horizontal-small">
+        <c-mortgage-los-military-service-view-mode expiration-date={coBorrowerExpirationDateOfService}
+          service-state={coBorrowerServiceState} service-description={coBorrowerServiceDescription}
+          description-label={descriptionLabel} status-label={statuslabel} handle-edit={handleEditClick}
+          icon-url={CoBorrowerIconURL} section-subtitle="Military Service - Co-Borrower">
+        </c-mortgage-los-military-service-view-mode>
+      </lightning-layout-item>
+    </lightning-layout>
+  </c-mortgage-los-section-controller>
+</template>

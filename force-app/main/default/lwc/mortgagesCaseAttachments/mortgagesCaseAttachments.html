@@ -1,0 +1,92 @@
+<template>
+  <template if:true={attachmentToDownload}>
+    <c-mortgages-upload-document-modal
+      onclose_upload_modal={closeUploadModal}
+      onsuccessfull_document_upload={closeUploadModalSuccess}
+      document-id={attachmentId}
+      record-id={opportunityId}
+      file-number={attachmentNumber}
+      files-count={attachmentsToDownload.length}></c-mortgages-upload-document-modal>
+  </template>
+
+  <article class="slds-card slds-card_boundary headerBottomBorder forceRelatedListCardDesktop">
+    <div class="slds-grid slds-page-header forceRelatedListCardHeader">
+      <header class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__figure stencil slds-avatar slds-avatar_small">
+          <span class="slds-icon_container slds-icon-standard-account" style="background-color: #b19f7e" title="account">
+            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+              <use xlink:href="/apexpages/slds/latest/assets/icons/standard-sprite/svg/symbols.svg#file"></use>
+            </svg>
+            <span class="slds-assistive-text">file</span>
+          </span>
+        </div>
+
+        <div class="slds-media__body">
+          <h2 class="slds-card__header-title">
+            <a href={attachmentsLink} class="slds-card__header-link slds-truncate" title="Attachments">
+              <span>Attachments ({attachments.length})</span>
+            </a>
+          </h2>
+        </div>
+
+        <template if:true={opportunityId}>
+          <template if:true={attachmentsPresent}>
+            <div class="slds-no-flex">
+              <button class="slds-button slds-button_neutral" onclick={handleDownloadAll}>Download All Files</button>
+            </div>
+          </template>
+        </template>
+      </header>
+    </div>
+
+    <template if:true={attachmentsPresent}>
+      <div class="slds-card__body slds-card__body_inner">
+        <ul>
+
+          <template for:each={attachmentsToShow} for:item="attachment">
+            <li key={attachment.id} class="slds-var-p-horizontal_medium slds-var-p-vertical_xx-small forceContentVirtualRelatedListStencil forceRecordLayout">
+              <div class="filerow">
+                <div class="slds-size_12-of-12 slds-grid">
+                  <div class="slds-show_inline-block slds-float_left slds-align-middle thumbnailImg medium">
+                    <div class="forceContentContentThumbnail">
+                      <div class="thumbnailContainer">
+                        <img src={attachment.thumbnailSrc} class="thumbnailImg medium thumbnail-image" alt={attachment.extension}>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="slds-show_inline-block slds-float_left slds-p-left--x-small slds-truncate slds-m-right_x-small main-fields">
+                    <span title={attachment.name}>{attachment.name}</span>
+                    <a href="javascript:void(0);" onclick={handleFilePreview} data-item-id={attachment.id}>(View)</a>
+                    <template if:true={opportunityId}>
+                      <span>or</span>
+                      <a href="javascript:void(0);" onclick={handleDownload} data-item-id={attachment.id}>Download</a>
+                    </template>
+                    <div class="slds-m-around--none secondary-fields slds-text-body--small slds-truncate">
+                      <span>{attachment.date}</span>
+                      <span>{attachment.size}</span>
+                      <span>{attachment.extension}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </template>
+      
+        </ul>
+      </div>
+
+      <template if:true={showToggle}>
+        <footer class="slds-card__footer">
+          <a class="slds-card__footer-action" href="javascript:void(0);" onclick={toggleShowAll}>
+            <template if:false={showAll}>
+              View All
+            </template>
+            <template if:true={showAll}>
+              Hide
+            </template>
+          </a>
+        </footer>
+      </template>
+    </template>
+  </article>
+</template>

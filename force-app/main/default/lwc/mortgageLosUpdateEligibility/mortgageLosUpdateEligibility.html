@@ -1,0 +1,41 @@
+<template>
+
+    <div class="slds-grid slds-grid_vertical eligiblity-grid">
+      <div class="slds-col slds-m-bottom_small">
+        <c-mortgage-los-section title="Summary">
+          <c-mortgage-los-section-controller data-id="summary">
+            <lightning-layout multiple-rows>
+              <lightning-layout-item class="slds-p-bottom_medium" flexibility="auto"
+                padding="horizontal-small">
+                <c-mortgage-los-eligibility-summary-view-mode
+                  handle-edit={handleEditClick}
+                  eligibility={eligibility}>
+                </c-mortgage-los-eligibility-summary-view-mode>
+              </lightning-layout-item>
+            </lightning-layout>
+          </c-mortgage-los-section-controller>
+        </c-mortgage-los-section>
+      </div>
+
+      <div class="slds-col slds-m-vertical_small">
+        <c-mortgage-los-section title="Lowest Par Rate Product">
+          <c-mortgage-los-section-controller data-id="lowest-par-rate-product">
+            <lightning-layout multiple-rows>
+              <lightning-layout-item class="slds-p-bottom_medium" flexibility="auto"
+                padding="horizontal-small">
+                <c-mortgage-los-product-view-mode
+                  handle-edit={handleEditClick}
+                  product={lowestParRateProduct}>
+                </c-mortgage-los-product-view-mode>
+              </lightning-layout-item>
+            </lightning-layout>
+          </c-mortgage-los-section-controller>
+        </c-mortgage-los-section>
+      </div>
+
+      <div class="slds-m-top_small">
+        <c-add-button click-handler={runEligibilityLite} title="New Eligibility Lite">New Eligibility Lite</c-add-button>
+      </div>
+    </div>
+
+</template>

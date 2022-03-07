@@ -1,0 +1,142 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto">
+            <div class="slds-p-bottom_medium slds-p-horizontal_small">
+                <c-mortgage-los-section-subtitle text="Property Information" icon={BorrowerIconURL}>
+                </c-mortgage-los-section-subtitle>
+                <div class="slds-form" role="list">
+                    <c-mortgage-los-form-element-control label="Street Address">
+                        <lightning-input variant="label-hidden" required type="text"
+                            data-name-input="property.address.addressLine1" onchange={handleInputChange}
+                            value={loanAndProperty.property.address.addressLine1}>
+                        </lightning-input>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="Unit #">
+                        <lightning-input variant="label-hidden" type="text" data-name-input="property.address.unit"
+                            onchange={handleInputChange} value={loanAndProperty.property.address.unit}>
+                        </lightning-input>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="City">
+                        <lightning-input variant="label-hidden" required type="text"
+                            data-name-input="property.address.city" onchange={handleInputChange}
+                            value={loanAndProperty.property.address.city}>
+                        </lightning-input>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="State">
+                        <lightning-combobox variant="label-hidden" required onchange={handleInputChange}
+                            data-name-input="property.address.stateCode"
+                            value={loanAndProperty.property.address.stateCode} placeholder="Select a state"
+                            options={options.states}>
+                        </lightning-combobox>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="Zip">
+                        <lightning-input variant="label-hidden" required pattern="^\d{5}(-\d{4})?$"
+                            placeholder="#####-####" message-when-pattern-mismatch="Not a valid Postal Code"
+                            onchange={handleInputChange} type="text" data-name-input="property.address.zipCode"
+                            value={loanAndProperty.property.address.zipCode}>
+                        </lightning-input>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="County">
+                        <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                            data-name-input="property.address.county.fipsCountyCode"
+                            value={loanAndProperty.property.address.county.fipsCountyCode} placeholder="Select a county"
+                            options={countyCodes}>
+                        </lightning-combobox>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="Number of Units">
+                        <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                            data-name-input="property.numberOfUnits" value={loanAndProperty.property.numberOfUnits}
+                            placeholder="Select an option" options={options.unitNumbers}>
+                        </lightning-combobox>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="Year Built">
+                        <lightning-input variant="label-hidden" type="text" data-name-input="property.yearBuilt"
+                            onchange={handleInputChange} value={loanAndProperty.property.yearBuilt} maxlength="4">
+                        </lightning-input>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="Construction Method">
+                        <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                            data-name-input="property.constructionMethod"
+                            value={loanAndProperty.property.constructionMethod} placeholder="Select an option"
+                            options={options.constructionMethod}>
+                        </lightning-combobox>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control label="Property Type">
+                        <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                            data-name-input="property.propertyType" value={loanAndProperty.property.propertyType}
+                            placeholder="Select an option" options={options.propertyTypes}>
+                        </lightning-combobox>
+                    </c-mortgage-los-form-element-control>
+
+                    <c-mortgage-los-form-element-control
+                        label="Mixed-use Property (If you occupy the property, will you set aside space within the property to operate your business?)">
+                        <lightning-input variant="label-hidden" type="checkbox"
+                            data-name-input="property.mixedUseProperty" onchange={handleInputChange}
+                            checked={loanAndProperty.property.mixedUseProperty}>
+                        </lightning-input>
+                    </c-mortgage-los-form-element-control>
+                </div>
+            </div>
+            <div class="slds-p-bottom_medium slds-p-horizontal_small">
+                <c-mortgage-los-section-subtitle text="Loan Information" icon={BorrowerIconURL}>
+                </c-mortgage-los-section-subtitle>
+
+                <c-mortgage-los-form-element-control label="Total Loan Amount">
+                    <lightning-input variant="label-hidden" type="text"
+                        data-name-input="selectedProduct.totalLoanAmount" onchange={handleMoneyChange}
+                        value={moneyValues.totalLoanAmount}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+
+                <c-mortgage-los-form-element-control label="PMI, MP Financed">
+                    <lightning-input variant="label-hidden" type="text"
+                        data-name-input="selectedProduct.pmiMonthlyPayment" onchange={handleMoneyChange}
+                        value={moneyValues.pmiMonthlyPayment}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+
+                <c-mortgage-los-form-element-control label="Occupancy">
+                    <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                        data-name-input="property.occupancyType" value={loanAndProperty.property.occupancyType}
+                        placeholder="Select an option" options={options.occupancyTypes}>
+                    </lightning-combobox>
+                </c-mortgage-los-form-element-control>
+
+                <c-mortgage-los-form-element-control label="Estimated Value">
+                    <lightning-input variant="label-hidden" type="text" data-name-input="property.estimatedValue"
+                        onchange={handleMoneyChange} value={moneyValues.estimatedValue}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+
+                <c-mortgage-los-form-element-control label="Appraised Value">
+                    <lightning-input variant="label-hidden" type="text" data-name-input="property.appraisedValue"
+                        onchange={handleMoneyChange} value={moneyValues.appraisedValue}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+
+                <c-mortgage-los-form-element-control label="Loan Type">
+                    <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                        data-name-input="selectedProduct.loanType" value={loanAndProperty.selectedProduct.loanType}
+                        placeholder="Select an option" options={options.loanType}>
+                    </lightning-combobox>
+                </c-mortgage-los-form-element-control>
+
+                <c-mortgage-los-form-element-control label="Loan Purpose">
+                    <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                        data-name-input="loanPurpose" value={loanAndProperty.loanPurpose} placeholder="Select an option"
+                        options={options.loanPurpose} disabled={loanPurposeDisabled}>
+                    </lightning-combobox>
+                </c-mortgage-los-form-element-control>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

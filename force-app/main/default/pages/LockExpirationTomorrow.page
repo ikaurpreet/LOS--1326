@@ -1,0 +1,5 @@
+<apex:page standardController="Opportunity">
+<apex:outputText style="color:red; font-size:15px; font-weight:800" value="Lock Expires TOMORROW. Expiration Date: {0,date,MM'/'dd'/'yyyy}">
+<apex:param value="{!Opportunity.Lock_Expiration_Date__c}" />
+</apex:outputText>
+</apex:page>

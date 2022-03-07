@@ -1,0 +1,55 @@
+<apex:component controller="MR_EncompasQueueController">
+    <apex:attribute name="submission" description="Submission object" type="MortgagesSubmission" required="true" assignTo="{!subject}" />
+    <apex:pageBlock title="Encompass Queue">
+        <apex:facet name="header">
+            <apex:outputPanel >
+                <div class="pbTitle" style="width:auto; margin:5px 0; float:left;"><h2>Encompass Queue</h2></div>
+                <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                        <img src="/img/loading.gif" style="float: right; margin: 8px;" />
+                    </apex:facet>
+                </apex:actionStatus>
+                <div style="clear:both;"></div>
+            </apex:outputPanel>
+        </apex:facet>
+        <apex:form >
+            <apex:outputPanel id="errors">
+                <apex:outputPanel rendered="{!errorMessage != null}" >
+                    <apex:pageMessage id="successMessage" title="API ERROR" summary="{!errorMessage}" severity="error" strength="2" />
+                    <!-- <script type="text/javascript">
+                        setTimeout(function() {
+                            document.querySelector('[id*=successMessage]').remove();
+                        }, 10000);
+                    </script> -->
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:pageBlockSection title="Backward" columns="1" collapsible="false" id="backward">
+                <apex:pageBlockTable value="{!backward}" var="item" rendered="{!backward != null && backward.size > 0}">            
+                    <apex:column value="{!item.messageId}" headerValue="Message Id"/>
+                    <apex:column value="{!item.name}" headerValue="Name"/>
+                    <apex:column headerValue="Action">
+                        <apex:commandButton value="Remove" action="{!removeMessage}" reRender="backward,errors" status="status">
+                            <apex:param name="messageId" value="{!item.messageId}" assignTo="{!messageId}" />
+                            <apex:param name="queue" value="backward" assignTo="{!queue}" />
+                            <apex:param name="errorMessage" value="" assignTo="{!errorMessage}" />
+                        </apex:commandButton>
+                    </apex:column>
+                </apex:pageBlockTable>
+                <apex:outputPanel rendered="{!backward != null && backward.size == 0}">No messages in backward queue</apex:outputPanel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Forward" columns="1" collapsible="false" id="forward">
+                <apex:pageBlockTable value="{!forward}" var="item" rendered="{!forward != null && forward.size > 0}" >
+                    <apex:column value="{!item.messageId}" headerValue="Message Id"/>
+                    <apex:column value="{!item.name}" headerValue="Name"/>
+                    <apex:column headerValue="Action">
+                        <apex:commandButton value="Remove" action="{!removeMessage}" reRender="forward,errors" status="status">
+                            <apex:param name="messageId" value="{!item.messageId}" assignTo="{!messageId}" />
+                            <apex:param name="queue" value="forward" assignTo="{!queue}" />
+                        </apex:commandButton>
+                    </apex:column>
+                </apex:pageBlockTable>
+                <apex:outputPanel rendered="{!forward != null && forward.size == 0}">No messages in forward queue</apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:form>
+    </apex:pageBlock>
+</apex:component>

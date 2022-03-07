@@ -1,0 +1,15 @@
+<template>
+  <div class="slds-form__row">
+    <div class="slds-form__item" role="listitem">
+      <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+        <div>
+          <span if:true={label} class={labelClass}>{label}</span>
+          <lightning-helptext if:true={helpText} content={helpText}></lightning-helptext>
+        </div>
+        <div class="slds-form-element__control">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,30 @@
+<aura:component controller="GraphQLProxyController" extends="c:MortgagesGraphQLComponent">
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="submission" type="Object"/>
+    <aura:attribute name="loading" type="Boolean" default="false"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:attribute name="document" type="Object"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <div>
+        <h2>Export 3.4 file</h2>
+
+        <div class="slds-grid">
+            <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-top slds-shrink">
+                <lightning:select aura:id="select-request-type" name="select-request-type" label="Request type" required="true" onchange="{! c.onRequestTypeChange }">
+                <option value="">Select request type...</option>
+                <option value="du">DU</option>
+            </lightning:select>
+            </div>
+            <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-top slds-shrink">
+                <lightning:button aura:id="btn-export" class="btn-export" label="Export 3.4 file" title="Export 3.4 file" variant="brand" disabled="true" onclick="{! c.onSubmit }"/>
+            </div>
+        </div>
+        <div class="slds-grid">
+            <div class="slds-col">
+                <aura:if isTrue="{!v.document != null}">
+                    <c:MortgagesSourceViewer source="{!v.document.body}" name="{!v.document.name}"/>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+</aura:component>

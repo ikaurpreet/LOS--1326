@@ -1,0 +1,68 @@
+<template>
+    <div if:true={withCurrentAddress} class="slds-p-bottom_medium slds-p-horizontal_small">
+        <c-mortgage-los-address-view-form handle-edit={handleEdit} type='current' address={participant.address}
+            title={currentAddressTitle} icon-url={iconUrl}>
+        </c-mortgage-los-address-view-form>
+    </div>
+
+    <div if:false={withCurrentAddress} class="slds-p-bottom_medium slds-p-horizontal_small">
+        <c-mortgage-los-section-subtitle text={currentAddressTitle} icon={iconUrl}>
+        </c-mortgage-los-section-subtitle>
+
+        <button if:false={withCurrentAddress} onclick={addCurrentAddress} class="slds-button slds-button_neutral">
+            <lightning-icon size="x-small" class="add-icon slds-m-right_x-small" icon-name="utility:new"
+                alternative-text="New icon" title="Add Current Address"></lightning-icon>
+            Add Current Address
+        </button>
+    </div>
+
+    <div class="slds-p-bottom_medium slds-p-horizontal_small">
+        <c-mortgage-los-section-subtitle if:true={showExtraFormerSubtitle} text={formerAddressTitle} icon={iconUrl}>
+        </c-mortgage-los-section-subtitle>
+
+        <template for:each={previousAddresses} for:item="address">
+            <div key={address.id.value} class="slds-m-bottom_small" data-testid="formerAddress">
+                <c-mortgage-los-address-view-form handle-edit={handleEdit} type='previous' address={address}
+                    title={formerAddressTitle} icon-url={iconUrl}>
+                </c-mortgage-los-address-view-form>
+            </div>
+        </template>
+
+        <button class="slds-button slds-button_neutral" onclick={addFormerAddress}>
+            <lightning-icon size="x-small" class="add-icon slds-m-right_x-small" icon-name="utility:new"
+                alternative-text="New icon" title="Add former address"></lightning-icon>
+            Add Former Address
+        </button>
+    </div>
+
+    <div class="slds-p-horizontal_small">
+        <c-mortgage-los-section-subtitle text={mailingAddressTitle} icon={iconUrl}>
+        </c-mortgage-los-section-subtitle>
+
+        <div class="slds-form" role="list">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class={editClass}>
+                        <span class="slds-form-element__label" for="checkbox-same-as-current-address">Same as current
+                            address?</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                <span class="slds-checkbox">
+                                    <input type="checkbox" data-credible-id="checkbox-same-as-current-address"
+                                        data-credible-checked={isSameAsCurrentAddress}
+                                        id="checkbox-same-as-current-address" name="label" value="option"
+                                        checked={isSameAsCurrentAddress} disabled="" />
+                                    <span class="slds-checkbox_faux"></span>
+                                </span>
+                            </div>
+                            <c-mortgage-los-edit-btn oneditevent={handleEdit}>
+                            </c-mortgage-los-edit-btn>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <c-mortgage-los-input-view-mode if:true={showMailingAddress} label="Address" value={fullMailingAddress}
+                handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+        </div>
+    </div>
+</template>

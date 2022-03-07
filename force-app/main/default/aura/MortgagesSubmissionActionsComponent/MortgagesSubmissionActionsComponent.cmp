@@ -1,0 +1,194 @@
+<aura:component controller="MortgagesSubmissionActionsController" extends="c:MortgagesGraphQLComponent">
+  <aura:attribute name="submission" type="Object"/>
+  <aura:attribute name="env" type="String"/>
+  <aura:attribute name="buttonLoading" type="String"/>
+  <aura:attribute name="impersonate" type="Object"/>
+  <aura:attribute name="error" type="String"/>
+  <aura:attribute name="message" type="String"/>
+  <aura:attribute name="jobs" type="Array"/>
+  <aura:attribute name="jobsColumns" type="Array"/>
+  <aura:attribute name="jobsLoading" type="Boolean"/>
+  <aura:attribute name="isFinalStatus" type="Boolean"/>
+  <aura:attribute name="tabsOpened" type="Array"/>
+  <aura:attribute name="qaEnvName" type="String"/>
+  <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+  <aura:if isTrue="{!v.message != null}">
+      <ui:message title="Success" severity="info" closable="true">
+          {!v.message}
+      </ui:message>
+  </aura:if>
+
+  <lightning:accordion onsectiontoggle="{!c.handleSectionToggle}" allowMultipleSectionsOpen="true" aura:id="accordion" activeSectionName="general">
+    <lightning:accordionSection name="general" label="General">
+      <lightning:button
+        class="slds-m-right_xx-small"
+        variant="brand"
+        label="Move to prequal"
+        title="Move to prequal"
+        onclick="{!c.moveToPrequal}"
+        disabled="{!v.buttonLoading != null}"
+      >
+        <aura:if isTrue="{!v.buttonLoading == 'moveToPrequal' }">
+            <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+        </aura:if>
+        Move to prequal
+      </lightning:button>
+      <aura:if isTrue="{!v.submission.meta.isNoContract}">
+          <lightning:button
+          class="slds-m-right_xx-small"
+          variant="brand"
+          label="Move to Pre Approval Dashboard"
+          title="Move to Pre Approval Dashboard"
+          onclick="{!c.moveToPreApprovalDashboard}"
+          disabled="{!v.buttonLoading != null}"
+          >
+            <aura:if isTrue="{!v.buttonLoading == 'moveToPreApprovalDashboard' }">
+                <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+            </aura:if>
+            Move to Pre Approval Dashboard
+          </lightning:button>
+      </aura:if>
+      <aura:if isTrue="{!!v.isFinalStatus}">
+        <lightning:button
+          class="slds-m-right_xx-small"
+          variant="destructive"
+          label="Archive"
+          title="Archive"
+          onclick="{!c.archive}"
+          disabled="{!v.buttonLoading != null}"
+        >
+          <aura:if isTrue="{!v.buttonLoading == 'archive' }">
+              <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+          </aura:if>
+          Archive
+        </lightning:button>
+      </aura:if>
+      <aura:if isTrue="{!v.isFinalStatus}">
+        <lightning:button
+          class="slds-m-right_xx-small"
+          variant="destructive"
+          label="Un-archive"
+          title="Un-archive"
+          onclick="{!c.unArchive}"
+          disabled="{!v.buttonLoading != null}"
+        >
+          <aura:if isTrue="{!v.buttonLoading == 'un-archive' }">
+              <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+          </aura:if>
+          Un-archive
+        </lightning:button>
+      </aura:if>
+      <lightning:button
+        class="slds-m-right_xx-small"
+        variant="brand"
+        label="Re-run eligibility"
+        title="Re-run eligibility"
+        onclick="{!c.rerunEligibility}"
+        disabled="{!v.buttonLoading != null}"
+      >
+        <aura:if isTrue="{!v.buttonLoading == 'rerunEligibility' }">
+            <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+        </aura:if>
+        Re-run eligibility
+      </lightning:button>
+      <lightning:button
+        class="slds-m-right_xx-small"
+        variant="brand"
+        label="Impersonate"
+        title="Impersonate"
+        onclick="{!c.requestImpersonationHandler}"
+        disabled="{!v.buttonLoading != null}"
+      >
+        <aura:if isTrue="{!v.buttonLoading == 'requestImpersonation' }">
+            <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+        </aura:if>
+        Impersonate
+      </lightning:button>
+      <aura:if isTrue="{!v.impersonate != null}">
+        <article class="slds-card">
+            <div class="slds-m-top_small slds-box slds-brand-band slds-brand-band_none">
+              <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                <dt class="slds-item_label slds-text-color_weak slds-truncate">Impersonation UUID:</dt>
+                <dd class="slds-item_detail slds-truncate">{!v.impersonate.uuid}</dd>
+              </dl>
+              <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                <dt class="slds-item_label slds-text-color_weak slds-truncate">Impersonatee UUID:</dt>
+                <dd class="slds-item_detail slds-truncate">{!v.impersonate.impersonatee}</dd>
+              </dl>
+              <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                <dt class="slds-item_label slds-text-color_weak slds-truncate">Auth Code:</dt>
+                <dd class="slds-item_detail slds-truncate">
+                  <input type="text" disabled="true" size="40" value="{!v.impersonate.authCode}"/>
+                </dd>
+              </dl>
+              <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                <dt class="slds-item_label slds-text-color_weak slds-truncate">Expires At:</dt>
+                <dd class="slds-item_detail slds-truncate">{!v.impersonate.expiresAt}</dd>
+              </dl>
+              <div class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-var-p-*_medium">
+                <a href="{!v.impersonate.url}" target="_blank">Right click here to log in (Must open in Incognito Window)</a>
+              </div>
+            </div>
+        </article>
+    </aura:if>
+    </lightning:accordionSection>
+    <lightning:accordionSection name="salesforce" label="Salesforce">
+      <div class="slds-grid slds-m-bottom_xx-small">
+        <div class="slds-col slds-p-bottom_x-small slds-align-bottom">
+            <aura:if isTrue="{!and(v.jobs != null, v.jobs.length != 0)}">
+                DISPLAYING RESULTS {!v.jobs.length}
+            </aura:if>
+            <aura:if isTrue="{!v.jobs.length == 0}">
+                NO SUBMISSIONS
+            </aura:if>
+          </div>
+          <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink">
+            <lightning:select class="slds-float_left" label="Entity" aura:id="record">
+                <option value="Opportunity">Opportunity</option>
+                <option value="Participants">Participants</option>
+                <option value="Account">Borrower Account</option>
+                <aura:if isTrue="{!v.submission.coBorrower}">
+                  <option value="CoBorrower">Co Borrower Account</option>
+                </aura:if>
+                <option value="Documents">Documents</option>
+                <option value="Tasks">Tasks</option>
+                <option value="Leads">Leads</option>
+            </lightning:select>
+          </div>
+          <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+            <lightning:button
+              class="slds-m-top_xx-small"
+              variant="brand"
+              label="Sync opportunity"
+              title="Sync opportunity"
+              onclick="{!c.sync}"
+              disabled="{!v.buttonLoading != null}"
+            >
+                <aura:if isTrue="{!v.buttonLoading == 'sync' }">
+                    <lightning:spinner alternativeText="Loading" size="small" variant="brand" />
+                </aura:if>
+                Sync
+            </lightning:button>
+          </div>
+          <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+            <lightning:buttonIcon onclick="{!c.refreshJobs}" iconName="utility:loop" variant="brand" alternativeText="Reload" >
+            </lightning:buttonIcon>
+          </div>
+      </div>
+      <div style="max-height: 400px; position:relative; overflow-y: scroll;">
+        <div style="clear: both;">
+          <lightning:datatable
+            columns="{!v.jobsColumns}"
+            maxRowSelection="1"
+            data="{!v.jobs}"
+            keyField="uuid"
+            onrowselection="{! c.showJobResults }"/>
+        </div>
+        <aura:if isTrue="{!v.jobsLoading}">
+          <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+        </aura:if>
+      </div>
+    </lightning:accordionSection>
+  </lightning:accordion>
+</aura:component>

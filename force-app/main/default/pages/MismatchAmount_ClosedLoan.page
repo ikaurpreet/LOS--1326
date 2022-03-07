@@ -1,0 +1,13 @@
+<apex:page standardController="Closed_Loan__c">
+   
+
+<div style="text-align:center">
+ 
+<apex:outputText style="width:100%; text-align:left; font-size:18px; font-weight:600; color:rgb(255,0,0)" value="Amount Discrepancy"></apex:outputText>
+<apex:outputText style="width:100%; text-align:left; font-size:36px; font-weight:800; color:rgb(255,128,0)" value="{!Closed_Loan__c.Mismatch_Amount__c}"><br/><br/></apex:outputText>
+
+
+
+</div>
+
+</apex:page>

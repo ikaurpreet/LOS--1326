@@ -1,0 +1,70 @@
+<template>
+  <c-mortgage-los-section-controller uncontrolled>
+    <lightning-layout multiple-rows>
+      <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto" if:true={showBorrower}>
+        <div class="slds-p-horizontal_small" if:true={showMetTwoYearMessageForBorrower}>
+          <c-mortgage-los-help-text icon="action:approval">
+            Borrower reported 2 year history with current and/or previous employment
+          </c-mortgage-los-help-text>
+        </div>
+        <div class="slds-p-horizontal_small" if:true={showDidNotMeetTwoYearMessageForBorrower}>
+          <c-mortgage-los-help-text icon="action:close">
+            Borrower has not reported 2 year history with current and/or previous employment
+          </c-mortgage-los-help-text>
+        </div>
+
+        <div class="slds-p-right_small slds-p-left_small">
+          <c-mortgage-los-section-subtitle text="Current Employment - Borrower" icon={borrowerIconUrl}
+            if:true={showExtraBorrowerTitle}>
+          </c-mortgage-los-section-subtitle>
+          <template for:each={employments.borrower} for:item="employment">
+            <c-mortgage-los-current-employment-monthly-income-edit-mode if:false={employment.delete}
+              key={employment.key} delete-employment={deleteEmployment} handle-input-change={handleInputChange}
+              icon={borrowerIconUrl} handle-address-input-change={handleAddressInputChange} get-title={getTitle}
+              employments={employments.borrower} handle-summary-input-change={handleSummaryInputChange} role="borrower"
+              employment={employment}>
+            </c-mortgage-los-current-employment-monthly-income-edit-mode>
+          </template>
+
+          <c-add-button click-handler={addAditionalBorrowerCurrentEmployment} title="Add Additional Current Employment">
+            Add Additional Current Employment
+          </c-add-button>
+        </div>
+      </lightning-layout-item>
+
+      <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto" if:true={showCoBorrower}>
+        <div class="slds-p-horizontal_small" if:true={showMetTwoYearMessageForCoBorrower}>
+          <c-mortgage-los-help-text icon="action:approval">
+            Co-Borrower reported 2 year history with current and/or previous employment
+          </c-mortgage-los-help-text>
+        </div>
+        <div class="slds-p-horizontal_small" if:true={showDidNotMeetTwoYearMessageForCoBorrower}>
+          <c-mortgage-los-help-text icon="action:close">
+            Co-Borrower has not reported 2 year history with current and/or previous employment
+          </c-mortgage-los-help-text>
+        </div>
+
+        <div class="slds-p-right_small slds-p-left_small">
+          <c-mortgage-los-section-subtitle text="Current Employment - Co-Borrower" icon={coBorrowerIconUrl}
+            if:true={showExtraCoBorrowerTitle}>
+          </c-mortgage-los-section-subtitle>
+          <template for:each={employments.coBorrower} for:item="employment">
+            <c-mortgage-los-current-employment-monthly-income-edit-mode if:false={employment.delete}
+              key={employment.key} handle-input-change={handleInputChange} icon={coBorrowerIconUrl}
+              handle-address-input-change={handleAddressInputChange} delete-employment={deleteEmployment}
+              employments={employments.coBorrower} get-title={getTitle}
+              handle-summary-input-change={handleSummaryInputChange} role="coBorrower" employment={employment}>
+            </c-mortgage-los-current-employment-monthly-income-edit-mode>
+          </template>
+
+          <c-add-button click-handler={addAditionalCoBorrowerCurrentEmployment}
+            title="Add Additional Current Employment">
+            Add Additional Current Employment
+          </c-add-button>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+  </c-mortgage-los-section-controller>
+  <c-mortgage-los-section-actions oncancelevent={handleCancel} onsaveevent={handleSaveClick}>
+  </c-mortgage-los-section-actions>
+</template>

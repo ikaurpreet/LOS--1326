@@ -1,0 +1,4 @@
+.slds-modal__content--no-overflow {
+    background-color: var(--sds-c-modal-content-color-background, var(--sds-c-modal-color-background, var(--lwc-colorBackgroundAlt,rgb(255, 255, 255))));
+    color: var(--sds-c-modal-content-text-color, var(--sds-c-modal-text-color));
+}

@@ -1,0 +1,100 @@
+<template>
+  <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+      <template if:true={authErrorMessage}>
+          <header class="slds-modal__header">
+            <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Authentication Error</h2>
+          </header>
+          <div class="slds-modal__content slds-p-around_medium">
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert" style="justify-content: left;">
+                {authErrorMessage}
+            </div>
+            <template if:true={authId}>
+                <div class="slds-m-horizontal_small slds-m-top_small">
+                    <lightning-button label="Sign In" variant="brand" title="Sign In" onclick={authClickHandler}>
+                        Sign In
+                    </lightning-button>
+                </div>
+            </template>
+          </div>
+      </template>
+      <template if:false={authErrorMessage}>
+      <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" id="abort_upload_document" onclick={handleOnClose}>
+          <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+          </svg>
+          <span class="slds-assistive-text">Close</span>
+        </button>
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Upload document ({fileNumber} of {filesCount})</h2>
+      </header>
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <div class="slds-grid slds-gutters">
+          <div class="slds-col slds-size_1-of-2">
+            <template if:true={documentId}>
+              <c-file-card file-id={documentId}></c-file-card>
+            </template>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <template if:true={loading}>
+              <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </template>
+            <lightning-combobox
+              name="category"
+              value={category}
+              placeholder="Select Category"
+              options={categories}
+              onchange={handleCategoryChange}
+              variant="label-hidden"
+            ></lightning-combobox>
+
+            <lightning-input
+              type="text"
+              name="document"
+              value={document}
+              placeholder="Enter document name"
+              onchange={handleDocumentChange}
+              variant="label-hidden"
+            ></lightning-input>
+
+            <lightning-textarea
+              name="details"
+              value={details}
+              placeholder="Document time frame or other details"
+              onchange={handleDetailsChange}
+              variant="label-hidden"
+            ></lightning-textarea>
+
+            <lightning-input 
+              type="date" 
+              date-style="short" 
+              placeholder="Expiration Date"
+              name="expiration_date" 
+              onchange={handleExpirationDateChange} 
+              variant="label-hidden"
+              value={expirationDate} >
+            </lightning-input>
+
+            <lightning-input
+              type="checkbox"
+              name="approveDocument"
+              data-id="approveCheckbox"
+              value={approveDocument}
+              label="Approve document"
+              onchange={handleDocumentApproveChange}
+            ></lightning-input>
+
+            <p>Document name Preview: {documentName}</p>
+          </div>
+        </div>
+      </div>
+      <footer class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral" onclick={handleOnSkip}>Skip</button>
+        <button class="slds-button slds-button_brand" onclick={handleOnUpload}>Upload</button>
+      </footer>
+    </template>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

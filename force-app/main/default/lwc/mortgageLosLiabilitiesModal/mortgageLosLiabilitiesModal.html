@@ -1,0 +1,256 @@
+<template>
+    <c-mortgage-los-modal variant="noOverflow" details={liability} title={title} onclosemodal={handleClose}>
+        <div class="slds-text-heading_small slds-m-bottom_medium">Liability Information</div>
+        <template if:true={otherLiability}>
+            <fieldset class="slds-form-element slds-form-element_compound">
+                <div class="slds-form-element__row">
+                    <div class="slds-size_1-of-3">
+                        <lightning-combobox required value={liability.whose}
+                            options={liabilityOwnerOptions} onchange={handleInputChange} data-name-input="whose"
+                            label="Bor/Cob/Joint">
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-size_1-of-3">
+                        <lightning-combobox required value={liability.accountType} options={accountTypeOptions}
+                            onchange={handleAccountTypeChange} data-name-input="accountType" label="Account Type">
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-form-element__row">
+                    <template if:true={otherAccountType}>
+                        <div class="slds-size_1-of-2">
+                            <lightning-input required value={liability.description} data-name-input="description"
+                                onchange={handleInputChange} label="Other Description">
+                            </lightning-input>
+                        </div>
+                    </template>
+                    <div class="slds-size_1-of-3">
+                        <lightning-input value={liability.monthlyPaymentWithMask} onchange={handleAmountChange}
+                            data-name-input="monthlyPaymentWithMask" label="Monthly Amount">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form-element__row">
+                    <div class="slds-size_1-of-3">
+                        <lightning-input value={liability.unpaidBalanceWithMask} data-name-input="unpaidBalanceWithMask"
+                            onchange={handleAmountChange} label="Balance">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3">
+                        <lightning-input type="number" value={liability.monthsLeft} data-name-input="monthsLeft"
+                            onchange={handleMonthsLeftChange} label="Months Left">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3">
+                        <lightning-input value={liability.creditLimitWithMask} onchange={handleAmountChange}
+                            data-name-input="creditLimitWithMask" label="Credit Limit">
+                        </lightning-input>
+                    </div>
+                </div>
+            </fieldset>
+        </template>
+        <template if:false={otherLiability}>
+            <fieldset class="slds-form-element slds-form-element_compound">
+                <div class="slds-form-element__row">
+                    <div class="slds-size_1-of-3">
+                        <lightning-combobox required value={liability.whose}
+                            options={liabilityOwnerOptions} onchange={handleInputChange} data-name-input="whose"
+                            label="Bor/Cob/Joint">
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-form-element__row">
+                    <div class="slds-size_1-of-3">
+                        <lightning-combobox required value={liability.accountType} options={accountTypeOptions}
+                            onchange={handleInputChange} data-name-input="accountType" label="Account Type">
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-size_1-of-3">
+                        <lightning-input value={liability.companyName} onchange={handleInputChange}
+                            data-name-input="companyName" label="Company Name">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3">
+                        <lightning-input value={liability.accountNumber} onchange={handleInputChange}
+                            data-name-input="accountNumber" label="Account Number">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form-element__row">
+                    <div class="slds-size_1-of-3">
+                        <lightning-input value={liability.unpaidBalanceWithMask} data-name-input="unpaidBalanceWithMask"
+                            onchange={handleAmountChange} label="Unpaid Balance">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3">
+                        <lightning-input type="number" value={liability.monthsLeft} data-name-input="monthsLeft"
+                            onchange={handleMonthsLeftChange} label="Months Left">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3">
+                        <lightning-input value={liability.monthlyPaymentWithMask} onchange={handleAmountChange}
+                            data-name-input="monthlyPaymentWithMask" label="Monthly Amount">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-text-heading_small slds-m-bottom_medium slds-m-top_medium">Debt
+                    information</div>
+
+                <fieldset class="slds-form-element slds-is-editing slds-form-element_stacked">
+                    <div class="slds-form-element__control">
+                        <div class="slds-var-m-bottom_x-small">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="paidOff" onchange={handleChange} id="paidOff"
+                                    value="paidOff" checked={paidOffChecked} />
+                                <label class="slds-checkbox__label" for="paidOff">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">Will be paid off</span>
+                                </label>
+                            </div>
+                            <div class="slds-form-element__row sub-row">
+                                <div if:true={paidOffChecked} class="slds-form-element_horizontal slds-size_1-of-2"
+                                    style="margin-bottom:0px">
+                                    <label class="slds-form-element__label"
+                                        style="height:100%;max-width: calc(43% - var(--lwc-squareIconUtilityMedium,1.25rem));
+                                padding-bottom:var(--lwc-varSpacingVerticalSmall,0.75rem);display:flex;align-items:center" for="paidOffAmount">Payoff
+                                        Amount</label>
+                                    <lightning-input required variant="label-hidden"
+                                        value={liability.paidOffAmountWithMask} name="paidOffAmountWithMask"
+                                        data-name-input="paidOffAmountWithMask" onchange={handleAmountChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-var-m-bottom_x-small">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="excludeDti" onchange={handleChange} id="excludeDti"
+                                    value="excludeDti" checked={excludeDtiChecked} />
+                                <label class="slds-checkbox__label" for="excludeDti">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">Exclude from DTI/AUS findings</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="slds-var-m-bottom_x-small">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="resubordinated" onchange={handleChange} id="resubordinated"
+                                    value="resubordinated" checked={resubordinatedChecked} />
+                                <label class="slds-checkbox__label" for="resubordinated">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">Resubordinated Indicator</span>
+                                </label>
+                            </div>
+                            <div data-testid="lienPosition" class="sub-row slds-m-top_small"
+                                if:true={resubordinatedChecked}>
+                                <div class="slds-form-element__row form-element">
+                                    <fieldset class={currentLienPositionClassName}>
+                                        <legend class="slds-form-element__label"><abbr class="slds-required"
+                                                title="required">*</abbr><b>Current</b> Lien Position
+                                        </legend>
+                                        <div class="slds-form-element__control" style="display:flex">
+                                            <span class="slds-radio">
+                                                <input data-name-input="currentLienPosition"
+                                                    onclick={handleCurrentLienPositionChange} type="radio"
+                                                    id="current-1" checked={currentLienPosition1} value="1"
+                                                    name="current" />
+                                                <label class="slds-radio__label" for="current-1">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">1</span>
+                                                </label>
+                                            </span>
+                                            <span class="slds-radio">
+                                                <input data-name-input="currentLienPosition"
+                                                    onclick={handleCurrentLienPositionChange} type="radio"
+                                                    id="current-2" checked={currentLienPosition2} value="2"
+                                                    name="current" />
+                                                <label class="slds-radio__label" for="current-2">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">2</span>
+                                                </label>
+                                            </span>
+                                            <span class="slds-radio">
+                                                <input data-name-input="currentLienPosition"
+                                                    onclick={handleCurrentLienPositionChange} type="radio"
+                                                    id="current-3" checked={currentLienPosition3} value="3"
+                                                    name="current" />
+                                                <label class="slds-radio__label" for="current-3">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">3</span>
+                                                </label>
+                                            </span>
+                                            <span class="slds-radio">
+                                                <input data-name-input="currentLienPosition"
+                                                    onclick={handleCurrentLienPositionChange} type="radio"
+                                                    checked={currentLienPosition4} id="current-4" value="4"
+                                                    name="current" />
+                                                <label class="slds-radio__label" for="current-4">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">4</span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                        <div if:false={validateCurrentLienPosition} class="slds-form-element__help">This
+                                            field is required</div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-form-element__row form-element">
+                                    <fieldset class={proposedLienPositionClassName}>
+                                        <legend class="slds-form-element__label"><abbr class="slds-required"
+                                                title="required">*</abbr><b>Proposed</b> Lien Position
+                                        </legend>
+                                        <div class="slds-form-element__control" style="display:flex">
+                                            <span class="slds-radio">
+                                                <input data-name-input="proposedLienPosition"
+                                                    onclick={handleProposedLienPositionChange} type="radio"
+                                                    id="proposed-1" value="1" checked={proposedLienPosition1}
+                                                    name="proposed" />
+                                                <label class="slds-radio__label" for="proposed-1">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">1</span>
+                                                </label>
+                                            </span>
+                                            <span class="slds-radio">
+                                                <input data-name-input="proposedLienPosition"
+                                                    onclick={handleProposedLienPositionChange} type="radio"
+                                                    id="proposed-2" value="2" checked={proposedLienPosition2}
+                                                    name="proposed" />
+                                                <label class="slds-radio__label" for="proposed-2">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">2</span>
+                                                </label>
+                                            </span>
+                                            <span class="slds-radio">
+                                                <input data-name-input="proposedLienPosition"
+                                                    onclick={handleProposedLienPositionChange} type="radio"
+                                                    id="proposed-3" value="3" checked={proposedLienPosition3}
+                                                    name="proposed" />
+                                                <label class="slds-radio__label" for="proposed-3">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">3</span>
+                                                </label>
+                                            </span>
+                                            <span class="slds-radio">
+                                                <input data-name-input="proposedLienPosition"
+                                                    onclick={handleProposedLienPositionChange} type="radio"
+                                                    id="proposed-4" value="4" checked={proposedLienPosition4}
+                                                    name="proposed" />
+                                                <label class="slds-radio__label" for="proposed-4">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">4</span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                        <div if:false={validateProposedLienPosition} class="slds-form-element__help">
+                                            This
+                                            field is required</div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </fieldset>
+        </template>
+
+    </c-mortgage-los-modal>
+</template>

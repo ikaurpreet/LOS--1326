@@ -1,0 +1,84 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Property Information">
+                </c-mortgage-los-section-subtitle>
+            </div>
+            <div class="slds-form" role="list">
+                <c-mortgage-los-form-element-control label="Estimated Value">
+                    <lightning-input variant="label-hidden" type="text" data-name-input="property.estimatedValue"
+                        onchange={handleMoneyChange} value={moneyValues.estimatedValue}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+                <c-mortgage-los-form-element-control label="Appraised Value">
+                    <lightning-input variant="label-hidden" type="text" data-name-input="property.appraisedValue"
+                        onchange={handleMoneyChange} value={moneyValues.appraisedValue}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+                <c-mortgage-los-form-element-control label="Community Property State">
+                    <template for:each={communityPropertyState} for:item="item">
+                        <div key={item.key} class="slds-checkbox">
+                            <input type="checkbox" data-name-input={item.key} onchange={handleCommunityStateChange}
+                                id={item.key} checked={item.checked} />
+                            <label class="slds-checkbox__label" for={item.key}>
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">{item.label}</span>
+                            </label>
+                        </div>
+                    </template>
+                </c-mortgage-los-form-element-control>
+                <c-mortgage-los-form-element-control label="Attachment Type">
+                    <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                        data-name-input="property.attachmentType" value={lenderData.property.attachmentType}
+                        placeholder="Select an option" options={attachmentType}>
+                    </lightning-combobox>
+                </c-mortgage-los-form-element-control>
+                <c-mortgage-los-form-element-control label="Property Type">
+                    <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                        data-name-input="property.propertyType" value={lenderData.property.propertyType}
+                        placeholder="Select an option" options={propertyType}>
+                    </lightning-combobox>
+                </c-mortgage-los-form-element-control>
+                <c-mortgage-los-form-element-control label="Property Will Be">
+                    <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                        data-name-input="property.occupancyType" value={lenderData.property.occupancyType}
+                        placeholder="Select an option" options={occupancyType}>
+                    </lightning-combobox>
+                </c-mortgage-los-form-element-control>
+            </div>
+            <template if:true={isRefiSubmission}>
+                <c-mortgage-los-form-element-control label="Date Acquired">
+                    <lightning-input variant="label-hidden" type="date" data-name-input="property.dateOfPurchase"
+                        onchange={handleInputChange} value={lenderData.property.dateOfPurchase}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+                <c-mortgage-los-form-element-control label="Original Cost">
+                    <lightning-input variant="label-hidden" type="text" data-name-input="property.originalPurchasePrice"
+                        onchange={handleMoneyChange} value={moneyValues.originalPurchasePrice}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+                <c-mortgage-los-input-view-mode label="Estimated Liens to be Paid Off"
+                    value={moneyValues.estimatedLiensToBePaidOff} variant="no-border">
+                </c-mortgage-los-input-view-mode>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Loan Information">
+                </c-mortgage-los-section-subtitle>
+            </div>
+            <c-mortgage-los-form-element-control label="Loan Type">
+                <lightning-combobox variant="label-hidden" onchange={handleInputChange}
+                    data-name-input="selectedProduct.loanType" value={lenderData.selectedProduct.loanType}
+                    placeholder="Select an option" options={loanType}>
+                </lightning-combobox>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Loan Purpose">
+                <lightning-combobox variant="label-hidden" onchange={handleInputChange} data-name-input="loanPurpose"
+                    value={lenderData.loanPurpose} placeholder="Select an option" options={loanPurpose}>
+                </lightning-combobox>
+            </c-mortgage-los-form-element-control>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

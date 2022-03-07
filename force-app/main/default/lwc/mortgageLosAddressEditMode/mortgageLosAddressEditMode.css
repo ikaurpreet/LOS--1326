@@ -1,0 +1,7 @@
+.add-icon {
+    --sds-c-icon-color-foreground-default: var(--lwc-brandPrimaryActive);
+}
+
+.slds-icon-utility-delete {
+    cursor: pointer;
+}

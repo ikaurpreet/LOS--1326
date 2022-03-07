@@ -1,0 +1,140 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Due from Borrower(s)">
+                </c-mortgage-los-section-subtitle>
+            </div>
+            <c-mortgage-los-form-element-control if:true={isPurchase} label="Sales Contract Price">
+                <lightning-input variant="label-hidden" data-testid="purchasePrice" type="text"
+                    onchange={handleMoneyChange} data-name-input="property.estimatedValue"
+                    value={lenderData.property.estimatedValue}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control if:false={isPurchase}
+                label="For Refinance: Balance of Mortgage Loans on the Property to be paid off in the Transaction">
+                <lightning-input variant="label-hidden" type="text" disabled data-name-input="property.estimatedValue"
+                    data-testid="balance" value={lenderData.property.estimatedLiensToBePaidOff}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Credit Cards and Other Debts Paid Off">
+                <lightning-input variant="label-hidden" type="text" disabled
+                    value={lenderData.creditCardsAndOtherDebts}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control
+                label="Borrower Closing Costs (including Prepaid and Initial Escrow Payments)">
+                <lightning-input variant="label-hidden" type="text" data-testid="totalClosingCosts"
+                    onchange={handleMoneyChange} data-name-input="feeManagement.totalClosingCosts"
+                    value={lenderData.feeManagement.totalClosingCosts}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Discount Points">
+                <lightning-input variant="label-hidden" data-testid="discount" type="text" onchange={handleMoneyChange}
+                    data-name-input="feeManagement.discount" value={lenderData.feeManagement.discount}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control variant="bold" label="Total Due from Borrower(s)">
+                <lightning-input data-testid="totalDueFromBorrower" variant="label-hidden" type="text" disabled
+                    value={totalDueFromBorrower}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Total Mortgage Loans">
+                </c-mortgage-los-section-subtitle>
+            </div>
+            <c-mortgage-los-form-element-control label="Loan Amount">
+                <lightning-input variant="label-hidden" data-testid="totalLoanAmount" type="text"
+                    onchange={handleMoneyChange} data-name-input="selectedProduct.totalLoanAmount"
+                    value={lenderData.selectedProduct.totalLoanAmount}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control variant="bold" label="Total Mortgage Loans">
+                <lightning-input variant="label-hidden" type="text" disabled
+                    value={lenderData.selectedProduct.totalLoanAmount}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+        </lightning-layout-item>
+
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Total Credits">
+                </c-mortgage-los-section-subtitle>
+            </div>
+            <c-mortgage-los-form-element-control label="Seller Credits">
+                <lightning-input variant="label-hidden" data-testid="sellerCredits" type="text"
+                    onchange={handleMoneyChange} data-name-input="feeManagement.sellerCredits"
+                    value={lenderData.feeManagement.sellerCredits}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Total of Other Credits">
+                <lightning-input variant="label-hidden" type="text" disabled value={totalOfOtherCredits}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="1. Total Closing Costs Paid by Lender and Other">
+                <lightning-input variant="label-hidden" data-testid="totalPaidClosingCosts" type="text"
+                    onchange={handleMoneyChange} data-name-input="feeManagement.totalPaidClosingCosts"
+                    value={lenderData.feeManagement.totalPaidClosingCosts}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="2. Total of Other Assets Applied to Loan">
+                <lightning-input variant="label-hidden" type="text" data-testid="totalOtherAssets"
+                    onchange={handleMoneyChange} data-name-input="feeManagement.totalOtherAssets"
+                    value={lenderData.feeManagement.totalOtherAssets}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+
+            <template for:each={lenderData.feeManagement.additionalCredits} for:item="addlCredit">
+                <c-mortgage-los-form-element-control key={addlCredit.creditType} label={addlCredit.label}>
+                    <lightning-input variant="label-hidden" type="text" onchange={handleAddlCreditChange}
+                        data-name-input={addlCredit.creditType} value={addlCredit.amount}>
+                    </lightning-input>
+                </c-mortgage-los-form-element-control>
+            </template>
+
+            <a if:true={ableToAddAdditionalCredits}
+                class="slds-text-link slds-form-element slds-form-element_edit slds-form-element_horizontal slds-hint-parent"
+                onclick={handleAddModalClicked}>
+                Add Additional Credit</a>
+
+            <c-mortgage-los-form-element-control variant="bold" label="Total Credits">
+                <lightning-input data-testid="totalCredits" variant="label-hidden" type="text" disabled
+                    value={totalCredits}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Calculation">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-form-element-control label="Total Due from Borrower(s)">
+                <lightning-input variant="label-hidden" type="text" disabled value={totalDueFromBorrower}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Less Total Mortgage Loans and Total Credits">
+                <lightning-input variant="label-hidden" type="text" disabled value={lessTotalAndTotalCredits}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_edit slds-form-element_horizontal slds-hint-parent">
+                        <span class="slds-form-element__label">
+                            <b>{cashLabel}</b> <br> Note: This amount does not include reserves or other funds that may
+                            be required
+                            by the Lender to be verified
+                        </span>
+                        <lightning-input variant="label-hidden" data-testid="calculationCash" type="text" disabled
+                            value={cash}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+        </lightning-layout-item>
+    </lightning-layout>
+    <c-mortgage-los-lender-form-l4-addl-modal if:true={modal} handle-credit-change={handleAddlCredit}
+        additional-credits={currentAddlCred} handle-close={handleCloseModalCliked} addl-credit-type={addlTypes}>
+    </c-mortgage-los-lender-form-l4-addl-modal>
+</template>

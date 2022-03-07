@@ -1,0 +1,24 @@
+.slds-modal__container1 {
+    margin: 0 auto;
+    width: 100%;
+    min-width: 20rem;
+}
+.modal-body {
+    background-color: var(--slds-c-modal-content-color-background, var(--sds-c-modal-content-color-background, var(--slds-c-modal-color-background, var(--sds-c-modal-color-background, var(--lwc-colorBackgroundAlt,rgb(255, 255, 255))))));
+    color: var(--slds-c-modal-content-text-color, var(--sds-c-modal-content-text-color, var(--slds-c-modal-text-color, var(--sds-c-modal-text-color))));
+    min-height: calc(100vh - 510px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 50%;
+    position: relative;
+}
+.slds-border_bottom {
+    border-bottom: 1px solid black;
+    padding-top: 27px;
+}
+.due-date{
+    background-color: var(--slds-c-modal-content-color-background, var(--sds-c-modal-content-color-background, var(--slds-c-modal-color-background, var(--sds-c-modal-color-background, var(--lwc-colorBackgroundAlt,rgb(255, 255, 255))))));
+    color: var(--slds-c-modal-content-text-color, var(--sds-c-modal-content-text-color, var(--slds-c-modal-text-color, var(--sds-c-modal-text-color))));
+    padding-bottom: 10px;
+    padding-left: 9px;
+}

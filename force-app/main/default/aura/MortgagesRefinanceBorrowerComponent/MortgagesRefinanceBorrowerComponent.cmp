@@ -1,0 +1,77 @@
+<aura:component>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="submissionUuid" type="String"/>
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="realEstate" type="Object"/>
+    <h3 class="slds-section-title--divider">Borrower - {!v.data.fullName}</h3>
+    <lightning:tabset selectedTabId="profile">
+        <lightning:tab label="Profile" id="profile">
+          <c:MortgagesParticipantComponent data="{!v.data}" component="profile"/>
+        </lightning:tab>
+        <lightning:tab label="Housing" id="housing">
+          <aura:if isTrue="{!v.data.housing != null}">
+            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+              <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Status">Status:</dt>
+              <dd class="slds-item_detail slds-truncate">{!v.data.housing.status}</dd>
+            </dl>
+            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+              <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Monthly payment">Monthly payment:</dt>
+              <dd class="slds-item_detail slds-truncate">{!v.data.housing.monthlyPayment}</dd>
+            </dl>
+            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+              <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Taxes">Taxes:</dt>
+              <dd class="slds-item_detail slds-truncate">{!v.data.housing.taxes}</dd>
+            </dl>
+
+            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+              <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Fees">Fees:</dt>
+              <dd class="slds-item_detail slds-truncate">{!v.data.housing.fees}</dd>
+            </dl>
+          </aura:if>
+          <aura:renderIf isTrue="{!v.data.address != null}">
+            <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="current-address">
+                <lightning:accordionSection name="current-address" label="Current address">
+                    <c:MortgagesParticipantComponent data="{!v.data.address}" component="address"/>
+                </lightning:accordionSection>
+            </lightning:accordion>
+          </aura:renderIf>
+          <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Property Occupancy">Property Occupancy:</dt>
+            <dd class="slds-item_detail slds-truncate">{!v.data.answersHash.propertyForOwnBusiness}</dd>
+          </dl>            
+        </lightning:tab>
+
+        <lightning:tab label="Answers" id="answers">
+          <c:MortgagesParticipantComponent data="{!v.data}" component="answers"/>
+        </lightning:tab>
+        <lightning:tab label="Previous addresses" id="previous-addresses">
+          <c:MortgagesParticipantComponent data="{!v.data.previousAddresses}" component="previousAddresses"/>
+        </lightning:tab>
+        <lightning:tab label="Incomes" id="incomes">
+          <c:MortgagesParticipantComponent data="{!v.data.incomes}" component="incomes"/>
+        </lightning:tab>
+        <lightning:tab label="Assets" id="assets">
+          <c:MortgagesParticipantComponent data="{!v.data.assets}" component="assets"/>
+        </lightning:tab>
+        <lightning:tab label="Employments" id="employments">
+          <c:MortgagesParticipantComponent data="{!v.data.employments}" component="employments"/>
+        </lightning:tab>
+        <lightning:tab label="Proved assets" id="proved-assets">
+          <c:MortgagesParticipantComponent data="{!v.data.provedAssets}" component="provedAssets"/>
+        </lightning:tab>
+        <lightning:tab label="Declaration" id="declaration">
+          <c:MortgagesParticipantComponent data="{!v.data.declaration}" component="declaration"/>
+        </lightning:tab>
+        <lightning:tab label="Sex, Race, Ethnicity" id="sex-race-ethnicity">
+          <c:MortgagesParticipantComponent data="{!v.data.fairHousingAnswer}" component="fairHousingAnswer"/>
+        </lightning:tab>
+        <lightning:tab label="Real estate" id="real-estate">
+          <c:MortgagesParticipantComponent data="{!v.data.realEstate}" component="realEstate"/>
+        </lightning:tab>
+        <aura:if isTrue="{!v.env == 'DEVELOP'}">
+          <lightning:tab label="Hard Credit Pulls" id="hard-credit-pulls">
+            <c:MortgagesSubmissionHardCreditPullsComponent env="{!v.env}" submissionUuid="{!v.submissionUuid}"/>
+          </lightning:tab>
+        </aura:if>
+    </lightning:tabset>
+</aura:component>

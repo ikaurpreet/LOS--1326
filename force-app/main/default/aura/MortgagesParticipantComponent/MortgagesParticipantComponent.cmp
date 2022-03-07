@@ -1,0 +1,525 @@
+<aura:component>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="component" type="String"/>
+    <aura:attribute name="columns" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <aura:if isTrue="{!v.component == 'profile'}">
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Uuid">Uuid:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant cognito uuid">{!v.data.profile.userUuid}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="SSN">SSN:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant SSN">{!v.data.ssn}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Email">Email:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant email"><lightning:formattedEmail value="{!v.data.profile.email}" /></dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First name">First name:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant first name">{!v.data.profile.firstName}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Last name">Last name:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant last name">{!v.data.profile.lastName}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Suffix">Suffix:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant suffix name">{!v.data.profile.suffixType}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Citizenship">Citizenship:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant citizenship">{!v.data.profile.citizenship}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Last name">Degree:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant degree">{!v.data.profile.degreeType}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Last name">Dependents ages:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant Dependents ages">{!v.data.profile.dependentsAges}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="DOB">DOB:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant date of birth">{!v.data.profile.dob}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Middle name">Middle name:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant middle name">{!v.data.profile.middleNameInitial}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Middle name">Phone:</dt>
+          <dd class="slds-item_detail slds-truncate" title="Participant phone"><lightning:formattedPhone value="{!v.data.profile.phone}"/></dd>
+        </dl>
+        <aura:renderIf isTrue="{!v.data.mailingAddress != null}">
+            <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="mailing-address">
+                <lightning:accordionSection name="mailing-address" label="Mailing address">
+                    <c:MortgagesParticipantComponent data="{!v.data.mailingAddress}" component="address"/>
+                </lightning:accordionSection>
+            </lightning:accordion>
+        </aura:renderIf>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'previousAddresses'}">
+      <aura:iteration items="{!v.data}" var="item">
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Is previous">Is previous:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.participantAddress.isPrevious}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Start date">Start date:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.participantAddress.startDate}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Housing status">Housing status:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.participantAddress.housingStatusType}</dd>
+        </dl>
+        <c:MortgagesParticipantComponent data="{!item.address}" component="address"/>
+      </aura:iteration>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'answers'}">      
+      <lightning:datatable
+        columns="{!v.columns}"
+        data="{!v.data.answers}"
+        keyField="answerType"
+        hideCheckboxColumn="true"
+      />
+      <aura:if isTrue="{!not(empty(v.data.militaryService))}">
+        <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="military-service">
+          <lightning:accordionSection name="military-service" label="Military Service">
+              <c:MortgagesParticipantComponent data="{!v.data.militaryService}" component="militaryService"/>
+          </lightning:accordionSection>
+        </lightning:accordion>
+      </aura:if>
+      <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="marital-status">
+        <lightning:accordionSection name="marital-status" label="Marital Status">
+            <c:MortgagesParticipantComponent data="{!v.data.profile}" component="maritalStatus"/>
+        </lightning:accordionSection>
+      </lightning:accordion>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'militaryService'}">
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Did you ever serve">Did you (or spouse) ever serve, or are you currently serving, in the United States Armed Forces:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.isServed}</dd>
+      </dl>
+      <aura:if isTrue="{!v.data.isServed}">
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Currently serving">Currently serving on active duty:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.isCurrentlyServing}</dd>
+        </dl>
+        <aura:if isTrue="{!v.data.isCurrentlyServing}">
+          <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Expiration date">Expiration Date of Service/Tour:</dt>
+            <dd class="slds-item_detail slds-truncate">{!v.data.expirationDate}</dd>
+          </dl>
+        </aura:if>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Currently retired">Currently retired, discharged, or separated from service:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.isRetired}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Currently retired">Only period of sefvice was as a non-activated member of the Reserve or National Guard:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.isReserve}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Serviving spouse">Serviving spouse:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.isSurvivingSpouse}</dd>
+        </dl>
+      </aura:if>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'maritalStatus'}">
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Marital type">Marital type:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.maritalType}</dd>
+      </dl>
+      <aura:if isTrue="{!v.data.maritalType == 'unmarried'}">
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Has relationship">Is there a person who is not your legal spouse but who currently has real property rights similar to those of legal spouse?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.hasRelationship}</dd>
+        </dl>
+        <aura:if isTrue="{!v.data.hasRelationship}">
+          <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Domestic Relationship Type">Domestic Relationship Type</dt>
+            <dd class="slds-item_detail slds-truncate">{!v.data.relationshipType}</dd>
+          </dl>
+          <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Description">Description</dt>
+            <dd class="slds-item_detail slds-truncate">{!v.data.relationshipDetails}</dd>
+          </dl>
+          <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Relationship State">Relationship State</dt>
+            <dd class="slds-item_detail slds-truncate">{!v.data.relationshipState}</dd>
+          </dl>
+        </aura:if>
+      </aura:if>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'address'}">
+        <dl class="slds-list_horizontal slds-wrap">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Uuid">Address Line1:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.addressLine1}</dd>
+          
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="City">City:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.city}</dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="State Code">State Code:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.stateCode}</dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="City">Zip Code:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.zipCode}</dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="County Code">County Code:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.county.fipsCountyCode}</dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="County Name">County Name:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.county.name}</dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Address Line2">Address Line2:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.addressLine2}</dd>
+
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Unit">Unit:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.unit}</dd>
+        </dl>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'incomes'}">
+      <lightning:datatable
+        columns="{!v.columns}"
+        data="{!v.data}"
+        keyField="incomeType"
+        hideCheckboxColumn="true"
+      />
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'assets'}">
+      <lightning:datatable
+        columns="{!v.columns}"
+        data="{!v.data}"
+        keyField="assetType"
+        hideCheckboxColumn="true"
+      />
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'employments'}">
+      <aura:iteration items="{!v.data}" var="item">
+        {!item.employerName} - {!item.employerType}
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Employer name">Employer name:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.employerName}</dd>
+        </dl>
+
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Employer type">Employer type:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.employerType}</dd>
+        </dl>
+        
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Business phone">Business phone:</dt>
+          <dd class="slds-item_detail slds-truncate"><lightning:formattedPhone value="{!item.businessPhone}"/></dd>
+        </dl>
+        
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Frequently paid">Frequently paid:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.frequentlyPaidType}</dd>
+        </dl>
+
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Work experience">Work experience:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.workExperience}</dd>
+        </dl>
+
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Annual income">Annual income:</dt>
+          <dd class="slds-item_detail slds-truncate"><ui:outputCurrency value="{!item.annualIncome}"/></dd>
+        </dl>
+
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Start on">Start on:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.startedOn}</dd>
+        </dl>
+
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="End date">End date:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.endDate}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Party to Transaction">Party to Transaction:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.isEmployerPartyToTransaction}</dd>
+        </dl>
+
+        <aura:if isTrue="{!item.employerType == 'selfEmployment'}">
+          <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Ownership of Business">Ownership of business:</dt>
+            <dd class="slds-item_detail slds-truncate">{!item.hasOwnershipShare}</dd>
+          </dl>
+          <aura:if isTrue="{!item.hasOwnershipShare}">
+            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+              <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Ownership Share">Ownership share:</dt>
+              <dd class="slds-item_detail slds-truncate">{!item.ownershipShare}</dd>
+            </dl>
+            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+              <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Monthly share income">Monthly share income:</dt>
+              <dd class="slds-item_detail slds-truncate">{!item.monthlyShareIncome}</dd>
+            </dl>
+          </aura:if>
+        </aura:if>
+
+        <c:MortgagesParticipantComponent data="{!item.address}" component="address"/>
+      </aura:iteration>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.component == 'provedAssets'}">
+      <lightning:datatable
+        columns="{!v.columns}"
+        data="{!v.data}"
+        keyField="assetType"
+        hideCheckboxColumn="true"
+      />
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'declaration'}">
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Are there any outstanding judgments against you?:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.outstandingJudgements}</dd>
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Comment:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.outstandingJudgementsText}</dd>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Have you declared bankruptcy within the past 7 years?</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.declaredBankruptcy}</dd>
+        <aura:if isTrue="{!v.data.declaredBankruptcy}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Please identify the type(s) of bankruptcy:</dt>
+          <dd class="slds-item_detail slds-truncate"></dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Chapter 7:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.bankruptcyChapters.declaredBankruptcyPast7YearsChapter7}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Chapter 11:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.bankruptcyChapters.declaredBankruptcyPast7YearsChapter11}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Chapter 12:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.bankruptcyChapters.declaredBankruptcyPast7YearsChapter12}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Chapter 13:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.bankruptcyChapters.declaredBankruptcyPast7YearsChapter13}</dd>
+        </aura:if>
+
+        <aura:if isTrue="{!not(empty(v.data.declaredBankruptcyText))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Comment:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.declaredBankruptcyText}</dd>
+        </aura:if>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <aura:if isTrue="{!not(empty(v.data.conveyedPropertyInLieuForeclosure))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Have you conveyed title to any property in lieu of foreclosure in the past 7 years?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.conveyedPropertyInLieuForeclosure}</dd>
+        </aura:if>
+        <aura:if isTrue="{!not(empty(v.data.propertyForeclosure))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Have you had property foreclosed upon or given title or deed in lieu thereof in the last 7 years?:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.propertyForeclosure}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Comment:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.propertyForeclosureText}</dd>
+        </aura:if>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <aura:if isTrue="{!not(empty(v.data.partyToLawsuitPersonalLiability))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Are you party to a lawsuit in which you potentially have any personal financial liability?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.partyToLawsuitPersonalLiability}</dd>
+        </aura:if>
+        <aura:if isTrue="{!not(empty(v.data.partyToLawsuit))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Are you a party to a lawsuit?:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.partyToLawsuit}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Comment:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.partyToLawsuitText}</dd>
+        </aura:if>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <aura:if isTrue="{!not(empty(v.data.propertyForeclosedUpon7Years))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Have you had property foreclosed upon in the last 7 years?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.propertyForeclosedUpon7Years}</dd>
+        </aura:if>
+        <aura:if isTrue="{!not(empty(v.data.foreclosureTitleTransferInvolvement))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Have you directly or indirectly been obligated on any loan which resulted in foreclosure, transfer of title in lieu of foreclosure, or judgment?:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.foreclosureTitleTransferInvolvement}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Comment:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.foreclosureTitleTransferInvolvementText}</dd>
+        </aura:if>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <aura:if isTrue="{!not(empty(v.data.delinquentLoansFederalDebt))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Are you currently delinquent or in default on a Federal debt?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.delinquentLoansFederalDebt}</dd>
+        </aura:if>
+        <aura:if isTrue="{!not(empty(v.data.delinquentLoans))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Are you presently delinquent or in default on any Federal debt or any other loan, mortgage, financial obligation, bond, or loan guarantee?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.delinquentLoans}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Comment:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.delinquentLoansText}</dd>
+        </aura:if>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Are you obligated to pay alimony, child support, or separate maintenance?:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.alimonyChildSupport}</dd>
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Comment:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.alimonyChildSupportText}</dd>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <aura:if isTrue="{!not(empty(v.data.cosignerOrGuarantor))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Are you a co-signer or guarantor on any debt or loan that is not disclosed on this application?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.cosignerOrGuarantor}</dd>
+        </aura:if>
+        <aura:if isTrue="{!not(empty(v.data.comakerEndorser))}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Are you a co-maker or endorser on a note?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.comakerEndorser}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Comment:</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.comakerEndorserText}</dd>
+        </aura:if>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Will you occupy the property as your primary residence?</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.permanentResidence}</dd>
+
+        <aura:if isTrue="{!v.data.permanentResidence}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Have you had an ownership interest in another property in the last three years?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.ownershipInterest}</dd>
+
+          <aura:if isTrue="{!v.data.ownershipInterest}">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate">What type of property did you own: primary residence, FHA secondary residence, second home, or investment property?</dt>
+            <dd class="slds-item_detail slds-truncate">{!v.data.occupancyType}</dd>
+            <dt class="slds-item_label slds-text-color_weak slds-truncate">How did you hold title to the property?</dt>
+            <dd class="slds-item_detail slds-truncate">{!v.data.ownershipType}</dd>
+          </aura:if>
+        </aura:if>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Are you borrowing any money for this real estate transaction or obtaining any money from another party, such as the seller or realtor, that you have not disclosed on this loan application?</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.borrowMoneyFromAnotherParty}</dd>
+
+        <aura:if isTrue="{!v.data.borrowMoneyFromAnotherParty}">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">What is the amount of this money?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.borrowMoneyFromAnotherPartyAmount}</dd>
+        </aura:if>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Have you or will you be applying for a mortgage loan on another property (not the property securing this loan) on or before closing this transaction that is not disclosed on this loan application?</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.mortgageLoanOnAnotherProperty}</dd>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Have you or will you be applying for any new credit (e.g. installment loan, credit card, etc.) on or before closing this loan that is not disclosed on this application?</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.applyNewCredit}</dd>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Will this property be subject to a lien that could take priority over the first mortgage lien, such as a clean energy lien paid through your property taxes (e.g. the Property Assessed Clean Energy Program)?</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.priorityOverFirstMortgageLien}</dd>
+      </dl>
+
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Within the last 7 years, have you completed a pre-foreclosure sale or short sale, whereby the property was sold to a third party and the Lender agreed to accept less than the outstanding mortgage balance due?</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.preForeclosureSale}</dd>
+      </dl>
+
+      <aura:if isTrue="{!not(empty(v.data.relationshipWithSeller))}">
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">If this is a Purchase Transaction: Do you have a family relationship or business affilation with the seller of the property?</dt>
+          <dd class="slds-item_detail slds-truncate">{!v.data.relationshipWithSeller}</dd>
+        </dl>
+      </aura:if>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'fairHousingAnswer'}">
+      <h3>Sex</h3>
+      <aura:iteration items="{!v.data.sexAnswerType}" var="item">
+          <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate">{!item.name}</dt>
+            <dd class="slds-item_detail slds-truncate">{!item.value}</dd>
+          </dl>
+      </aura:iteration>
+      <h3>Race</h3>
+      <aura:iteration items="{!v.data.raceAnswer}" var="item">
+          <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+            <dt class="slds-item_label slds-text-color_weak slds-truncate">{!item.name}</dt>
+            <dd class="slds-item_detail slds-truncate">{!item.value}</dd>
+          </dl>
+      </aura:iteration>
+      <h3>Ethnicity</h3>
+      <aura:iteration items="{!v.data.ethnicityAnswer}" var="item">
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">{!item.name}</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.value}</dd>
+        </dl>
+      </aura:iteration>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'creditTrade'}">
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Loan Balance:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.loanBalance}</dd>
+      </dl>
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Monthly Payment:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.monthlyPayment}</dd>
+      </dl>
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Bank name:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.name}</dd>
+      </dl>
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Additional info:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.additionalInfo}</dd>
+      </dl>
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Origination date:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.originationDate}</dd>
+      </dl>
+      <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">Not recognize:</dt>
+        <dd class="slds-item_detail slds-truncate">{!v.data.notRecognize}</dd>
+      </dl>
+    </aura:if>
+
+    <aura:if isTrue="{!v.component == 'realEstate'}">
+      <h3>Properties</h3>
+      <aura:iteration items="{!v.data.properties}" var="item">
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Occupancy Type:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.occupancyType}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Monthly payment:</dt>
+        
+          <dd class="slds-item_detail slds-truncate"><ui:outputCurrency value="{!item.monthlyPayment}"/></dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Monthly taxes, insurance, HOA:</dt>
+          <dd class="slds-item_detail slds-truncate"><ui:outputCurrency value="{!item.taxesInsuranceHoa}"/></dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Property Type:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.propertyType}</dd>
+        </dl>
+        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate">Number of Units:</dt>
+          <dd class="slds-item_detail slds-truncate">{!item.numberOfUnits}</dd>
+        </dl>
+        <c:MortgagesParticipantComponent data="{!item.address}" component="address"/>
+        <aura:if isTrue="{!item.creditTrade != null}">
+          <h3>Credit Trade</h3>
+          <c:MortgagesParticipantComponent data="{!item.creditTrade}" component="creditTrade"/>
+        </aura:if>
+        <div>&nbsp;</div>
+      </aura:iteration>
+    </aura:if>
+</aura:component>

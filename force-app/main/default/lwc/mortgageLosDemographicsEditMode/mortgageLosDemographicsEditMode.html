@@ -1,0 +1,51 @@
+<template>
+    <c-mortgage-los-section-subtitle text={sectionSubtitle} icon={iconUrl} class="demoSubTitle">
+    </c-mortgage-los-section-subtitle>
+
+    <div class="slds-form" role="list">
+        <div class="slds-form-element_readonly demoEditSection">
+            <p>Ethnicity</p>
+            <template for:each={ethnicities} for:item="item">
+                <lightning-input key={item.key} label={item.label} type="checkbox" data-name-input={item.key}
+                    data-parent={item.dataParent} onchange={handleInputChange} checked={item.value}
+                    class={item.indentClass} disabled={item.disabled}>
+                </lightning-input>
+                <template if:true={item.hasOtherTextBox}>
+                    <lightning-input key={item.key} variant="label-hidden" type="text"
+                        data-name-input={item.otherTextBoxKey} data-parent={item.key} onchange={handleInputChange}
+                        value={item.otherTextBoxValue} class={item.otherTextBoxClass}
+                        disabled={item.otherTextBoxDisabled}>
+                    </lightning-input>
+                </template>
+            </template>
+            <div class="demoEditSection"></div>
+        </div>
+        <div class="slds-form-element_readonly demoEditSection">
+            <p>Race</p>
+            <template for:each={races} for:item="item">
+                <lightning-input key={item.key} label={item.label} type="checkbox" data-name-input={item.key}
+                    data-parent={item.dataParent} onchange={handleInputChange} checked={item.value}
+                    class={item.indentClass} disabled={item.disabled}>
+                </lightning-input>
+                <template if:true={item.hasOtherTextBox}>
+                    <lightning-input key={item.key} variant="label-hidden" type="text"
+                        data-name-input={item.otherTextBoxKey} data-parent={item.key} onchange={handleInputChange}
+                        value={item.otherTextBoxValue} class={item.otherTextBoxClass}
+                        disabled={item.otherTextBoxDisabled}>
+                    </lightning-input>
+                </template>
+            </template>
+            <div class="demoEditSection"></div>
+        </div>
+        <div class="slds-form-element_readonly demoEditSection">
+            <p>Sex</p>
+            <template for:each={sexes} for:item="item">
+                <lightning-input key={item.key} label={item.label} type="checkbox" data-name-input={item.key}
+                    data-parent={item.dataParent} onchange={handleInputChange} checked={item.value}
+                    class={item.indentClass} disabled={item.disabled}>
+                </lightning-input>
+            </template>
+            <div class="demoEditSection"></div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,24 @@
+<template>
+  <div class="slds-form">
+    <fieldset class="slds-form-element slds-form-element_horizontal">
+      <legend class="slds-form-element__label">{label}</legend>
+      <div class="slds-form-element__control">
+
+        <template if:true={hasEditingTradelines} for:each={editingTradelines} for:item="tradeline">
+          <div key={tradeline.uuid} class="slds-checkbox">
+            <input type="checkbox" name="default" id={tradeline.uuid} data-id={tradeline.uuid} onclick={handleToggle} checked={tradeline.checked}/>
+            <label class="slds-checkbox__label" for={tradeline.uuid}>
+              <span class="slds-checkbox_faux"></span>
+              <span class="slds-form-element__label">{tradeline.text}</span>
+            </label>
+          </div>
+        </template>
+
+        <div if:false={hasEditingTradelines} class="slds-checkbox">
+          <span class="slds-form-element__label">No available tradelines to link</span>
+        </div>
+
+      </div>
+    </fieldset>
+  </div>
+</template>

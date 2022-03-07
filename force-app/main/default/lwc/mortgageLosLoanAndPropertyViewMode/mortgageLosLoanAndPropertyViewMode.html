@@ -1,0 +1,88 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto">
+            <div class="slds-p-bottom_medium slds-p-horizontal_small">
+                <c-mortgage-los-section-subtitle text="Property Information" icon={BorrowerIconURL}>
+                </c-mortgage-los-section-subtitle>
+
+                <c-mortgage-los-input-view-mode label="Property Address" value={fullAddress} handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="County" value={loanAndProperty.property.address.county.name}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Number of Units" value={labels.numberOfUnits}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Year Built" value={loanAndProperty.property.yearBuilt} handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Construction Method" value={labels.constructionMethod}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Property Type" value={labels.propertyType}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class={editClass}>
+                            <span class="slds-form-element__label" for="mixedUseProperty">Mixed-use Property (If you
+                                occupy the
+                                property, will you set aside space within the property to operate your
+                                business?)</span>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">
+                                    <span class="slds-checkbox">
+                                        <input type="checkbox" data-credible-id="mixedUseProperty"
+                                            data-credible-checked={loanAndProperty.property.mixedUseProperty} id="mixedUseProperty"
+                                            name="label" value="option" checked={loanAndProperty.property.mixedUseProperty}
+                                            disabled="" />
+                                        <span class="slds-checkbox_faux"></span>
+                                    </span>
+                                </div>
+                                <c-mortgage-los-edit-btn oneditevent={handleEdit}>
+                                </c-mortgage-los-edit-btn>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-bottom_medium slds-p-horizontal_small">
+                <c-mortgage-los-section-subtitle text="Loan Information" icon={BorrowerIconURL}>
+                </c-mortgage-los-section-subtitle>
+
+                <c-mortgage-los-input-view-mode label="Total Loan Amount" value={labels.totalLoanAmount}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="PMI, MP Financed"
+                    value={labels.pmiMonthlyPayment} handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Occupancy" value={labels.occupancyType}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Estimated Value" value={labels.estimatedValue}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Appraised Value" value={labels.appraisedValue}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Loan Type" value={labels.loanType}
+                    handle-edit={handleEdit}>
+                </c-mortgage-los-input-view-mode>
+
+                <c-mortgage-los-input-view-mode label="Loan Purpose" value={labels.loanPurpose}
+                    handle-edit={loanPurposeHandleEdit}>
+                </c-mortgage-los-input-view-mode>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

@@ -1,0 +1,17 @@
+<aura:component controller="MortgagesSubmissionController" extends="c:MortgagesGraphQLComponent">
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="submission" type="Object"/>
+    <aura:attribute name="productHistory" type="Object"/>
+    <aura:attribute name="columns" type="Object"/>
+    <aura:attribute name="loading" type="Boolean" default="false"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <div style="height: 600px;">
+        <lightning:datatable
+            keyField="id"
+            data="{!v.productHistory}"
+            columns="{!v.columns}"
+            hideCheckboxColumn="true"/>
+    </div>
+</aura:component>

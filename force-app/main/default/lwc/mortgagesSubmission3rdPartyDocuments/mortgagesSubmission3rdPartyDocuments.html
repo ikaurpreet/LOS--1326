@@ -1,0 +1,35 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <template if:true={error}>
+        <c-mortgages-error error={error}></c-mortgages-error>
+    </template>
+    <template if:true={openAddLenderDocument}>
+        <c-mortgages-add-lender-folder-document 
+          onclose={closeAddLenderDocumentHandler} 
+          onupdate={updateAddLenderDocumentHandler}
+          selected-values={addLenderTags} 
+          document-id={addLenderDocumentId}>
+        </c-mortgages-add-lender-folder-document>
+    </template>
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+        <template for:each={data} for:item="group">
+            <lightning-accordion-section name={group.name} label={group.label} key={group.name}>
+            <div class="slds-clearfix">
+                <lightning-button variant="brand" label="Add files to" title="Add files to" onclick={openBatchModal} disabled class="slds-m-left_x-small slds-float_right" data-id={group.name}></lightning-button>
+            </div>
+            <c-mortgages-documents-data-table
+                key-field="id"
+                data-id={group.name}
+                data={group.items}
+                sorted-by={sortBy}
+                sorted-direction={sortDirection}
+                onsort={handleSortdata}	
+                columns={columns}
+                onrowselection={handleRowAction}>
+            </c-mortgages-documents-data-table>
+            </lightning-accordion-section>
+        </template>
+    </lightning-accordion>
+</template>

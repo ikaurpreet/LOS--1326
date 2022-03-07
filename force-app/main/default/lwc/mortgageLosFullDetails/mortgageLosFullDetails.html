@@ -1,0 +1,58 @@
+<template>
+    <lightning-messages></lightning-messages>
+    <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode} columns="2"
+        fields={fields_info}>
+    </lightning-record-form>
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+        <lightning-accordion-section name="documents" label="Documents">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode} columns="2"
+                fields={fields_documents}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="real-estate-agent" label="Real Estate Agent">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode} columns="2"
+                fields={fields_real_info}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="selected-product-information" label="Selected Product Information">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode}  columns="2"
+                fields={fields_sel_pro_info}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="mortgage-property-info" label="Mortgage Property Info">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode}  columns="2"
+                fields={fields_propery_info}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="real-estate-agent" label="Source Information">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode}  columns="2"
+                fields={fields_src}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="income" label="Income">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode}  columns="2"
+                fields={fields_income}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="thirdparties" label="Title">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode}  columns="2"
+                fields={fields_thirdparties}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="additional-information" label="Additional Information">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode}  columns="2"
+                fields={fields_addlinfo}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="timestamps" label="Time Stamps">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode}  columns="2"
+                fields={fields_timestamps}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="system-information" label="System Information">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode={mode}  columns="2"
+                fields={fields_system_information}>
+            </lightning-record-form>
+        </lightning-accordion-section>
+    </lightning-accordion>
+</template>

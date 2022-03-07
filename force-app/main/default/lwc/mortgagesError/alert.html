@@ -1,0 +1,20 @@
+<template>
+  <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" style="white-space:normal;" role="alert">
+      <template if:true={fieldErrors}>
+        <template for:each={fieldErrors} for:item="item">
+          <template for:each={item.messages} for:item="message">
+            {message}
+          </template>
+        </template>
+      </template>
+      <template if:false={fieldErrors}>
+        <lightning-icon class="slds-m-right_x-small" icon-name="utility:error" variant="inverse" size="x-small" alternative-text="Error" title="Error"></lightning-icon>
+        <h2 style="white-space:normal;">{error.exceptionType}: {error.message}</h2>
+      </template>
+      <div class="slds-notify__close">
+        <button onclick={close} class="slds-button slds-button_icon slds-button_icon-small slds-button_icon-inverse" title="Close">
+          <lightning-icon icon-name="utility:close" variant="inverse" size="x-small" alternative-text="Close" title="Close"></lightning-icon>
+        </button>
+      </div>
+    </div>
+  </template>

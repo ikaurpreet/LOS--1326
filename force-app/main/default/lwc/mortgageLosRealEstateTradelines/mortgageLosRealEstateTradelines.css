@@ -1,0 +1,19 @@
+.slds-form-element_edit .slds-form-element__static, .slds-form-element--edit .slds-form-element__static {
+    min-height: calc(var(--lwc-varFontSize7,1.25rem) + 1px);
+}
+
+.slds-form-element.slds-form-element_horizontal.slds-form-element_split-60 .slds-form-element__label {
+    max-width: calc(60% - var(--lwc-squareIconUtilityMedium,1.25rem));
+}
+
+.slds-form-element.slds-form-element_horizontal.slds-form-element_split-60 .slds-form-element__control {
+    padding-left: 60%;
+}
+
+.slds-form-element_no-border {
+    border: 0;
+}
+
+.slds-disabled-input .slds-form-element__static, .slds-disabled-input .slds-form-element__label {
+    color: var(--lwc-colorTextIconDefaultHint,rgb(176, 173, 171))
+}

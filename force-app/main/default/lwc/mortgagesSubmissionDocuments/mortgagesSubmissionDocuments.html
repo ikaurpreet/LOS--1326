@@ -1,0 +1,32 @@
+<template>
+    <lightning-card  title="Documents" icon-name="standard:document">
+        <c-new-document-modal
+            slot="actions"
+            class="slds-show_inline-block slds-var-m-right_medium slds-var-m-left_medium"
+            record-id={recordId}>
+        </c-new-document-modal>
+        <c-mortgages-document-upload onuploadcompleted={uploadCompletedHandler} record-id={recordId} slot="actions" class="slds-show_inline-block"></c-mortgages-document-upload>
+        <lightning-tabset>
+            <lightning-tab label="Borrower Conditions">
+                <c-mortgages-submission-tasks record-id={recordId}></c-mortgages-submission-tasks>
+            </lightning-tab>
+            <lightning-tab label="Accepted Docs" title="2nd tab extended title">
+                <c-mortgages-submission-accepted-documents onupdatelendertags={updateLenderTagsHandler} record-id={recordId}></c-mortgages-submission-accepted-documents>
+            </lightning-tab>
+            <lightning-tab label="Archived Docs">
+                <c-mortgages-submission-archived-documents onupdatelendertags={updateLenderTagsHandler} record-id={recordId}></c-mortgages-submission-archived-documents>
+            </lightning-tab>
+            <lightning-tab label="3rd Party Docs">
+                <c-mortgages-submission-3rd-party-documents onupdatelendertags={updateLenderTagsHandler} record-id={recordId}></c-mortgages-submission-3rd-party-documents>
+            </lightning-tab>
+            <lightning-tab label="Lender Submission">
+                <c-mortgages-submission-lender-documents record-id={recordId}></c-mortgages-submission-lender-documents>
+            </lightning-tab>
+            <lightning-tab label="All Documents">
+                <c-mortgages-submission-all-documents
+                onupdatelendertags={updateLenderTagsHandler}
+                record-id={recordId}></c-mortgages-submission-all-documents>
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>

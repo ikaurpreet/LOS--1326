@@ -1,0 +1,54 @@
+<template>
+
+  <div if:false={hasLoaded} role="status" class="slds-spinner slds-spinner_small slds-m-vertical_small">
+    <span class="slds-assistive-text">Loading</span>
+    <div class="slds-spinner__dot-a"></div>
+    <div class="slds-spinner__dot-b"></div>
+  </div>
+
+  <template if:true={hasLoaded}>
+    <c-mortgage-los-alert if:true={hasError} message="Unable to load, refresh page" variant="error"></c-mortgage-los-alert>
+    <template if:false={hasError}>
+
+      <template if:true={hasProperties}>
+        <!-- Property summary -->
+        <div if:true={hasSavedProperties} class="slds-col slds-m-vertical_small">
+          <c-mortgage-los-real-estate-property-summary properties={roleFilteredProperties}></c-mortgage-los-real-estate-property-summary>
+        </div>
+
+        <!-- Existing Property cards -->
+        <template for:each={roleFilteredProperties} for:item="property" for:index="index">
+          <div key={property.uuid} class="slds-col slds-m-vertical_small">
+            <c-mortgage-los-real-estate-property-card property={property} index={index} all-tradelines={tradelines} is-borrower={isBorrower}
+            borrower={borrower} co-borrower={coBorrower} onrestoreproperty={loadSubmissionData} primary-residence-uuids={primaryResidenceUuids}
+            ondeleteproperty={handleDeleteProperty} onsaveproperty={handleSaveProperty} onedittradelinetoggle={handleTradelineToggle}>
+          </c-mortgage-los-real-estate-property-card>
+          </div>
+        </template>
+
+        <!-- Adding property cards -->
+        <template for:each={propertiesToAdd} for:item="propertyToAdd" for:index="index">
+          <div key={propertyToAdd.id} class="slds-col slds-m-vertical_small">
+            <c-mortgage-los-real-estate-property-card property={propertyToAdd} index={index} mode="addMode" all-tradelines={tradelines}
+              is-borrower={isBorrower} borrower={borrower} co-borrower={coBorrower} ondeleteproperty={handleDeleteProperty}
+              primary-residence-uuids={primaryResidenceUuids} onsaveproperty={handleSaveProperty} onedittradelinetoggle={handleTradelineToggle}>
+          </c-mortgage-los-real-estate-property-card>
+          </div>
+        </template>
+      </template>
+
+      <div if:false={hasProperties} class="slds-grid slds-grid_align-center slds-grid_vertical-align-center slds-m-top_small">
+        <lightning-icon class="slds-col slds-m-right_x-small" icon-name="utility:info" size="small"></lightning-icon>
+        <div if:true={isBorrower} class="slds-col slds-text-title_bold">Borrower did not report any properties owned</div>
+        <div if:false={isBorrower} class="slds-col slds-text-title_bold">Co-Borrower did not report any properties owned</div>
+      </div>
+
+      <button onclick={addNewProperty} class="slds-button slds-button_neutral">
+        <lightning-icon size="x-small" class="add-icon slds-m-right_x-small" icon-name="utility:new" alternative-text="New icon" title="Add Additional Property"></lightning-icon>
+        Add Additional Property
+      </button>
+
+    </template>
+  </template>
+
+</template>

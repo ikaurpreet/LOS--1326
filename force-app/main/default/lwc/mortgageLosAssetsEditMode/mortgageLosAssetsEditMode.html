@@ -1,0 +1,144 @@
+<template>
+    <div class="slds-p-bottom_x-small slds-m-bottom_x-small slds-border_bottom">
+        <template for:each={assets} for:item="assetsGroup">
+            <div key={assetsGroup.label}>
+                <div class="los-c__assets_title-container">
+                    <p>{assetsGroup.label}</p>
+                </div>
+
+                <div if:true={assetsGroup.items.length} class="slds-grid">
+                    <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                        <span>Owner</span>
+                    </div>
+                    <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                        <span>Account Type</span>
+                    </div>
+                    <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                        <span>Financial Institution</span>
+                    </div>
+                    <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                        <span>Account Number</span>
+                    </div>
+                    <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                        <span>Cash or Market Value ↑</span>
+                    </div>
+                </div>
+
+                <template for:each={assetsGroup.items} for:item="asset">
+                    <div key={asset.key} class="slds-grid">
+                        <div class="slds-grid slds-col slds-p-bottom_x-small">
+                            <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                                <lightning-combobox required data-asset-key={asset.key} onchange={handleInputChange}
+                                    data-name-input="ownerValue" disabled={disabledOwner} variant="label-hidden"
+                                    options={ownerOptions} value={asset.ownerValue}>
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                                <lightning-combobox required dropdown-alignment="auto" variant="label-hidden"
+                                    data-asset-key={asset.key} onchange={handleInputChange} options={assetsTypeOptions}
+                                    data-name-input="assetType" value={asset.assetType}>
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                                <lightning-input required data-name-input="institutionName" onchange={handleInputChange}
+                                    data-asset-key={asset.key} variant="label-hidden" value={asset.institutionName}>
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                                <lightning-input data-name-input="accountNumber" onchange={handleInputChange}
+                                    data-asset-key={asset.key} variant="label-hidden" value={asset.accountNumber}>
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-p-right_x-small slds-size_1-of-5">
+                                <lightning-input required onchange={handleAmountChange} data-asset-key={asset.key}
+                                    variant="label-hidden" value={asset.amountWithMask}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <button onclick={handleDeleteAsset} data-details={asset.key}
+                            data-asset-group={assetsGroup.label}
+                            class="slds-button slds-button_icon slds-m-right_medium slds-p-bottom_x-small"
+                            title='Delete'>
+                            <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </template>
+                <template for:each={assetsGroup.deletedAssets} for:item="asset">
+                    <div class="slds-align_absolute-center slds-m-bottom_x-small asset--deleted" key={asset.key}>
+                        <lightning-icon size="x-small" class="slds-m-right_x-small" icon-name="utility:success">
+                        </lightning-icon>
+                        <span class="slds-text-title_bold slds-m-right_xx-small">{asset.ownerLabel}
+                            {asset.assetTypeLabel} asset removed</span> ({asset.institutionName}
+                        #{asset.accountNumber}
+                        for {asset.amountWithMask})
+                        <span class="asset_undo-delete slds-m-left_x-small" onclick={handleUndoClicked}
+                            data-details={asset.key}> Undo</span>
+                    </div>
+                </template>
+
+                <div class="slds-grid slds-grid_align-end slds-p-bottom_x-small" style="margin-right:40px">
+                    <div class="slds-col">
+                        <span
+                            class="total-assets__group-value slds-p-around_x-small slds-text-title_bold slds-text-align_right"
+                            data-group={assetsGroup.label}>{assetsGroup.label} Total:</span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-5 slds-p-left_x-small">
+                        <span
+                            class="total-assets__group-value slds-p-around_x-small slds-text-title_bold slds-text-align_left"
+                            data-group={assetsGroup.label}>{assetsGroup.totalWithMask}</span>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+    <div class="slds-grid slds-border_bottom slds-border_top slds-p-vertical_xx-small total-assets">
+        <div class="slds-col">
+            <span class="slds-p-around_x-small">
+                <button class="slds-button slds-button_neutral" onclick={showAddModal}>
+                    <lightning-icon size="x-small" class="add-icon slds-m-right_x-small" icon-name="utility:new"
+                        alternative-text="New icon" title="Add Assets"></lightning-icon>
+                    Add Additional Assets
+                </button>
+            </span>
+        </div>
+        <div class="slds-grid total-assets__value slds-p-around_x-small slds-col slds-grid_align-end slds-size_2-of-5"
+            style="margin-right:40px">
+            <div class="slds-col">
+                <span class="slds-text-title_bold slds-text-align_right">
+                    ASSETS TOTAL: </span>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-left_large">
+                <span class="slds-text-title_bold slds-text-align_left">
+                    {totalAssets}</span>
+            </div>
+        </div>
+    </div>
+
+
+    <c-mortgage-los-modal if:true={showingModal} details={addingAsset} variant="noOverflow" onclosemodal={closeModal}
+        title="Add Additional Assets">
+        <fieldset class="slds-form-element slds-form-element_compound">
+            <div class="slds-form-element__row">
+                <div class="slds-size_1-of-2">
+                    <lightning-combobox required onchange={handleNewAssetChange} class="slds-m-bottom_x-small"
+                        data-name-input="ownerValue" value={addingAsset.ownerValue} disabled={disabledOwner}
+                        label="Owner" options={ownerOptions}>
+                    </lightning-combobox>
+                    <lightning-combobox required onchange={handleNewAssetChange} class="slds-m-bottom_x-small"
+                        dropdown-alignment="auto" options={assetsTypeOptions} data-name-input="assetType"
+                        label="Account Type">
+                    </lightning-combobox>
+                    <lightning-input required onchange={handleNewAssetChange} class="slds-m-bottom_x-small"
+                        data-name-input="institutionName" label="Financial Institution"></lightning-input>
+                    <lightning-input onchange={handleNewAssetChange} class="slds-m-bottom_x-small"
+                        data-name-input="accountNumber" label="Account Number"></lightning-input>
+                    <lightning-input required data-name-input="amount" onchange={handleNewAssetAmountChange}
+                        label="Cash or Market Value ↑">
+                    </lightning-input>
+                </div>
+            </div>
+        </fieldset>
+    </c-mortgage-los-modal>
+</template>

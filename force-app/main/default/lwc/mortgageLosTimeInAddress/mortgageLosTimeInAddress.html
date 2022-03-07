@@ -1,0 +1,26 @@
+<template>
+    <c-mortgage-los-form-element-control label={startDateLabel}>
+        <fieldset class="slds-form-element slds-form-element_compound slds-is-editing slds-form-element_stacked">
+            <div class="slds-form-element__row slds-m-bottom_none">
+                <div class="slds-size_1-of-2">
+                    <div class="slds-form-element slds-m-bottom_none">
+                        <label class="slds-form-element__label" for="years">Years</label>
+                        <div class="slds-form-element__control">
+                            <input type="number" min=0 data-name-input="startDate" id="years" class="slds-input"
+                                onchange={handleYearChange} value={currentYears} />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <div class="slds-form-element slds-m-bottom_none">
+                        <label class="slds-form-element__label" for="months">Months</label>
+                        <div class="slds-form-element__control">
+                            <input type="number" min=0 data-name-input="startDate" id="months" class="slds-input"
+                                onchange={handleMonthChange} value={currentMonths} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </c-mortgage-los-form-element-control>
+</template>

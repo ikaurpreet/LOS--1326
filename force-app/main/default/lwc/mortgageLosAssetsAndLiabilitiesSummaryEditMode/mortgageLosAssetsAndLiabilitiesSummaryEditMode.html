@@ -1,0 +1,20 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item flexibility="auto" class="slds-size_1-of-2 slds-p-horizontal_small slds-m-bottom_medium">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class={className}>
+                        <span class="slds-form-element__label">Assets and Liabilities are completed</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                <lightning-radio-group value={jointlyAssetsLiabilitiesValue} variant="label-hidden"
+                                    options={options} type="radio" onchange={handleInputChange}>
+                                </lightning-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

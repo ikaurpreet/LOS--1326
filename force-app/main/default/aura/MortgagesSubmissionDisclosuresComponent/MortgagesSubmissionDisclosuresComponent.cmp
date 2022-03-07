@@ -1,0 +1,70 @@
+<aura:component controller="DisclosuresController" extends="c:MortgagesGraphQLComponent">
+    <ltng:require scripts="{!$Resource.FileSaver}"></ltng:require>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="submission" type="Object"/>
+    <aura:attribute name="userUuid" type="String" />
+    <aura:attribute name="env" type="String" />
+    <aura:attribute name="error" type="String" />
+    <aura:attribute name="loading" type="Boolean" default="false"/>
+    <aura:attribute name="disclosureUserEvents" type="String" />
+    <aura:attribute name="disclosureUserEventsPreview" type="String" />
+    <aura:attribute name="sourceFull" type="Boolean" default="false"/>
+
+
+    <h3 class="slds-section-title--divider">Disclosures Data</h3>
+        <aura:if isTrue="{!v.disclosureUserEvents != null}">
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-no-flex">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+                                    <aura:if isTrue="{!v.sourceFull}">
+                                        <lightning:button label="Collaps" iconName="utility:up" iconPosition="left"
+                                            onclick="{!c.toggleSourceViewHandler}" />
+                                        <aura:set attribute="else">
+                                            <lightning:button label="Expand" iconName="utility:down" iconPosition="left"
+                                                onclick="{!c.toggleSourceViewHandler}" />
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                                <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+                                    <lightning:button label="Download" iconName="utility:download" iconPosition="left"
+                                        onclick="{!c.downloadHandler}" />
+                                </div>
+                                <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+                                    <lightning:button label="Copy to Clipboard" iconName="utility:copy_to_clipboard"
+                                        iconPosition="left" onclick="{!c.copySourceHandler}" />
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+                <aura:if isTrue="{!v.disclosureUserEvents != null}">
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-box slds-brand-band slds-brand-band_none">
+                            <pre contentEditable="true" suppressContentEditableWarning="true"
+                                style="white-space: pre-wrap; margin: 0">
+                                <aura:if isTrue="{!v.sourceFull}">
+                                    {!v.disclosureUserEvents}
+                                <aura:set attribute="else">
+                                    {!v.disclosureUserEventsPreview}
+                                </aura:set>
+                                </aura:if>
+                            </pre>
+                        </div>
+                    </div>
+                    <footer class="slds-card__footer slds-align_absolute-center">
+                        <aura:if isTrue="{!v.sourceFull}">
+                            <lightning:button label="Collaps" iconName="utility:up" iconPosition="left"
+                                onclick="{!c.toggleSourceViewHandler}" />
+                            <aura:set attribute="else">
+                                <lightning:button label="Expand" iconName="utility:down" iconPosition="left"
+                                    onclick="{!c.toggleSourceViewHandler}" />
+                            </aura:set>
+                        </aura:if>
+                    </footer>
+                </aura:if>
+            </article>
+        </aura:if>
+</aura:component>

@@ -1,0 +1,56 @@
+<template>
+  <lightning-record-view-form record-id={recordId} object-api-name="Opportunity">
+    <lightning-tabset>
+        <lightning-tab label="File Contacts">
+          <template if:true={showContactRoles}>
+            <c-related-list records={contactroles} columndata={contactrolecolumns} title="Contact Roles">
+            </c-related-list>
+          </template>
+        </lightning-tab>
+        <lightning-tab label="Title Holders">
+          <template if:true={showTitleHolders}>
+            <c-new-title-holder
+              class=""
+              record-id={recordId}
+              onclose={refreshTitleHolders}
+              >
+            </c-new-title-holder>
+            <c-related-list records={titleholders}
+              columndata={titleholdercolumns}
+              title="Title Holders"
+              record-object-name="Title_Holder__c"
+              new-object-enabled={titleHolderNewObjectEnabled}
+              new-object-default-values={titleHolderNewObjectDefaultValues} >
+            </c-related-list>
+          </template>
+        </lightning-tab>
+        <lightning-tab label="Spouses">
+          <template if:true={showSpouses}>
+            <c-related-list records={spouses} columndata={spousecolumns} title="Spouses">
+            </c-related-list>
+          </template>
+        </lightning-tab>
+        <lightning-tab label="Lender Contacts">
+          <template if:true={showContacts}>
+            <c-related-list records={contacts} columndata={contactcolumns} title="Contacts from Parent Account">
+            </c-related-list>
+          </template>
+        </lightning-tab>
+    </lightning-tabset>
+
+    <lightning-card title="3rd Parties">
+      <div class="slds-grid">
+          <div class="slds-col slds-size_1-of-2">
+              <lightning-output-field class="slds-border_bottom" field-name="Lender_Account__c"></lightning-output-field>
+              <lightning-output-field class="slds-border_bottom" field-name="Title_Company_Account__c"></lightning-output-field>
+              <lightning-output-field class="slds-border_bottom" field-name="Insurance_Company_Account__c"></lightning-output-field>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+              <lightning-output-field class="slds-border_bottom" field-name="Appraisal_Company_Account__c"></lightning-output-field>
+              <lightning-output-field class="slds-border_bottom" field-name="Real_Estate_Agency_Account__c"></lightning-output-field>
+              <lightning-output-field class="slds-border_bottom" field-name="Settlement_Company_Account__c"></lightning-output-field>
+          </div>
+      </div>
+    </lightning-card>
+  </lightning-record-view-form>
+</template>

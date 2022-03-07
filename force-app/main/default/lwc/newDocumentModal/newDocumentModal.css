@@ -1,0 +1,14 @@
+.slds-modal__container{
+    max-height: 50rem;
+    width: 100%;
+    max-width: 70rem;
+  }
+
+.slds-modal__content{
+  height: 40rem !important;
+  max-height: 50rem !important;
+}
+
+.document-name-input {
+  display: none;
+}

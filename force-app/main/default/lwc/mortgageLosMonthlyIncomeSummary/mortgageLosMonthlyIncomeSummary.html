@@ -1,0 +1,60 @@
+<template>
+  <c-mortgage-los-section-controller>
+    <table>
+        <tr>
+            <th></th>
+            <th>
+                Borrower
+            </th>
+            <th>
+                Co-Borrower
+            </th>
+            <th>
+                Total
+            </th>
+        </tr>
+        <tr>
+            <td>Base</td>
+            <td class={borrowerTdClass}><lightning-formatted-number if:true={showBorrower} value={incomes.borrower.base} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td class={coBorrowerTdClass}><lightning-formatted-number if:true={showCoBorrower} value={incomes.coBorrower.base} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td><lightning-formatted-number value={incomes.totals.base} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+        </tr>
+        <tr>
+            <td>Overtime</td>
+            <td class={borrowerTdClass}><lightning-formatted-number if:true={showBorrower} value={incomes.borrower.overtime} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td class={coBorrowerTdClass}><lightning-formatted-number if:true={showCoBorrower} value={incomes.coBorrower.overtime} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td><lightning-formatted-number value={incomes.totals.overtime} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+        </tr>
+        <tr>
+            <td>Bonuses</td>
+            <td class={borrowerTdClass}><lightning-formatted-number if:true={showBorrower} value={incomes.borrower.bonuses} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td class={coBorrowerTdClass}><lightning-formatted-number if:true={showCoBorrower} value={incomes.coBorrower.bonuses} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td><lightning-formatted-number value={incomes.totals.bonuses} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+        </tr>
+        <tr>
+            <td>Commissions</td>
+            <td class={borrowerTdClass}><lightning-formatted-number if:true={showBorrower} value={incomes.borrower.commissions} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td class={coBorrowerTdClass}><lightning-formatted-number if:true={showCoBorrower} value={incomes.coBorrower.commissions} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td><lightning-formatted-number value={incomes.totals.commissions} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+        </tr>
+        <tr>
+            <td>Other</td>
+            <td class={borrowerTdClass}><lightning-formatted-number if:true={showBorrower} value={incomes.borrower.other} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td class={coBorrowerTdClass}><lightning-formatted-number if:true={showCoBorrower} value={incomes.coBorrower.other} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td><lightning-formatted-number value={incomes.totals.other} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+        </tr>
+        <tr>
+            <td>Other Sources</td>
+            <td class={borrowerTdClass}><lightning-formatted-number if:true={showBorrower} value={incomes.borrower.otherSources} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td class={coBorrowerTdClass}><lightning-formatted-number if:true={showCoBorrower} value={incomes.coBorrower.otherSources} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td><lightning-formatted-number value={incomes.totals.otherSources} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td class={borrowerTdClass}><lightning-formatted-number if:true={showBorrower} value={incomes.borrower.total} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td class={coBorrowerTdClass}><lightning-formatted-number if:true={showCoBorrower} value={incomes.coBorrower.total} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+            <td><lightning-formatted-number value={incomes.totals.total} format-style="currency" currency-code="USD" maximum-fraction-digits="0"></lightning-formatted-number></td>
+        </tr>
+    </table>
+  </c-mortgage-los-section-controller>
+</template>

@@ -1,0 +1,50 @@
+<template>
+  <c-mortgage-los-section title="Property Summary" icon="standard:contact_list">
+    <c-mortgage-los-section-controller uncontrolled>
+      <lightning-layout multiple-rows>
+
+        <lightning-layout-item class="slds-size_2-of-2 slds-p-top_x-small slds-p-horizontal_medium" flexibility="auto">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Property Owner</th>
+              <th>Primary Tradeline</th>
+              <th>Other Tradeline(s)</th>
+              <th>Disposition</th>
+              <th>Occupancy</th>
+            </tr>
+            <template for:each={processedProperties} for:item="property">
+              <tr key={property.uuid}>
+                <td>{property.fullAddress}</td>
+                <td>{property.ownership}</td>
+                <td>
+                  <template for:each={property.primaryTradelines} for:item="primaryTradeline">
+                    <div class="tradeline-row" key={primaryTradeline.uuid}>{primaryTradeline.text}</div>
+                  </template>
+                </td>
+                <td>
+                  <template for:each={property.secondaryTradelines} for:item="secondaryTradeline">
+                    <div class="tradeline-row" key={secondaryTradeline.uuid}>{secondaryTradeline.text}</div>
+                  </template>
+                </td>
+                <td>{property.status}</td>
+                <td>{property.occupancyType}</td>
+              </tr>
+            </template>
+          </table>
+        </lightning-layout-item>
+
+        <!-- MVP out of scope fields - add later on -->
+        <!-- <lightning-layout-item class="slds-size_1-of-2" flexibility="auto">
+          <c-mortgage-los-checkbox-view-mode label="Borrower - I do not own any real estate" status="true" editable handle-edit={handleEdit}>
+          </c-mortgage-los-checkbox-view-mode>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-size_1-of-2" flexibility="auto">
+          <c-mortgage-los-checkbox-view-mode label="Co-Borrower - I do not own any real estate" status="true" editable handle-edit={handleEdit}>
+          </c-mortgage-los-checkbox-view-mode>
+        </lightning-layout-item> -->
+
+      </lightning-layout>
+    </c-mortgage-los-section-controller>
+  </c-mortgage-los-section>
+</template>

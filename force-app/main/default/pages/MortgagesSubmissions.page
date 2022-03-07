@@ -1,0 +1,13 @@
+<apex:page >
+  <apex:includeScript value="/lightning/lightning.out.js" />
+  <div id="submissions"></div>
+  <script>
+      $Lightning.use("c:CustomApp", function() {
+          $Lightning.createComponent("c:MortgagesSubmissionsComponent",
+              {},
+              "submissions",
+              function(cmp) { console.log("Submissions was rendered"); }
+          );
+      });
+  </script>
+</apex:page>

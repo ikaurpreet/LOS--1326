@@ -1,0 +1,13 @@
+export const VALUE = 'Value';
+export const BORROWER = 'borrower';
+export const CO_BORROWER = 'coBorrower';
+export const TRUE = 'true';
+export const FALSE = 'false';
+export const MORTGAGE_REFI = 'MortgageRefi';
+export const HOME_PURCHASE = 'HomePurchase';
+export const DATA_NAME_INPUT = 'data-name-input';
+export const EDIT_PARTICIPANT_EVENT_NAME = 'editparticipant';
+export const ELEMENT_TYPE_CHECKBOX = 'checkbox';
+export const EVENT_TYPE_CHANGE = 'change';
+export const SUBMISSION_UUID = 'submissionUuid';
+export const MAX_AMOUNT_VALUE = 999999999.99;

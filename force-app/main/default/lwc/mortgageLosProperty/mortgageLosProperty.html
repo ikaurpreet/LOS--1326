@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Property">
+        <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode="readonly" columns="2"
+            fields={fields}>
+        </lightning-record-form>
+    </lightning-card>
+    <template if:true={secondMortgage}>
+        <lightning-card title="Second Property">
+            <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode="readonly" columns="2"
+                fields={fields_second_property}>
+            </lightning-record-form>
+        </lightning-card>
+    </template>
+    <lightning-card title="HOA">
+        <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode="view" columns="2"
+            fields={fields_hoa}>
+        </lightning-record-form>
+    </lightning-card>
+    <template if:true={showTable}>
+        <c-related-list records={items} columndata={columns} title="Loans" object-name="Loan__c">
+        </c-related-list>
+    </template>
+</template>

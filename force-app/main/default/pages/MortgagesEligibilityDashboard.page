@@ -1,0 +1,13 @@
+<apex:page >
+<apex:includeScript value="/lightning/lightning.out.js" />
+<div id="eligibility"></div>
+<script>
+    $Lightning.use("c:CustomApp", function() {
+        $Lightning.createComponent("c:MortgagesEligibilityDetailsComponent",
+            { uuid : "{!$CurrentPage.parameters.uuid}", env: "{!$CurrentPage.parameters.env}" },
+            "eligibility",
+            function(cmp) { console.log("Eligibility was created"); }
+        );
+    });
+</script>
+</apex:page>

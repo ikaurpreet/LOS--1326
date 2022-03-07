@@ -1,0 +1,248 @@
+<aura:component controller="MortgagesEligibilityController" extends="c:MortgagesGraphQLComponent">
+    <ltng:require scripts="{!$Resource.FileSaver}"></ltng:require>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="uuid" type="String"/>
+    <aura:attribute name="submission" type="Object"/>
+    <aura:attribute name="columns" type="List" access="PRIVATE" />
+    <aura:attribute name="eligibility" type="Object"/>
+    <aura:attribute name="selectedTab" type="String" default="details"/>
+    <aura:attribute name="participantRoles" type="Object"/>
+    <aura:attribute name="participantRole" type="Object"/>
+    <aura:attribute name="bureaus" type="Object"/>
+    <aura:attribute name="bureau" type="Object"/>
+    <aura:attribute name="sources" type="Object"/>
+    <aura:attribute name="source" type="Object"/>
+    <aura:attribute name="sourceName" type="String"/>
+    <aura:attribute name="sourceSize" type="String"/>
+    <aura:attribute name="sourceFull" type="Boolean" default="false"/>
+    <aura:attribute name="sourceTypes" type="Object"/>
+    <aura:attribute name="sourceType" type="Object"/>
+    <aura:attribute name="sourceWithType" type="Boolean"/>
+    <aura:attribute name="sourceWithBureau" type="Boolean"/>
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="loading" type="Boolean"/>
+    <aura:attribute name="error" type="String"/>
+    <lightning:tabset selectedTabId="{!v.selectedTab}">
+        <lightning:tab label="Details" id="details" onactive="{!c.onTabSelected}">
+            <aura:if isTrue="{!v.eligibility != null}">
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Uuid:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.eligibility.uuid}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Vertical:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.eligibility.vertical}</dd>
+                </dl>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Status:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.eligibility.status}</dd>
+                </dl>
+                <aura:if isTrue="{!v.eligibility.status != 'failed'}">
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate">Outcome:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.eligibility.outcome}</dd>
+                    </dl>
+                    <aura:if isTrue="{!v.eligibility.outcome == 'eligible'}">
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate">Expired:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.eligibility.expired}</dd>
+                        </dl>
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate">Representative Fico:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.eligibility.representativeFico}</dd>
+                        </dl>
+                    </aura:if>
+                    <aura:if isTrue="{!v.eligibility.outcome != 'eligible'}">
+                        <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate">Borrower Decline Reasons:</dt>
+                            <dd class="slds-item_detail slds-truncate">{!v.eligibility.borrowerDeclineReasons}</dd>
+                        </dl>
+                        <aura:if isTrue="{!and(v.eligibility.coBorrowerDeclineReasons != null, v.eligibility.coBorrowerDeclineReasons != '')}">
+                            <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate">Co Borrower Decline Reasons:</dt>
+                                <dd class="slds-item_detail slds-truncate">{!v.eligibility.coBorrowerDeclineReasons}</dd>
+                            </dl>
+                        </aura:if>
+                    </aura:if>
+                </aura:if>
+                <aura:if isTrue="{!v.eligibility.status == 'failed'}">
+                    <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate">Failed Reasons:</dt>
+                        <dd class="slds-item_detail slds-truncate">{!v.eligibility.failedReasons}</dd>
+                    </dl>
+                </aura:if>
+                <dl class="slds-p-vertical_xx-small slds-list_horizontal slds-wrap slds-border_bottom slds-var-p-*_medium">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Created At:</dt>
+                    <dd class="slds-item_detail slds-truncate">{!v.eligibility.createdAt}</dd>
+                </dl>
+            </aura:if>
+        </lightning:tab>
+        <aura:if isTrue="{!v.eligibility != null}">
+            <aura:if isTrue="{!v.eligibility.status != 'failed'}">    
+                <aura:if isTrue="{!v.eligibility.outcome == 'eligible'}">
+                    <lightning:tab label="Products" id="products" onactive="{!c.onTabSelected}">
+                        <c:MortgagesProductsComponent eligibility="{!v.eligibility}" env="{!v.env}"/>
+                    </lightning:tab>
+                </aura:if>
+                <lightning:tab label="Hard Knockout Rules" id="hardKnockoutRules" onactive="{!c.onTabSelected}">
+                    <lightning:datatable
+                        columns="{!v.columns}"
+                        data="{!v.eligibility.hardKnockoutRules}"
+                        keyField="uuid"
+                        hideCheckboxColumn="true"
+                    />
+                </lightning:tab>
+                <lightning:tab label="Fico Scores" id="ficoScores" onactive="{!c.onTabSelected}">
+                    <lightning:datatable
+                        columns="{!v.columns}"
+                        data="{!v.eligibility.ficoScores}"
+                        keyField="uuid"
+                        hideCheckboxColumn="true"
+                    />
+                </lightning:tab>
+                <lightning:tab label="Mortgage Lines" id="tradelines" onactive="{!c.onTabSelected}">
+                    <lightning:datatable
+                        columns="{!v.columns}"
+                        data="{!v.eligibility.tradelines}"
+                        keyField="uuid"
+                        hideCheckboxColumn="true"
+                    />
+                </lightning:tab>
+                <lightning:tab label="Rate rules" id="rateRules" onactive="{!c.onTabSelected}">
+                    <lightning:datatable
+                        columns="{!v.columns}"
+                        data="{!v.eligibility.rateRules}"
+                        keyField="uuid"
+                        hideCheckboxColumn="true"
+                    />
+                </lightning:tab>
+                <lightning:tab label="Trade lines" id="participantTradeLines" onactive="{!c.onTabSelected}">
+                    <div class="slds-grid slds-m-bottom_xx-small">
+                        <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink">
+                        <lightning:radioGroup name="bureau"
+                            label="Bureau:"
+                            options="{!v.bureaus}"
+                            value="{!v.bureau}"
+                            onchange="{!c.handleChange}"
+                            type="button"/>
+                        </div>
+                        <aura:if isTrue="{!v.eligibility.withCoBorrower}">
+                            <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+                                <lightning:radioGroup name="participantRole"
+                                    label="Participant:"
+                                    options="{!v.participantRoles}"
+                                    value="{!v.participantRole}"
+                                    onchange="{!c.handleChange}"
+                                    type="button"/>
+                            </div>
+                        </aura:if>
+                    </div>
+                    <lightning:datatable
+                        columns="{!v.columns}"
+                        data="{!v.eligibility.participantTradeLines}"
+                        keyField="uuid"
+                        hideCheckboxColumn="true"
+                    />
+                </lightning:tab>
+            </aura:if>
+        <aura:if isTrue="{!v.eligibility.uuid != null}">
+            <lightning:tab label="Raw Response/Request" id="sources" onactive="{!c.onTabSelected}">
+                <div class="slds-grid slds-m-bottom_xx-small">
+                    <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink">
+                        <lightning:radioGroup name="source"
+                            label="Source:"
+                            options="{!v.sources}"
+                            value="{!v.source}"
+                            onchange="{!c.handleChange}"
+                            type="button"/>
+                    </div>
+                    <aura:if isTrue="{!v.sourceWithType}">
+                        <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-bottom slds-shrink">
+                            <lightning:radioGroup name="sourceType"
+                                label="Type:"
+                                options="{!v.sourceTypes}"
+                                value="{!v.sourceType}"
+                                onchange="{!c.handleChange}"
+                                type="button"/>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.sourceWithBureau}">
+                        <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-bottom slds-shrink">
+                            <lightning:radioGroup name="bureau"
+                                label="Bureau:"
+                                options="{!v.bureaus}"
+                                value="{!v.bureau}"
+                                onchange="{!c.handleChange}"
+                                type="button"/>
+                        </div>
+                        <aura:if isTrue="{!v.eligibility.withCoBorrower}">
+                            <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+                                <lightning:radioGroup name="participantRole"
+                                    label="Participant:"
+                                    options="{!v.participantRoles}"
+                                    value="{!v.participantRole}"
+                                    onchange="{!c.handleChange}"
+                                    type="button"/>
+                            </div>
+                        </aura:if>
+                    </aura:if>
+                </div>                        
+                    <aura:if isTrue="{!v.eligibility.sourceResults != null}">
+                        <article class="slds-card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                <p class="slds-card__header-link slds-truncate">
+                                    <span>{!v.sourceName}</span> - <span>{!v.sourceSize}</span>
+                                </p>
+                                </h2>
+                            </div>
+                            <div class="slds-no-flex">
+                                <div class="slds-grid">
+                                <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+                                    <aura:if isTrue="{!v.sourceFull}">
+                                        <lightning:button label="Collaps" iconName="utility:up" iconPosition="left" onclick="{!c.toggleSourceViewHandler}"/>
+                                        <aura:set attribute="else">
+                                            <lightning:button label="Expand" iconName="utility:down" iconPosition="left" onclick="{!c.toggleSourceViewHandler}"/>
+                                        </aura:set>
+                                        </aura:if>
+                                </div>
+                                <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+                                    <lightning:button label="Download" iconName="utility:download" iconPosition="left" onclick="{!c.downloadHandler}"/>
+                                </div>
+                                <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+                                    <lightning:button label="Copy to Clipboard" iconName="utility:copy_to_clipboard" iconPosition="left" onclick="{!c.copySourceHandler}"/>
+                                </div>
+                                </div>
+                            </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div class="slds-box slds-brand-band slds-brand-band_none">
+                            <pre contentEditable="true" suppressContentEditableWarning="true" style="white-space: pre-wrap; margin: 0">
+                                <aura:if isTrue="{!v.sourceFull}">
+                                {!v.eligibility.sourceResults}
+                                <aura:set attribute="else">
+                                    {!v.eligibility.sourceResultsPreview}
+                                </aura:set>
+                                </aura:if>
+                            </pre>
+                            </div>
+                        </div>
+                        <footer class="slds-card__footer slds-align_absolute-center">
+                            <aura:if isTrue="{!v.sourceFull}">
+                                <lightning:button label="Collaps" iconName="utility:up" iconPosition="left" onclick="{!c.toggleSourceViewHandler}"/>
+                                <aura:set attribute="else">
+                                    <lightning:button label="Expand" iconName="utility:down" iconPosition="left" onclick="{!c.toggleSourceViewHandler}"/>
+                                </aura:set>
+                                </aura:if>
+                        </footer>
+                        </article>
+                    </aura:if>
+            </lightning:tab>
+            </aura:if>
+        </aura:if>
+    </lightning:tabset>
+</aura:component>

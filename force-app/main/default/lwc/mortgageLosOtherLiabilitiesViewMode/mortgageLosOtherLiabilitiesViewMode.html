@@ -1,0 +1,99 @@
+<template>
+    <template if:true={showTable}>
+        <c-mortgage-los-help-text icon="action:approval">
+            Liabilities imported on {humanLiabilityImportDate}. <a href="javascript:void"
+                onclick={runImportLeabilties}>Import Liabilities Again.</a>
+        </c-mortgage-los-help-text>
+        <table
+            class="slds-table slds-table_cell-buffer slds-table_bordered los-table_bordered slds-table_fixed-layout slds-table_striped slds-m-bottom_small">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="los-col_fixed_medium" scope="col">
+                        <div title="Owner">Owner</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div title="Account Type">Account Type</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div title="Other Description">Other Description</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-cell-wrap" title="Monthly Amount">Monthly Amount</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-cell-wrap" title="Balance">Balance</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-cell-wrap" title="Months Left">Months Left</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-cell-wrap" title="Credit Limit">Credit Limit</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Action"></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={liabilities} for:item="liability">
+                    <tr key={liability.uuid} class="slds-hint-parent">
+                        <td class="slds-cell-wrap">
+                            <div title="">{liability.whoseLabel}</div>
+                        </td>
+                        <td class="slds-cell-wrap">
+                            <div title="">{liability.accountTypeLabel}</div>
+                        </td>
+                        <td class="slds-cell-wrap">
+                            <div title="">{liability.description}</div>
+                        </td>
+                        <td class="slds-cell-wrap">
+                            <div title="">{liability.monthlyPaymentWithMask}</div>
+                        </td>
+                        <td class="slds-cell-wrap">
+                            <div title="">{liability.unpaidBalanceWithMask}</div>
+                        </td>
+                        <td class="slds-cell-wrap">
+                            <div title="">{liability.monthsLeft}</div>
+                        </td>
+                        <td class="slds-cell-wrap">
+                            <div title="">{liability.creditLimitWithMask}</div>
+                        </td>
+                        <td class="slds-cell-wrap slds-text-align_center">
+                            <c-mortgage-los-edit-btn detail={liability} oneditevent={handleEditModalClicked}>
+                            </c-mortgage-los-edit-btn>
+
+                            <button onclick={handleDelete} style="vertical-align: top" data-details={liability.uuid}
+                                class="slds-button slds-button_icon slds-m-left_medium" title='Delete'>
+                                <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                    <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </template>
+
+    <div class="info_container slds-align_absolute-center slds-m-vertical_large" if:false={showTable}>
+        <lightning-icon size="small" class="slds-m-right_small" icon-name="utility:info" alternative-text="Info icon"
+            title="No assets"></lightning-icon>
+        <p>No liabilities added by the {participant}</p>
+    </div>
+
+    <button class="slds-button slds-button_neutral" onclick={handleAddModalClicked}>
+        <lightning-icon size="x-small" class="add-icon slds-m-right_x-small" icon-name="utility:new"
+            alternative-text="New icon" title="Add Liabilities"></lightning-icon>
+        Add Additional Liability
+    </button>
+
+    <c-mortgage-los-liabilities-modal if:true={modal} handle-liability-change={handleCurrentLiabilityChange}
+        liability={currentLiability} borrower-uuid={borrowerUuid} coborrower-uuid={coborrowerUuid} role={role}
+        handle-close={handleCloseModalCliked} other-liability={otherLiability}>
+    </c-mortgage-los-liabilities-modal>
+
+    <c-mortgage-los-modal if:true={isDeleting} details={deletingLiability} onclosemodal={handleCloseDeleteModal}
+        action-label="Delete" title="Delete Liability">
+        <div class="slds-text-align_center">Are you sure you want to delete this liability?</div>
+    </c-mortgage-los-modal>
+</template>

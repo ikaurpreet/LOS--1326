@@ -1,0 +1,15 @@
+<apex:page >
+  <apex:pageBlock title="Prequal Links">
+  <apex:pageBlockSection columns="2">
+      
+   <apex:outputLink styleClass="btn" style="width:80%; text-decoration:none; font-size:18px; background-color:#57BF93;" value="https://www.credible.com?utm_source=CS-phone-{!$User.Alias}&utm_medium=client_success&utm_campaign=phone_prequal">Phone Prequal</apex:outputLink>
+   <apex:outputLink styleClass="btn" style="text-decoration:none; font-size:18px; background-color:#57BF93;" value="https://www.credible.com?utm_source=CS-chat-{!$User.Alias}&utm_medium=client_success&utm_campaign=chat_prequal">Chat Prequal</apex:outputLink>
+   
+    <div></div><div></div>
+    </apex:pageBlockSection>
+    
+  <apex:pageBlockSection >
+      <apex:outputLink styleClass="btn" style="width:80%; text-decoration:none; font-size:18px; background-color:#57BF93;" value="https://www.credible.com/refinance-student-loans?vt_61370722856=1&utm_source=CS-phone_sales-{!$User.Alias}&utm_medium=client_success&utm_campaign=phone_prequal">Phone Sales</apex:outputLink>
+    </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,24 @@
+<template>
+  <div class="slds-form" role="list">
+    <c-mortgage-los-input-view-mode
+      label={product.rate.label}
+      value={product.rate.value}
+      handle-edit={handleEdit}>
+    </c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode
+      label={product.lender.label}
+      value={product.lender.value}
+      handle-edit={handleEdit}>
+    </c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode
+      label={product.points.label}
+      value={product.points.value}
+      handle-edit={handleEdit}>
+    </c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode
+      label={product.dti.label}
+      value={product.dti.value}
+      handle-edit={handleEdit}>
+    </c-mortgage-los-input-view-mode>
+  </div>
+</template>

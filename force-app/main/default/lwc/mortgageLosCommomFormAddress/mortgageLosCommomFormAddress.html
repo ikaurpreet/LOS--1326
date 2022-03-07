@@ -1,0 +1,45 @@
+<template>
+    <div class="slds-form" role="list">
+        <c-mortgage-los-form-element-control label={address.addressLine1.label}>
+            <fieldset class="slds-form-element slds-form-element_compound slds-is-editing slds-form-element_stacked">
+                <div class="slds-form-element__row slds-m-bottom_none">
+                    <div class="slds-size_3-of-4">
+                        <lightning-input class="slds-m-bottom_none" variant="label-hidden" required type="text"
+                            data-name-input="addressLine1" onchange={handleChange} value={address.addressLine1.value}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4">
+                        <div class="slds-form-element slds-m-bottom_none">
+                            <div class="slds-form-element__control">
+                                <input type="text" data-name-input="unit" placeholder="Unit" class="slds-input"
+                                    onchange={handleChange} value={address.unit.value} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label={address.city.label}>
+            <lightning-input variant="label-hidden" required type="text" data-name-input="city" onchange={handleChange}
+                value={address.city.value}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label={address.stateCode.label}>
+            <lightning-combobox variant="label-hidden" required onchange={handleChange} data-name-input="stateCode"
+                value={address.stateCode.value} placeholder="Select an option" options={states}>
+            </lightning-combobox>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label={address.zipCode.label}>
+            <lightning-input variant="label-hidden" required type="text" data-name-input="zipCode"
+                onchange={handleChange} value={address.zipCode.value}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-time-in-address if:false={isMailingAddress} handle-input-change={handleStartDateChange}
+            data-name-input="startDate" is-current-address={isCurrentAddress} start-date={address.startDate}>
+        </c-mortgage-los-time-in-address>
+    </div>
+</template>

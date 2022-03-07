@@ -1,0 +1,22 @@
+<template>
+  <c-mortgage-los-section-controller uncontrolled>
+    <lightning-layout multiple-rows>
+      <lightning-layout-item if:true={showBorrower} class="slds-size_1-of-2" flexibility="auto"
+        padding="horizontal-small">
+        <c-mortgage-los-profile-edit-mode validate-marital-status={validateMaritalStatus} co-borrowed={coBorrowed}
+          oneditparticipant={handleParticipantChange} participant={borrowerInfo} icon-url={BorrowerIconURL}
+          role="borrower" section-subtitle="Borrower">
+        </c-mortgage-los-profile-edit-mode>
+      </lightning-layout-item>
+      <lightning-layout-item if:true={showCoBorrower} class="slds-size_1-of-2" flexibility="auto"
+        padding="horizontal-small">
+        <c-mortgage-los-profile-edit-mode validate-marital-status={validateMaritalStatus} co-borrowed={coBorrowed}
+          oneditparticipant={handleParticipantChange} participant={coBorrowerInfo} icon-url={coBorrowerIconURL}
+          role="coBorrower" section-subtitle="Co-Borrower">
+        </c-mortgage-los-profile-edit-mode>
+      </lightning-layout-item>
+    </lightning-layout>
+    <c-mortgage-los-section-actions oncancelevent={handleCancelClick} onsaveevent={handleSaveClick}>
+    </c-mortgage-los-section-actions>
+  </c-mortgage-los-section-controller>
+</template>

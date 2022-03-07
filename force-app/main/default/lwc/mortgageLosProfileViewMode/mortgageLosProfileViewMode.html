@@ -1,0 +1,20 @@
+<template>
+  <c-mortgage-los-section-subtitle text={sectionSubtitle} icon={iconUrl}>
+  </c-mortgage-los-section-subtitle>
+
+  <div class="slds-form" role="list">
+    <c-mortgage-los-input-view-mode label={participant.firstName.label} value={participant.firstName.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.middleNameInitial.label} value={participant.middleNameInitial.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.lastName.label} value={participant.lastName.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.suffixType.label} value={suffixCurrentLabel} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.ssn.label} value={participant.ssn.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.dob.label} value={DOBFormatted} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.citizenship.label} value={citizenCurrentLabel} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.maritalType.label} value={maritalCurrentLabel} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.dependentsSummary.label} value={participant.dependentsSummary.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.homePhone.label} value={participant.homePhone.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.phone.label} value={participant.phone.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.workPhone.label} value={participant.workPhone.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+    <c-mortgage-los-input-view-mode label={participant.email.label} value={participant.email.value} handle-edit={handleEdit}></c-mortgage-los-input-view-mode>
+  </div>
+</template>

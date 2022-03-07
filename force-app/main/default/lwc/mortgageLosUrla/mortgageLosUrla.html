@@ -1,0 +1,23 @@
+<template>
+    <template if:false={submissionReady}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <div if:true={submissionReady}>
+        <template if:true={separatedTab}>
+            <lightning-tabset variant="scoped">
+                <lightning-tab label="Borrower 1003">
+                    <c-mortgage-los-urla-participant record-id={recordId} role="borrower" participant-uuid={borrower.uuid}
+                        show-both-participants={marriedCoBorrower}></c-mortgage-los-urla-participant>
+                </lightning-tab>
+                <lightning-tab label="Co-Borrower 1003">
+                    <c-mortgage-los-urla-participant record-id={recordId} role="coBorrower" participant-uuid={coBorrower.uuid}
+                        show-both-participants={marriedCoBorrower}></c-mortgage-los-urla-participant>
+                </lightning-tab>
+            </lightning-tabset>
+        </template>
+        <template if:false={separatedTab}>
+            <c-mortgage-los-urla-participant record-id={recordId} role="borrower" participant-uuid={borrower.uuid}
+                show-both-participants={marriedCoBorrower}></c-mortgage-los-urla-participant>
+        </template>
+    </div>
+</template>

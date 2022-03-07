@@ -1,0 +1,91 @@
+<template>
+    <div class="slds-m-bottom_medium">
+        <c-mortgage-los-section-subtitle text={title} icon={icon}>
+        </c-mortgage-los-section-subtitle>
+
+        <c-mortgage-los-input-view-mode label="Employer" handle-edit={handleEdit}
+            value={employmentFormatted.employerName}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="Address" handle-edit={handleEdit}
+            value={employmentFormatted.fullAddress}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="B. Phone" handle-edit={handleEdit}
+            value={employmentFormatted.businessPhone}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="Position" handle-edit={handleEdit} value={employmentFormatted.position}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="Start Date" handle-edit={handleEdit} value={startedOnFormatted}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="How long with the current employer" handle-edit={handleEdit}
+            value={employmentFormatted.workExperience}>
+        </c-mortgage-los-input-view-mode>
+
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class={editClass}>
+                    <span class="slds-form-element__label" for={checkboxIsPartyToTransactionId}>I am employed by a
+                        family member, property seller, real estate agent, or other party to the transaction</span>
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element__static">
+                            <span class="slds-checkbox">
+                                <input type="checkbox" data-credible-id="isEmployerPartyToTransaction"
+                                    data-credible-checked={employmentFormatted.isEmployerPartyToTransaction}
+                                    id={checkboxIsPartyToTransactionId} name="label" value="option"
+                                    checked={employmentFormatted.isEmployerPartyToTransaction} disabled="" />
+                                <span class="slds-checkbox_faux"></span>
+                            </span>
+                        </div>
+                        <c-mortgage-los-edit-btn oneditevent={handleEdit}>
+                        </c-mortgage-los-edit-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class={editClass}>
+                    <span class="slds-form-element__label" for={checkboxIsOwnerId}>Check if you are the Business Owner
+                        or Self-Employed</span>
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element__static">
+                            <span class="slds-checkbox">
+                                <input type="checkbox" id={checkboxIsOwnerId} data-credible-id="hasOwnershipShare"
+                                    data-credible-checked={employmentFormatted.hasOwnershipShare} name="label"
+                                    value="option" checked={employmentFormatted.hasOwnershipShare} disabled="" />
+                                <span class="slds-checkbox_faux"></span>
+                            </span>
+                        </div>
+                        <c-mortgage-los-edit-btn oneditevent={handleEdit}>
+                        </c-mortgage-los-edit-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <c-mortgage-los-input-view-mode label="Base" handle-edit={handleEdit} value={employmentFormatted.base}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="Overtime" handle-edit={handleEdit} value={employmentFormatted.overtime}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="Bonuses" handle-edit={handleEdit} value={employmentFormatted.bonuses}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="Commissions" handle-edit={handleEdit}
+            value={employmentFormatted.commissions}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="Other" handle-edit={handleEdit} value={employmentFormatted.other}>
+        </c-mortgage-los-input-view-mode>
+
+        <c-mortgage-los-input-view-mode label="Total Monthly Income" handle-edit={handleEdit}
+            value={employmentFormatted.total}>
+        </c-mortgage-los-input-view-mode>
+    </div>
+</template>

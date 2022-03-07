@@ -1,0 +1,22 @@
+.short__divider {
+    cursor: default;
+}
+
+.short__divider:after {
+    height: 100%;
+    background-color: rgb(176, 173, 171);
+}
+
+.short__divider:hover:before {
+    background-color: rgb(176, 173, 171);
+    width: var(--lwc-borderWidthThin,1px);
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.table__custom__prioritet {
+    position: relative;
+    z-index: 2;
+}

@@ -1,0 +1,79 @@
+<apex:page standardcontroller="Notes__c" extensions="ErrorMessageNotesController">
+
+<apex:includeScript value="/support/console/40.0/integration.js"/>
+    
+    <script type="text/javascript">
+        
+            
+              function closeAndRefresh() {
+                  
+
+            sforce.console.getFocusedPrimaryTabId(function(result) {
+                
+                sforce.console.refreshPrimaryTabById(result.id, true);
+
+                //First find the ID of the current tab to close it
+                
+                sforce.console.getEnclosingTabId(function(result) {
+                    
+                    //Now that we have the tab ID, we can close it
+                    var tabId = result.id;
+                    sforce.console.closeTab(tabId);
+                });
+            });
+
+        };
+        
+        
+        
+
+    </script>
+    
+
+<apex:form >
+    <apex:pageBlock title="New Note">
+      <apex:pageMessages id="showmsg"></apex:pageMessages>
+        
+        <apex:pageBlockSection columns="2">
+        
+                <apex:inputField value="{!Notes__c.Account__c}" /> <div></div>
+                
+                
+                <apex:inputField value="{!Notes__c.Contact_Type__c}" style="width:140px" required="true"/> <div></div>
+                
+                <apex:inputField value="{!Notes__c.Product__c}" style="width:140px" required="true"/> <div></div>
+                
+                
+                <apex:inputField value="{!Notes__c.Moving_Forward__c}" style="width:140px" rendered="{!if(Notes__c.RecordTypeId="01261000000Sc5P","true","false")}"/>
+                
+                <apex:inputField value="{!Notes__c.Non_Credible_Lender__c}" style="width:140px" rendered="{!if(Notes__c.RecordTypeId="01261000000Sc5P","true","false")}"/>
+                
+                <apex:inputField value="{!Notes__c.Note_Reason__c}" style="width:140px"/>
+                
+                <apex:inputField value="{!Notes__c.Moving_Forward__c}" style="width:140px" rendered="{!if(Notes__c.RecordTypeId="01261000000Sc5K","true","false")}"/>
+                
+                <apex:inputField value="{!Notes__c.Non_Credible_Rate__c}" style="width:140px" rendered="{!if(Notes__c.RecordTypeId="01261000000Sc5P","true","false")}"/>
+                <div rendered="{!if(Notes__c.RecordTypeId="01261000000Sc5K","true","false")}"></div>
+                <apex:inputField value="{!Notes__c.Next_Follow_Up_Date_Time__c}" style="width:110px" />
+                <apex:inputField value="{!Notes__c.Completed__c}" rendered="{!if(Notes__c.RecordTypeId="01261000000Sc5P","true","false")}"/>
+     
+                <apex:inputField value="{!Notes__c.Description__c}" style="width:300px; height:50px" />
+                <apex:inputField value="{!Notes__c.Completed__c}" rendered="{!if(Notes__c.RecordTypeId="01261000000Sc5K","true","false")}"/>
+                <div></div>
+                <apex:inputField value="{!Notes__c.Uncomplete__c}" rendered="{!if(Notes__c.RecordTypeId="01261000000Sc5K","true","false")}"/>
+                
+                
+         </apex:pageBlockSection>
+         <apex:pageBlockButtons >
+         
+             <apex:commandButton action="{!save}" value="Save" rerender="showmsg"/>
+             <apex:commandButton action="{!cancel}" value="Cancel" />
+         
+         
+         </apex:pageBlockButtons>
+         
+        
+         
+     </apex:pageBlock>
+</apex:form>
+</apex:page>

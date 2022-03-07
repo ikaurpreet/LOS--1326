@@ -1,0 +1,66 @@
+<aura:component controller="GraphQLProxyController" extends="c:MortgagesGraphQLComponent">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="submission" type="Object"/>
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="source" type="String" default="user"/>
+    <aura:attribute name="sources" type="Array"/>
+    <aura:attribute name="sourceType" type="String" default="request"/>
+    <aura:attribute name="sourceTypes" type="Array"/>
+    <aura:attribute name="service" type="String" default="usps"/>
+    <aura:attribute name="services" type="Array"/>
+    <aura:attribute name="loading" type="Boolean"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:attribute name="requests" type="Object"/>
+    <aura:attribute name="request" type="Object"/> 
+    <aura:attribute name="noRequests" type="Boolean"/>
+    
+    <div class="slds-grid slds-m-bottom_xx-small">
+        <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-bottom slds-shrink">
+            <!-- <aura:if isTrue="{!v.service != 'pointserv'}"> -->
+                <lightning:radioGroup name="source"
+                    label="Source:"
+                    disabled="{!v.service == 'pointserv'}"
+                    options="{!v.sources}"
+                    value="{!v.source}"
+                    onchange="{!c.handleChange}"
+                    type="button"/>
+            <!-- </aura:if> -->
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-bottom slds-shrink">
+            <lightning:radioGroup name="service"
+                label="Service:"
+                options="{!v.services}"
+                value="{!v.service}"
+                onchange="{!c.handleChange}"
+                type="button"/>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-bottom slds-shrink">
+          <aura:if isTrue="{!v.noRequests == null}">
+              <lightning:select aura:id="request" label="Requests" onchange="{!c.requestHandle}" >
+                <aura:iteration items="{!v.requests}" var="request">
+                    <option text="{!request.name}" value="{!request.uuid}"/>
+                </aura:iteration>
+              </lightning:select>
+            <aura:set attribute="else"> <div style="margin-bottom: 7px;"> Requests not found</div> </aura:set>
+          </aura:if>
+        </div>
+        <aura:if isTrue="{!v.request != null}">
+          <div class="slds-col slds-no-flex slds-grid slds-m-left_xx-small slds-align-bottom slds-shrink">
+              <lightning:radioGroup name="sourceType"
+                  label="Source Type:"
+                  options="{!v.sourceTypes}"
+                  value="{!v.sourceType}"
+                  onchange="{!c.handleChangeSourceType}"
+                  type="button"/>
+          </div>
+        </aura:if>
+    </div>
+    <aura:if isTrue="{!v.request != null}">
+        <aura:if isTrue="{!v.sourceType == 'request'}">
+            <c:MortgagesSourceViewer source="{!v.request.requestText}" name="{!v.request.name + '-request'}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.sourceType == 'response'}">
+            <c:MortgagesSourceViewer source="{!v.request.responseText}" name="{!v.request.name + '-response'}"/>
+        </aura:if>
+    </aura:if>
+</aura:component>

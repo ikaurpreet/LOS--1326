@@ -1,0 +1,9 @@
+<template>
+    <c-mortgage-los-section-controller uncontrolled>
+        <c-mortgage-los-loan-and-property-edit-mode oneditparticipant={handleParticipantChange}
+            loan-and-property={loanAndProperty} record-id={recordId}>
+        </c-mortgage-los-loan-and-property-edit-mode>
+        <c-mortgage-los-section-actions oncancelevent={handleCancelClick} onsaveevent={handleSaveClick}>
+        </c-mortgage-los-section-actions>
+    </c-mortgage-los-section-controller>
+</template>

@@ -1,0 +1,47 @@
+<template>
+  <c-mortgage-los-section title={propertyCardTitle} icon={propertyCardIcon} del-action={openDeleteModal}>
+    <c-mortgage-los-section-controller uncontrolled>
+      <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto" padding="horizontal-small">
+
+          <c-mortgage-los-real-estate-section-subtitle subtitle-text={sectionSubtitle} ownership={property.ownership}></c-mortgage-los-real-estate-section-subtitle>
+          <div class="slds-form" role="list">
+            <c-mortgage-los-input-view-mode label={formFields.ownership} value={parsedOwnership} handle-edit={subjectPropertyToggleEdit}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.fullAddress} value={fullAddress} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-checkbox-view-mode label={formFields.isSubject} status={property.isSubject}></c-mortgage-los-checkbox-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.occupancyType} value={property.occupancyType} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.numberOfUnits} value={property.numberOfUnits} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.status} value={property.status} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.propertyType} value={property.propertyType} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.purchasePrice} value={property.purchasePrice} formatter={currencyFormatter} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.dateAcquired} value={parsedDateOfPurchase} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.yearBuilt} value={property.yearBuilt} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+          </div>
+
+          <c-mortgage-los-real-estate-section-subtitle subtitle-text="Mortgage Information" ownership={property.ownership}></c-mortgage-los-real-estate-section-subtitle>
+          <div class="slds-form" role="list">
+            <c-mortgage-los-real-estate-tradelines label={formFields.tradelines} property={property}
+              tradelines={property.tradelines} mode="viewMode" handle-edit={toggleEditMode}></c-mortgage-los-real-estate-tradelines>
+            <c-mortgage-los-input-view-mode label={formFields.propertyValue} value={property.propertyValue} formatter={currencyFormatter} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.mortgageBalance} value={property.mortgageBalance} formatter={currencyFormatter}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.mortgagePayment} value={property.mortgagePayment} formatter={currencyFormatter}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.insTaxesAssociationDues} value={property.insTaxesAssociationDues} formatter={currencyFormatter} handle-edit={subjectPropertyToggleEdit}></c-mortgage-los-input-view-mode>
+          </div>
+
+          <c-mortgage-los-real-estate-section-subtitle subtitle-text="Rental Information" ownership={property.ownership}></c-mortgage-los-real-estate-section-subtitle>
+          <div class="slds-form" role="list">
+            <c-mortgage-los-input-view-mode label={formFields.grossRentalIncome} value={property.grossRentalIncome} formatter={currencyFormatter} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.percentageOfRental} value={property.percentageOfRental} formatter={percentageFormatter} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.participationPercent} value={property.participationPercent} formatter={percentageFormatter} handle-edit={toggleEditMode}></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.netIncomeLoss} value={property.netIncomeLoss} formatter={currencyFormatter}></c-mortgage-los-input-view-mode>
+          </div>
+
+        </lightning-layout-item>
+      </lightning-layout>
+    </c-mortgage-los-section-controller>
+  </c-mortgage-los-section>
+
+  <c-mortgage-los-modal if:true={showingModal} details="deleteProperty" onclosemodal={closeDeleteModal} action-label="Delete" title="Delete Property">
+    <div class="slds-text-align_center">Are you sure you want to delete this property?</div>
+  </c-mortgage-los-modal>
+</template>

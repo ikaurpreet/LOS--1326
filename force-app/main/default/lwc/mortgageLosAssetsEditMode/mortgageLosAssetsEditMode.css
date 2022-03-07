@@ -1,0 +1,36 @@
+.los-c__assets_title-container {
+    height: 30px;
+    margin: 4px 0px;
+    width: 100%;
+    font-weight: bold;
+}
+
+.add-icon {
+    --sds-c-icon-color-foreground-default: var(--lwc-brandPrimaryActive);
+}
+
+.total-assets {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.asset--deleted {
+    height: 36px;
+    background-color: rgb(255, 183, 93, 0.3);
+}
+
+.asset_undo-delete {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.total-assets__value.animation, .total-assets__group-value.animation {
+    transition: none;
+    background-color: #D8EDFF;
+}
+
+.total-assets__value, .total-assets__group-value {
+    transition: all 2s ease-out;
+    background-color: none;
+}

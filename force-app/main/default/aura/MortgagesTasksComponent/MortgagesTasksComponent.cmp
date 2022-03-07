@@ -1,0 +1,39 @@
+<aura:component controller="MortgagesTasksController" implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName" access="global">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:attribute name="submissionUuid" type="String"/>
+    <aura:attribute name="env" type="String"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="loading" type="Boolean"/>
+    <aura:attribute name="columns" type="Object"/>
+    <aura:attribute name="task" type="Object"/>
+    <aura:attribute name="tasks" type="Object"/>
+    <aura:attribute name="error" type="String"/>
+    <aura:attribute name="itemsColumns" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+    </aura:if>
+    <aura:if isTrue="{!v.error != null}">
+      <ui:message title="Error" severity="error">
+          {!v.error}
+      </ui:message>
+    </aura:if>
+    <lightning:datatable
+          keyField="uuid"
+          data="{! v.tasks }"
+          columns="{! v.columns }"
+          maxRowSelection="0"
+          onrowselection="{!c.onTaskSelected}"
+          onrowaction="{!c.handleRowAction}"
+          />
+    
+    <aura:if isTrue="{!v.task != null}">
+      <div class="slds-box slds-box_small">
+        <c:MortgagesTasksDocumentComponent/>
+          <h4 class="slds-section-title--divider slds-m-bottom_xx-small slds-m-top_xx-small">{!v.task.title}</h4>
+          <h3 class="slds-m-bottom_large slds-m-top_xx-small">{!v.task.description}</h3>
+          {!v.task.uuid}
+      </div>
+    </aura:if>
+</aura:component>

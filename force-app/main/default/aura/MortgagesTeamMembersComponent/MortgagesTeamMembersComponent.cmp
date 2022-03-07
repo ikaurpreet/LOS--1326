@@ -1,0 +1,29 @@
+<aura:component controller="MortgageTeamMemberController" extends="c:MortgagesGraphQLComponent">
+    <aura:attribute name="env" type="String" default="DEVELOP" />
+    <aura:attribute name="members" type="Array" />
+    <aura:attribute name="items" type="Array" />
+    <aura:attribute name="loading" type="Boolean" />
+    <aura:attribute name="error" type="String" />
+    <aura:attribute name="envs" type="Array" />
+
+    <aura:attribute name="columns" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-m-left_xx-small">
+        <!-- <lightning:select aura:id="env" name="env" label="Environment" onchange="{! c.init }" value="{!v.env}">
+          <option value="LOCAL">Local</option>
+          <option value="DEVELOP">Develop</option>
+          <option value="DEV1">Dev1</option>
+          <option value="STAGE">Stage</option>
+          <option value="UAT">UAT</option>
+          <option value="PRODUCTION">Production</option>
+        </lightning:select> -->
+      </div>
+    <lightning:datatable
+      columns="{!v.columns}"
+      data="{!v.members}"
+      keyField="userId"
+      hideCheckboxColumn="true"
+      onrowaction="{! c.handleRowAction }"
+      onheaderaction="{! c.handleHeaderAction }"/>
+</aura:component>

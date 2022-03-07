@@ -1,0 +1,37 @@
+<apex:page standardController="Custom_Task__c">
+    <style>
+        #col1,#col2{width:49%;display:inline-block;text-align:center}
+    </style>
+    
+    <apex:form >
+        <div id="col1">
+        
+                <apex:outputText style="width:100%; text-align:left; font-size:72px; font-weight:800; color:rgb(153,51,255)" value="{!TODAY()-Custom_Task__c.Lock_Loan_Date__c}"></apex:outputText>
+                <apex:outputText style="width:100%; text-align:center; font-size:18px; font-weight:600; color:rgb(42,151,240)" value="days locked"><br/></apex:outputText>
+
+        </div>
+        <div id="col2">
+        
+                <apex:outputText style="width:100%; text-align:center; font-size:72px; font-weight:800; color:rgb(75,202,129)" value="{!Custom_Task__c.Lock_Expiration_Date__c-TODAY()}"></apex:outputText>
+                <apex:outputText style="width:100%; text-align:center; font-size:18px; font-weight:600; color:rgb(42,151,240)" value="days remaining"><br/></apex:outputText>
+
+        </div>
+    </apex:form>
+           
+
+<div style="text-align:center">
+ 
+
+
+<apex:outputText style="width:100%; text-align:left; font-size:18px; font-weight:600; color:rgb(42,151,240)" value="Locked Date: {0,date,MMM' 'd', 'yyyy}"><br/><br/><br/>
+<apex:param value="{!Custom_Task__c.Lock_Loan_Date__c}" />
+
+</apex:outputText>
+
+<apex:outputText style="width:100%; text-align:left; font-size:18px; font-weight:600; color:rgb(42,151,240)" value="Expiration Date: {0,date,MMM' 'd', 'yyyy}"><br/><br/>
+<apex:param value="{!Custom_Task__c.Lock_Expiration_Date__c}" />
+
+</apex:outputText>
+</div>
+
+</apex:page>

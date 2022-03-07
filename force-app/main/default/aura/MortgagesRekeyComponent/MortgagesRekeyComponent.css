@@ -1,0 +1,7 @@
+.THIS .modal__title{
+  font-size: 18px;
+}
+
+.THIS .other__textarea textarea[disabled]{
+  color: gray;
+}

@@ -1,0 +1,12 @@
+<template>
+    <c-mortgage-los-section-controller uncontrolled>
+        <lightning-layout>
+            <lightning-layout-item class="slds-p-bottom_medium" padding="horizontal-small" flexibility="auto">
+                <c-mortgage-los-lender-form-l1-edit-mode oneditparticipant={handleParticipantChange} lender-data={lenderData} is-purchase-submission={isPurchaseSubmission} is-refi-submission={isRefiSubmission}>
+                </c-mortgage-los-lender-form-l1-edit-mode>
+            </lightning-layout-item>
+        </lightning-layout>
+        <c-mortgage-los-section-actions oncancelevent={handleCancelClick} onsaveevent={handleSaveClick}>
+        </c-mortgage-los-section-actions>
+    </c-mortgage-los-section-controller>
+</template>

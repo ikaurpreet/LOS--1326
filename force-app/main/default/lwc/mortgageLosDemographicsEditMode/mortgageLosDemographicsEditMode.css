@@ -1,0 +1,18 @@
+.demoSubTitle {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 130%;
+}
+
+.demoIndentCheckbox {
+    padding-left: 20px;
+}
+
+.demoOtherTextBox {
+    padding-left: 40px;
+}
+
+.demoEditSection {
+    margin-bottom: 20px;
+}

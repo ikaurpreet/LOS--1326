@@ -1,0 +1,160 @@
+<template>
+    <div class="slds-border_bottom slds-m-bottom_medium">
+        <div class="slds-grid">
+            <div class="slds-col">
+                <c-mortgage-los-section-subtitle text={title} icon={icon}>
+                </c-mortgage-los-section-subtitle>
+            </div>
+            <div class="slds-col slds-grow-none">
+                <lightning-icon size="x-small" onclick={openModal} data-employment-key={employment.key}
+                    icon-name="utility:delete" alternative-text="Delete" title="Delete">
+                </lightning-icon>
+            </div>
+        </div>
+
+        <c-mortgage-los-form-element-control label="I am currently working in this role">
+            <span class="slds-checkbox slds-checkbox_standalone">
+                <input type="checkbox" data-name-input="currentlyWorking" onchange={handleCurrentlyWorkingChange}
+                    checked={employment.currentlyWorking} />
+                <span class="slds-checkbox_faux"></span>
+                <div if:true={showAlert} class="slds-grid slds-m-top_x-small">
+                    <div class="slds-col slds-m-right_x-small">
+                        <lightning-icon size="x-small" icon-name="utility:info" alternative-text="Info" title="Info">
+                        </lightning-icon>
+                    </div>
+                    <div class="slds-col">
+                        This employment will be moved to previous employment when you save. Update end date.
+                    </div>
+                </div>
+            </span>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Employer">
+            <lightning-input variant="label-hidden" type="text" required data-name-input="employerName"
+                onchange={handleChange} value={employment.employerName}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Street Address">
+            <fieldset class="slds-form-element slds-form-element_compound slds-is-editing slds-form-element_stacked">
+                <div class="slds-form-element__row slds-m-bottom_none">
+                    <div class="slds-size_3-of-4">
+                        <lightning-input class="slds-m-bottom_none" variant="label-hidden" type="text"
+                            data-name-input="addressLine1" onchange={handleAddressChange} value={address.addressLine1}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4">
+                        <lightning-input type="text" variant="label-hidden" class="slds-m-bottom_none"
+                            data-name-input="unit" placeholder="Unit" onchange={handleAddressChange}
+                            value={address.unit}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </fieldset>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="City" if:true={addressInputRequirement}>
+            <lightning-input variant="label-hidden" type="text" required data-name-input="city"
+                onchange={handleAddressChange} value={address.city}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="State" if:true={addressInputRequirement}>
+            <lightning-combobox variant="label-hidden" required onchange={handleAddressChange}
+                data-name-input="stateCode" value={address.stateCode} placeholder="Select an option" options={states}>
+            </lightning-combobox>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Zip" if:true={addressInputRequirement}>
+            <lightning-input variant="label-hidden" type="text" min="0" max-length=5 required data-name-input="zipCode"
+                onchange={handleZipChange} value={address.zipCode}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="B. Phone">
+            <lightning-input variant="label-hidden" type="text" pattern="^\(\d{3}\)\s\d{3}-\d{4}$"
+                message-when-pattern-mismatch="Not a valid phone number" data-name-input="businessPhone"
+                onchange={handlePhoneChange} value={employment.businessPhone}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Position">
+            <lightning-input variant="label-hidden" required type="text" data-name-input="position"
+                onchange={handleChange} value={employment.position}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Start Date">
+            <lightning-input type="date" variant="label-hidden" required data-name-input="startedOn"
+                value={employment.startedOn} max={maxStartDate} message-when-range-overflow={messageWhenRangeOverflow}
+                onchange={handleChange}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="End Date">
+            <lightning-input type="date" variant="label-hidden" data-name-input="endDate" value={endDateValue}
+                disabled={endDateInputAccess} min={minEndDate}
+                message-when-range-underflow="The End date must be greater than a Start date." onchange={handleChange}
+                required={endDateInputRequirement}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control
+            label="I am employed by a family member, property seller, real estate agent, or other party to the transaction">
+            <lightning-input type="checkbox" data-name-input="isEmployerPartyToTransaction"
+                checked={employment.isEmployerPartyToTransaction} onchange={handleChange}></lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Employment type">
+            <lightning-combobox variant="label-hidden" required onchange={handleChange} data-name-input="employerType"
+                value={employment.employerType} placeholder="Select an option" options={employmentTypeOptions}>
+            </lightning-combobox>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Do you have an ownership share in the business?">
+            <lightning-input type="checkbox" data-name-input="hasOwnershipShare" checked={employment.hasOwnershipShare}
+                onchange={handleChange}></lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Base">
+            <lightning-input data-name-input="base" value={grossMonthlyIncomeSummary.base}
+                onchange={handleAmountChange}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Overtime">
+            <lightning-input data-name-input="overtime" value={grossMonthlyIncomeSummary.overtime}
+                onchange={handleAmountChange}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Bonuses">
+            <lightning-input data-name-input="bonuses" value={grossMonthlyIncomeSummary.bonuses}
+                onchange={handleAmountChange}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Commissions">
+            <lightning-input data-name-input="commissions" value={grossMonthlyIncomeSummary.commissions}
+                onchange={handleAmountChange}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Other">
+            <lightning-input data-name-input="other" value={grossMonthlyIncomeSummary.other}
+                onchange={handleAmountChange}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+
+        <c-mortgage-los-form-element-control label="Total Monthly Income">
+            <lightning-input disabled data-name-input="total" value={grossMonthlyIncomeSummary.total}
+                onchange={handleAmountChange}>
+            </lightning-input>
+        </c-mortgage-los-form-element-control>
+    </div>
+
+    <c-mortgage-los-modal if:true={showingModal} details={deletingEmployment} onclosemodal={closeModal}
+        action-label="Delete" title="Delete Employment">
+        <div class="slds-text-align_center">Are you sure you want to delete this employment?</div>
+    </c-mortgage-los-modal>
+</template>

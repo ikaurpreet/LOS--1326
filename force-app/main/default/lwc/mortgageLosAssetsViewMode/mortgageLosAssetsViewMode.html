@@ -1,0 +1,89 @@
+<template>
+    <template if:true={showTable}>
+        <template for:each={assets} for:item="assetsGroup">
+            <div key={assetsGroup.label} class="los-c__assets_title-container">
+                <p>{assetsGroup.label}</p>
+            </div>
+
+            <table key={assetsGroup.label}
+                class="slds-table slds-table_cell-buffer slds-table_bordered los-table_bordered slds-table_fixed-layout slds-table_striped slds-m-bottom_small">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Owner">Owner</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Account Type">Account Type</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Institution">Institution</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Account No.">Account No.</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Account No.">Value</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Action"></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={assetsGroup.items} for:item="asset">
+                        <tr key={asset.uuid} class="slds-hint-parent" data-testid="assetRecord">
+                            <td class="slds-cell-wrap">
+                                <div class="slds-truncate" title="">{asset.owner}</div>
+                            </td>
+                            <td class="slds-cell-wrap">
+                                <div class="slds-truncate" title="">{asset.assetTypeLabel}</div>
+                            </td>
+                            <td class="slds-cell-wrap">
+                                <div class="slds-truncate" title="">{asset.institutionName}</div>
+                            </td>
+                            <td class="slds-cell-wrap">
+                                <div class="slds-truncate" title="">{asset.accountNumber}</div>
+                            </td>
+                            <td class="slds-cell-wrap">
+                                <div class="slds-truncate" title="">{asset.amountWithMask}</div>
+                            </td>
+                            <td class="slds-text-align_center">
+                                <c-mortgage-los-edit-btn detail={asset} oneditevent={handleEdit}>
+                                </c-mortgage-los-edit-btn>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+                <tfoot>
+                    <tr class="slds-hint-parent">
+                        <td class="slds-text-align_right" colspan="4">{assetsGroup.label} Total:</td>
+                        <td colspan="2">{assetsGroup.totalWithMask}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </template>
+        <table
+            class="slds-table slds-table_cell-buffer slds-table_bordered los-table_bordered slds-table_fixed-layout slds-table_striped slds-m-bottom_small"
+            aria-label=" Example headless table of Opportunities with cell content truncated ">
+            <tbody>
+                <tr>
+                    <td><b>Summary</b></td>
+                    <td class="slds-text-align_right" colspan="3"><b>ASSETS TOTAL:</b></td>
+                    <td colspan="2"><b>{totalAssets}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+
+    <div class="info_container slds-align_absolute-center slds-m-vertical_large" if:false={showTable}>
+        <lightning-icon size="small" class="slds-m-right_small" icon-name="utility:info" alternative-text="Info icon"
+            title="No assets"></lightning-icon>
+        <p>No assets added by the {participant}</p>
+    </div>
+
+    <button class="slds-button slds-button_neutral" onclick={showAddModal}>
+        <lightning-icon size="x-small" class="add-icon slds-m-right_x-small" icon-name="utility:new"
+            alternative-text="New icon" title="Add Assets"></lightning-icon>
+        Add Additional Assets
+    </button>
+</template>

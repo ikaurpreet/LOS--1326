@@ -1,0 +1,129 @@
+<template>
+    <c-mortgage-los-section-subtitle text={propertyTitle} icon={icon}>
+    </c-mortgage-los-section-subtitle>
+
+    <c-mortgage-los-yes-no-radio required variant="split-60" data-testid="permanentResidence"
+        label="A. Will you occupy the property as your primary residence?" value={declarations.permanentResidence}
+        details="permanentResidence" handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" if:true={declarations.permanentResidence}
+        data-testid="ownershipInterest" value={declarations.ownershipInterest} details="ownershipInterest"
+        label="a. Have you had an ownership interest in another property in the last three years?"
+        handle-change={handleInputChange}></c-mortgage-los-yes-no-radio>
+    <div if:true={showASuboptions} class="slds-form__row">
+        <div class="slds-form__item">
+            <div
+                class="slds-form-element slds-form-element_edit slds-form-element_horizontal slds-hint-parent slds-form-element_split-60">
+                <span class="slds-form-element__label">a. (1) What type of property did you own?</span>
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element__static">
+                        <lightning-combobox variant="label-hidden" required placeholder="Select an option"
+                            data-testid="occupancyType" value={declarations.occupancyType}
+                            onchange={handleOccupancyChange} options={occupancyOptions}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div if:true={showASuboptions} class="slds-form__row">
+        <div class="slds-form__item">
+            <div
+                class="slds-form-element slds-form-element_edit slds-form-element_horizontal slds-hint-parent slds-form-element_split-60">
+                <span class="slds-form-element__label">a. (2) How did you hold title to the property?</span>
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element__static">
+                        <lightning-combobox variant="label-hidden" required placeholder="Select an option"
+                            data-testid="ownershipType" value={declarations.ownershipType}
+                            onchange={handleOwnershipChange} options={ownershipOption}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <c-mortgage-los-yes-no-radio disabled={isRefi} required variant="split-60"
+        label="B. Do you have a family relationship or business affiliation with the seller of the property?"
+        details="relationshipWithSeller" value={declarations.relationshipWithSeller} handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" details="borrowMoneyFromAnotherParty"
+        label="C. Are you borrowing any money for this real estate transaction (e.g., money for your closing costs or down payment) or obtaining any money from another party, such as the seller or realtor, that you have not disclosed on this loan application?"
+        value={declarations.borrowMoneyFromAnotherParty} handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+    <div if:true={declarations.borrowMoneyFromAnotherParty} class="slds-form__row">
+        <div class="slds-form__item">
+            <div
+                class="slds-form-element slds-form-element_edit slds-form-element_horizontal slds-hint-parent slds-form-element_split-60">
+                <span class="slds-form-element__label">What is the amount of this money?</span>
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element__static">
+                        <lightning-input type="text" required variant='label-hidden'
+                            value={declarations.borrowMoneyFromAnotherPartyAmount} onchange={handleAmountChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <c-mortgage-los-yes-no-radio required variant="split-60" details="mortgageLoanOnAnotherProperty"
+        label="D1. Have you or will you be applying for a mortgage loan on another property (not the property securing this loan) on or before closing this transaction that is not disclosed on this loan application? "
+        value={declarations.mortgageLoanOnAnotherProperty} handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" details="applyNewCredit"
+        label="D2. Have you or will you be applying for any new credit (e.g., installment loan, credit card, etc.) on or before closing this loan that is not disclosed on this application?"
+        value={declarations.applyNewCredit} handle-change={handleInputChange}></c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" details="priorityOverFirstMortgageLien"
+        label="E. Will this property be subject to a lien that could take priority over the first mortgage lien, such as a clean energy lien paid through your property taxes (e.g., the Property Assessed Clean Energy Program)?"
+        value={declarations.priorityOverFirstMortgageLien} handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+
+    <c-mortgage-los-section-subtitle text={financesTitle} icon={icon}>
+    </c-mortgage-los-section-subtitle>
+
+    <c-mortgage-los-yes-no-radio required variant="split-60" details="cosignerOrGuarantor"
+        label="F. Are you a co-signer or guarantor on any debt or loan that is not disclosed on this application?"
+        value={declarations.cosignerOrGuarantor} handle-change={handleInputChange}></c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" label="G. Are there any outstanding judgments against you?"
+        details="outstandingJudgements" value={declarations.outstandingJudgements} handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" value={declarations.delinquentLoansFederalDebt}
+        details="delinquentLoansFederalDebt" label="H. Are you currently delinquent or in default on a Federal debt?"
+        handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" value={declarations.partyToLawsuitPersonalLiability}
+        details="partyToLawsuitPersonalLiability"
+        label="I. Are you a party to a lawsuit in which you potentially have any personal financial liability?"
+        handle-change={handleInputChange}></c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" value={declarations.conveyedPropertyInLieuForeclosure}
+        details="conveyedPropertyInLieuForeclosure"
+        label="J. Have you conveyed title to any property in lieu of foreclosure in the past 7 years?"
+        handle-change={handleInputChange}></c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" value={declarations.preForeclosureSale}
+        details="preForeclosureSale"
+        label="K. Within the past 7 years, have you completed a pre-foreclosure sale or short sale, whereby the property was sold to a third party and the Lender agreed to accept less than the outstanding mortgage balance due?"
+        handle-change={handleInputChange}></c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" value={declarations.propertyForeclosedUpon7Years}
+        details="propertyForeclosedUpon7Years" label="L. Have you had property foreclosed upon in the last 7 years?"
+        handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+    <c-mortgage-los-yes-no-radio required variant="split-60" value={declarations.declaredBankruptcy}
+        details="declaredBankruptcy" label="M. Have you declared bankruptcy within the past 7 years?"
+        handle-change={handleInputChange}>
+    </c-mortgage-los-yes-no-radio>
+    <div if:true={declarations.declaredBankruptcy} class="slds-form__row">
+        <div class="slds-form__item">
+            <div
+                class="slds-form-element slds-form-element_edit slds-form-element_horizontal slds-hint-parent slds-form-element_split-60">
+                <span class="slds-form-element__label">Please identify the type(s) of bankruptcy</span>
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element__static">
+                        <lightning-checkbox-group name="checkboxGroup" label="Checkbox Group"
+                            data-testid="bankruptcyOptions" options={bankruptcyOptions} value={bankruptcyValue}
+                            variant="label-hidden" onchange={handleBankruptcyChaptersChange} required>
+                        </lightning-checkbox-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

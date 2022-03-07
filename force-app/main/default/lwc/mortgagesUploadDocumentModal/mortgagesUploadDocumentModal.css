@@ -1,0 +1,7 @@
+.slds-form-element {
+  margin-bottom: 10px;
+}
+
+.slds-listbox.slds-listbox_vertical.slds-dropdown.slds-dropdown_fluid.slds-dropdown_left.slds-dropdown_length-with-icon-7 {
+  max-height: calc((1.5rem + 1rem) * 3);
+}

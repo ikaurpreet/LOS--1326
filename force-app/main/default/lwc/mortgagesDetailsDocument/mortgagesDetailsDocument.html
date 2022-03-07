@@ -1,0 +1,98 @@
+<template>
+  <template if:true={openAddLenderDocument}>
+      <c-mortgages-add-lender-folder-document 
+        onclose={closeAddLenderDocumentHandler} 
+        onupdate={updateAddLenderDocumentHandler}
+        selected-values={addLenderTags} 
+        document-id={document.id}>
+      </c-mortgages-add-lender-folder-document>
+  </template>
+  <template if:true={openAddExpirationDateDocument}>
+    <c-mortgages-add-expiration-date-document
+      value={document.expirationDate}
+      document-id={document.id}
+      onclose={closeAddExpirationDateDocumentHandler}
+    >
+    </c-mortgages-add-expiration-date-document>
+  </template>
+  <div class="slds-card">
+    <div class="slds-card__body slds-card__body_inner">
+      <template if:true={error}>
+        <c-mortgages-error error={error} onclose={closeError}></c-mortgages-error>
+      </template>
+      <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+      </template>
+      <template if:true={document}>
+        <div class="slds-grid slds-grid_vertical">
+          <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+            <span class="slds-form-element__label">Filename</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static">{document.name}</div>
+            </div>
+          </div>
+          <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+            <span class="slds-form-element__label">Status</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static">{document.status}</div>
+            </div>
+          </div>
+          <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+            <span class="slds-form-element__label">Opportunity</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static"><a href="javascript:void" onclick={openOpportunityHandler}>{document.opportunity.Name}</a></div>
+            </div>
+          </div>
+          <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+            <span class="slds-form-element__label">Category</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static">{document.category}</div>
+            </div>
+          </div>
+          <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+            <span class="slds-form-element__label">Most Recent Status Change Date</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static"><lightning-formatted-date-time value={document.mostRecentStatusChangeDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                minute="2-digit" time-zone-name="short" hour12="false"></lightning-formatted-date-time></div>
+            </div>
+          </div>
+          <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+            <span class="slds-form-element__label">Document Upload Date</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static"><lightning-formatted-date-time value={document.uploadDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                minute="2-digit" time-zone-name="short" hour12="false"></lightning-formatted-date-time></div>
+            </div>
+          </div>
+          <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+            <span class="slds-form-element__label">Expiration Date</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static"><lightning-formatted-date-time value={document.expirationDate} year="numeric" month="numeric" day="numeric" ></lightning-formatted-date-time></div>
+              <button class="slds-button slds-button_icon slds-button_icon-small" title="Edit: Expiration Date" onclick={openAddExpirationDateDocumentHandler}>
+                <lightning-icon icon-name="utility:edit" size="xx-small" alternative-text="Edit" title="Edit"></lightning-icon>
+                <span class="slds-assistive-text">Edit: Expiration Date</span>
+              </button>
+            </div>
+          </div>
+          <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+            <span class="slds-form-element__label">Lender Folder</span>
+            <div class="slds-form-element__control">
+              <div class="slds-form-element__static">{document.folderLabel}</div>
+              <button class="slds-button slds-button_icon slds-button_icon-small" title="Edit: Lender Folder" onclick={openAddLenderDocumentHandler}>
+                <lightning-icon icon-name="utility:edit" size="xx-small" alternative-text="Edit" title="Edit"></lightning-icon>
+                <span class="slds-assistive-text">Edit: Lender Folder</span>
+              </button>
+            </div>
+          </div>
+          <template if:true={document.lastModifiedBy}>
+            <div class="slds-col slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+              <span class="slds-form-element__label">Last modified by</span>
+              <div class="slds-form-element__control">
+                <div class="slds-form-element__static"><a href="javascript:void" onclick={openUserHandler}>{document.lastModifiedBy.Name}</a></div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>

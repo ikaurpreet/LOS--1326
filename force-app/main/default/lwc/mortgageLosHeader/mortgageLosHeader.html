@@ -1,0 +1,71 @@
+<template>
+  <lightning-record-view-form record-id={recordId} object-api-name="Opportunity" density="compact">
+    <div class="slds-grid slds-p-around_medium header slds-gutters_x-small slds-m-left_none slds-m-right_none">
+      <div class="slds-col slds-size_1-of-6">
+        <div>Borrower</div>
+        <div class="value"><a onclick={openAccount}>{accountName}</a></div>
+        <div class="slds-m-top_x-small">Co-Borrower</div>
+        <template if:true={cosigned}>
+          <div class="value"><a onclick={openCosigner}>{cosignerName}</a></div>
+        </template>
+        <template if:false={cosigned}>
+          <div class="value gray">No Co-Borrower</div>
+        </template>
+      </div>
+      <div class="slds-col slds-size_1-of-6">
+        <div if:false={isTesterProfile}>Address</div>
+        <div if:true={isTesterProfile}>Subject Property Address</div>
+        <div class="value"><lightning-formatted-rich-text value={propertyAddress}></lightning-formatted-rich-text></div>
+      </div>
+
+      <template if:false={isTesterProfile}>
+        <div class="slds-col slds-size_1-of-6">
+          <div>Bo - Date of Birth</div>
+          <div class={graphqlInfoCss}>{dob}</div>
+          <div class="slds-m-top_x-small">Bo - Last 4 digits of SSN</div>
+          <div class={graphqlInfoCss}>{ssn}</div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+          <div>Opportunity Owner</div>
+          <div class="value"><a onclick={openOwner}>{ownerName}</a></div>
+          <div class="slds-m-top_x-small">Encompass Loan Number</div>
+          <div class="value">{encompassLoanNumber}</div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+          <div>Lender Loan Number</div>
+          <div class="value">{lender} - {lenderLoanNumber}</div>
+          <div class="slds-m-top_x-small">Stage</div>
+          <div class="value">{stage}</div>
+        </div>
+      </template>
+
+      <template if:true={isTesterProfile}>
+        <div class="slds-col slds-size_1-of-6">
+          <div>Lender Loan Number</div>
+          <div class="value">{lender} - {lenderLoanNumber}</div>
+          <div class="slds-m-top_x-small">Loan Amount</div>
+          <div class={graphqlInfoCss}>{loanAmount}</div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+          <div>LTV</div>
+          <div class={eligibilityGraphqlInfoCss}>{ltv}</div>
+          <div class="slds-m-top_x-small">DTI</div>
+          <div class={eligibilityGraphqlInfoCss}>{dti}</div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+          <div>Rate</div>
+          <div class={eligibilityGraphqlInfoCss}>{rate}</div>
+          <div class="slds-m-top_x-small">FICO Score</div>
+          <div class={eligibilityGraphqlInfoCss}>{fico}</div>
+        </div>
+      </template>
+
+      <div class="slds-col slds-size_1-of-6">
+        <div>Lock Date</div>
+        <div class={lockDateCSS}>{lockDate}</div>
+        <div class="slds-m-top_x-small">Expiration Date</div>
+        <div class={lockExpirationDateCSS}>{lockExpirationDate}</div>
+      </div>
+    </div>
+  </lightning-record-view-form>
+</template>

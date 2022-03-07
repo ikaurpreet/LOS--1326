@@ -1,0 +1,156 @@
+<template>
+    <lightning-tabset>
+        <lightning-tab label={participantInfoLabel}>
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Personal Information" icon="standard:contact">
+                        <c-mortgage-los-update-profile record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-update-profile>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Address" icon="standard:address">
+                        <c-mortgage-los-update-address record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-update-address>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Military Service" icon="standard:reward">
+                        <c-mortgage-los-update-military-service record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-update-military-service>
+                    </c-mortgage-los-section>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Employment & Income">
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Gross Monthly Income Summary" icon="standard:contact_list">
+                        <c-mortgage-los-monthly-income-summary record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-monthly-income-summary>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Current Employment/Self-Employment Monthly Income"
+                        icon="standard:account">
+                        <c-mortgage-los-current-employment-monthly-income record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-current-employment-monthly-income>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Previous Employment and Income" icon="standard:account">
+                        <c-mortgage-los-previous-employment-and-income record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-previous-employment-and-income>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Income from Other Sources" icon="utility:currency">
+                        <c-mortgage-los-income-from-other-sources record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-income-from-other-sources>
+                    </c-mortgage-los-section>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Assets & Liabilities">
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Summary" icon="standard:contact_list">
+                        <c-mortgage-los-assets-and-liabilities-summary record-id={recordId} role={role}
+                            variant="split-60">
+                        </c-mortgage-los-assets-and-liabilities-summary>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Assets" icon="custom:custom17">
+                        <c-mortgage-los-assets record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-assets>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Credit Report" icon="custom:custom102">
+                        <c-mortgage-los-credit-report record-id={recordId} role={role}
+                            participant-uuid={participantUuid}>
+                        </c-mortgage-los-credit-report>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Liabilities" icon="standard:omni_supervisor">
+                        <c-mortgage-los-liabilities record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants} participant-uuid={participantUuid}>
+                        </c-mortgage-los-liabilities>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Other Liabilities and Expenses" icon="standard:omni_supervisor">
+                        <c-mortgage-los-other-liabilities record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants} participant-uuid={participantUuid}>
+                        </c-mortgage-los-other-liabilities>
+                    </c-mortgage-los-section>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Real Estate">
+            <div class="slds-grid slds-grid_vertical">
+                <c-mortgage-los-real-estate record-id={recordId} role={role}></c-mortgage-los-real-estate>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Loan & Property">
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Loan and Property Information" icon="custom:custom16">
+                        <c-mortgage-los-loan-and-property record-id={recordId}></c-mortgage-los-loan-and-property>
+                    </c-mortgage-los-section>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Declarations & Demographics">
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Declarations" icon="standard:customer_portal_users">
+                        <c-mortgage-los-property-and-money record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-property-and-money>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="Demographic Information" icon="standard:channel_program_members">
+                        <c-mortgage-los-demographics record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}>
+                        </c-mortgage-los-demographics>
+                    </c-mortgage-los-section>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Lender Form">
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="L1. Property and Loan Information" icon="standard:contact_list">
+                        <c-mortgage-los-lender-form-l1 record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}></c-mortgage-los-lender-form-l1>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="L3. Mortgage Loan Information" icon="standard:contact_list">
+                        <c-mortgage-los-lender-form-l3 record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}></c-mortgage-los-lender-form-l3>
+                    </c-mortgage-los-section>
+                </div>
+                <div class="slds-col slds-m-vertical_small">
+                    <c-mortgage-los-section title="L4. Qualifying the Borrower - Minimum Required Funds or Cash Back"
+                        icon="standard:contact_list">
+                        <c-mortgage-los-lender-form-l4 record-id={recordId} role={role}
+                            show-both-participants={showBothParticipants}></c-mortgage-los-lender-form-l4>
+                    </c-mortgage-los-section>
+                </div>
+            </div>
+        </lightning-tab>
+    </lightning-tabset>
+</template>

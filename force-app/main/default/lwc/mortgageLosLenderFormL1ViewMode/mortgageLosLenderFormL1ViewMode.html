@@ -1,0 +1,59 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Property Information">
+                </c-mortgage-los-section-subtitle>
+            </div>
+            <c-mortgage-los-input-view-mode label="Estimated Value" handle-edit={handleEdit}
+                value={labels.estimatedValue}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Appraised Value" handle-edit={handleEdit}
+                value={labels.appraisedValue}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Community Property State" handle-edit={handleEdit}
+                value={labels.communityPropertyState}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Attachment Type" handle-edit={handleEdit}
+                value={labels.attachmentType}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Property Type" handle-edit={handleEdit}
+                value={labels.propertyType}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Property Will Be" handle-edit={handleEdit}
+                value={labels.occupancyType}>
+            </c-mortgage-los-input-view-mode>
+            <template if:true={isRefiSubmission}>
+                <!--<c-mortgage-los-input-view-mode label="Gross Rent" handle-edit={handleEdit} value="">
+                </c-mortgage-los-input-view-mode>
+                <c-mortgage-los-input-view-mode label="Occup. Rate" handle-edit={handleEdit} value="">
+                </c-mortgage-los-input-view-mode>-->
+                <c-mortgage-los-input-view-mode label="Date Acquired" handle-edit={handleEdit} value={yearAcquired}>
+                </c-mortgage-los-input-view-mode>
+                <c-mortgage-los-input-view-mode label="Original Cost" handle-edit={handleEdit}
+                    value={labels.originalPurchasePrice}>
+                </c-mortgage-los-input-view-mode>
+                <c-mortgage-los-input-view-mode
+                  label="Estimated Liens to be Paid Off" value={labels.estimatedLiensToBePaidOff}>
+                </c-mortgage-los-input-view-mode>
+            </template>
+        </lightning-layout-item>
+
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Loan Information">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-input-view-mode label="Loan Type" handle-edit={handleEdit} value={labels.loanType}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Loan Purpose" handle-edit={handleEdit}
+                value={labels.loanPurpose}>
+            </c-mortgage-los-input-view-mode>
+            <!-- <c-mortgage-los-input-view-mode label="Purpose of Refinanace" handle-edit={handleEdit} value="">
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Refinance Type" handle-edit={handleEdit} value="">
+            </c-mortgage-los-input-view-mode>-->
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

@@ -1,0 +1,14 @@
+<template>
+  <div class="slds-form__row">
+    <div class="slds-form__item" role="listitem">
+      <div class={className}>
+        <span class="slds-form-element__label">{label}</span>
+        <div class="slds-form-element__control">
+          <div class="slds-form-element__static">{formattedValue}</div>
+          <c-mortgage-los-edit-btn if:true={handleEdit} oneditevent={handleEdit}>
+          </c-mortgage-los-edit-btn>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

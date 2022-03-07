@@ -1,0 +1,19 @@
+<template>
+    <lightning-card  title="Documents" icon-name="standard:opportunity">
+      <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+      </template>
+      <template if:true={error}>
+        <c-mortgages-error error={error} onclose={closeError}></c-mortgages-error>
+      </template>
+      <c-mortgages-documents-data-table
+          key-field="id"
+          data={data}
+          hide-checkbox-column	
+          sorted-by={sortBy}
+          sorted-direction={sortDirection}
+          onsort={handleSortdata}	
+          columns={columns}>
+      </c-mortgages-documents-data-table>
+    </lightning-card>
+</template>

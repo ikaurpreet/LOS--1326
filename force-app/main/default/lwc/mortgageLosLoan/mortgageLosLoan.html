@@ -1,0 +1,14 @@
+<template>
+    <lightning-record-form record-id={idfromparent2} object-api-name="Opportunity" mode="readonly" columns="2" fields={fields}>
+    </lightning-record-form>
+    <template if:true={showPETable} >
+        <div class="slds-m-top_medium">
+            <c-related-list records={peItems} columndata={peColumns} title="Policy Exceptions">
+            </c-related-list>
+        </div>
+    </template>
+    <template if:true={showRateTable}>
+        <c-related-list records={rateItems} columndata={rateColumns} title="Historical Rates">
+        </c-related-list>
+    </template>
+</template>

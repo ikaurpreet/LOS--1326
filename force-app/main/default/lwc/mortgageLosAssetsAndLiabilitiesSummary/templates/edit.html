@@ -1,0 +1,12 @@
+<template>
+    <c-mortgage-los-section-controller uncontrolled>
+        <c-mortgage-los-assets-and-liabilities-summary-edit-mode oneditparticipant={handleParticipantChange}
+            jointly-assets-liabilities={jointlyAssetsLiabilities} variant={variant} if:true={showBorrower}>
+        </c-mortgage-los-assets-and-liabilities-summary-edit-mode>
+        <c-mortgage-los-assets-and-liabilities-summary-edit-mode oneditparticipant={handleParticipantChange}
+            jointly-assets-liabilities={jointlyAssetsLiabilities} variant={variant} if:true={showCoBorrower}>
+        </c-mortgage-los-assets-and-liabilities-summary-edit-mode>
+        <c-mortgage-los-section-actions oncancelevent={handleCancelClick} onsaveevent={handleSaveClick}>
+        </c-mortgage-los-section-actions>
+    </c-mortgage-los-section-controller>
+</template>

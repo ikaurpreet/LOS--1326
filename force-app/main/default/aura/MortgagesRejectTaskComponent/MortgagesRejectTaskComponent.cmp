@@ -1,0 +1,21 @@
+<aura:component controller="MortgagesTasksController" extends="c:MortgagesGraphQLComponent" implements="force:LightningQuickActionWithoutHeader,force:LightningQuickAction,lightning:actionOverride,force:hasRecordId,force:hasSObjectName" access="global">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:attribute name="rejected" type="Boolean" />
+    <div class="slds-align_absolute-center" style="height:218px">
+      <div style="width:100%;">
+        <aura:if isTrue="{!v.rejected}">
+          <lightning:icon iconName="action:approval" alternativeText="Approved" title="Approved" />    <span style="margin-left: 10px;">Task Rejected</span>   
+          <aura:set attribute="else">
+              <lightning:card>
+                  <aura:set attribute="footer">
+                      <lightning:button variant="destructive" label="Reject" title="Reject" onclick="{! c.handleReject }"/>
+                  </aura:set>
+                  <ui:inputTextArea aura:id="description" label="Enter description of rejection" required="true" rows="5"/>        
+                  <!-- <lightning:textarea aura:id="description" name="description" required="true" value="" label="Enter description of rejection" maxlength="255" messageWhenTooLong="A maximum of 255 characters are allowed in a description." messageWhenValueMissing="Description is required" /> -->
+              </lightning:card>
+          </aura:set>
+        </aura:if>
+      </div>  
+    </div>     
+</aura:component>

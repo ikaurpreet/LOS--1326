@@ -1,0 +1,42 @@
+<template>
+    <c-mortgage-los-section-controller uncontrolled>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto"
+                if:true={showBorrower} padding="horizontal-small">
+                <c-mortgage-los-section-subtitle text="Previous Employment - Borrower" icon={BorrowerIconURL}
+                    if:true={showExtraBorrowerTitle}>
+                </c-mortgage-los-section-subtitle>
+                <template for:each={borrowerEmployments.employments} for:item="employment">
+                    <div class="slds-m-bottom_small" key={employment.key} if:false={employment.delete}>
+                        <c-mortgage-los-employments-edit-mode handle-input-change={handleInputChange}
+                            handle-address-input-change={handleAddressInputChange} delete-employment={deleteEmployment}
+                            title="Previous Employment - Borrower" role="borrower" employment={employment}
+                            icon={BorrowerIconURL} participant-employments={borrowerEmployments.employments}>
+                        </c-mortgage-los-employments-edit-mode>
+                    </div>
+                </template>
+                <c-add-button title="Add Previous Employment" click-handler={addAditionalBorrowerCurrentEmployment}>Add
+                    Previous Employment</c-add-button>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto"
+                if:true={showCoBorrower} padding="horizontal-small">
+                <c-mortgage-los-section-subtitle text="Previous Employment - Co-Borrower" icon={CoBorrowerIconURL}
+                    if:true={showExtraCoBorrowerTitle}>
+                </c-mortgage-los-section-subtitle>
+                <template for:each={coBorrowerEmployments.employments} for:item="employment">
+                    <div class="slds-m-bottom_small" key={employment.key} if:false={employment.delete}>
+                        <c-mortgage-los-employments-edit-mode handle-input-change={handleInputChange}
+                            handle-address-input-change={handleAddressInputChange} delete-employment={deleteEmployment}
+                            title="Previous Employment - Co-Borrower" role="coBorrower" employment={employment}
+                            icon={CoBorrowerIconURL} participant-employments={coBorrowerEmployments.employments}>
+                        </c-mortgage-los-employments-edit-mode>
+                    </div>
+                </template>
+                <c-add-button title="Add Previous Employment" click-handler={addAditionalCoBorrowerCurrentEmployment}>
+                    Add Previous Employment</c-add-button>
+            </lightning-layout-item>
+        </lightning-layout>
+    </c-mortgage-los-section-controller>
+    <c-mortgage-los-section-actions oncancelevent={handleCancel} onsaveevent={handleSaveClick}>
+    </c-mortgage-los-section-actions>
+</template>

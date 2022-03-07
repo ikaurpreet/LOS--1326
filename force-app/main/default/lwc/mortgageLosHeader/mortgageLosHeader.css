@@ -1,0 +1,22 @@
+.header {
+  background-color: var(--lwc-colorBackgroundAlt);
+  border-radius: var(--lwc-borderRadiusMedium);
+  font-size: 12px;
+}
+
+.value {
+  font-weight: var(--lwc-fontWeightBold);
+  font-size: 14px;
+}
+
+.green {
+  color: #027E46;
+}
+
+.red {
+  color: #C23934;
+}
+
+.gray {
+  color: #706E6B;
+}

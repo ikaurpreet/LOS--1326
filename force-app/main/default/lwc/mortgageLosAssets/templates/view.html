@@ -1,0 +1,11 @@
+<template>
+    <c-mortgage-los-section-controller>
+        <lightning-layout>
+            <lightning-layout-item class="slds-p-bottom_medium" padding="horizontal-small" flexibility="auto">
+                <c-mortgage-los-assets-view-mode show-add-modal={showAddModal} assets={assets}
+                    total-assets={totalAssetsWithMask} role={role} handle-edit={handleEdit}>
+                </c-mortgage-los-assets-view-mode>
+            </lightning-layout-item>
+        </lightning-layout>
+    </c-mortgage-los-section-controller>
+</template>

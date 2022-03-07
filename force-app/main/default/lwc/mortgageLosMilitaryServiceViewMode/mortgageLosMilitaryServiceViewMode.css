@@ -1,0 +1,12 @@
+fieldset .slds-checkbox__label {
+  display: flex;
+}
+
+fieldset span.slds-form-element__label {
+  flex: 1;
+  padding-top: 0;
+}
+
+fieldset .slds-checkbox_faux {
+  margin-top: 0.2rem;
+}

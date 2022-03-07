@@ -1,0 +1,32 @@
+<template>  
+      <lightning-tabset>
+          <lightning-tab label="Open">
+            <template if:true={showCustomTasksOpenOpp}>
+              <c-related-list records={customTasksOpenOpp} columndata={customTasksOpenOppColumns} title="Custom Tasks (Open Opportunity)">
+              </c-related-list>   
+            </template>   
+          </lightning-tab>
+          <lightning-tab label="All">
+            <template if:true={showCustomTasks}>
+              <c-related-list records={customTasks} columndata={customTasksColumns} title="Custom Tasks">
+              </c-related-list>
+            </template>
+          </lightning-tab>
+          <lightning-tab label="3rd Parties">
+            <template if:true={showThirdPartyTasks}>
+              <c-related-list records={thirdPartyTasks} columndata={thirdPartyTasksColumns} title="3rd Party Tasks">
+              </c-related-list>
+            </template>
+          </lightning-tab>
+          <lightning-tab label="Borrower Tasks">
+            <template if:true={showSubmissionTasks}>
+              <c-related-list records={submissionTasks} columndata={submissionTaskColumns} title="Submission Tasks">
+              </c-related-list>
+            </template>
+          </lightning-tab>
+      </lightning-tabset>
+      <template if:true={showTasksheets}>
+        <c-related-list records={taskSheets} columndata={taskSheetColumns} title="Task Sheets">
+        </c-related-list>
+      </template>
+</template>

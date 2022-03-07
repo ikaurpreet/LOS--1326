@@ -1,0 +1,31 @@
+<template>
+    <template if:true={showUpload}>
+      <!-- <lightning-button label="Upload document" slot="actions" onclick={openUpload}></lightning-button> -->
+      <!-- <div style="display:none;"> -->
+        <lightning-file-upload
+          class="multiple-file-upload"
+          label="Attach files"
+          id="multiple-file-upload"
+          name="fileUploader"
+          slot="actions"
+          accept={acceptedFormats}
+          record-id={recordId}
+          onuploadfinished={handleUploadFinished}
+            multiple>
+        </lightning-file-upload>
+      <!-- </div> -->
+    </template>
+    <template if:true={error}>
+      <c-mortgages-error error={error}></c-mortgages-error>
+    </template>
+    <template if:true={uploadedFile}>
+        <c-mortgages-upload-document-modal
+            onclose_upload_modal={closeUploadModal}
+            onsuccessfull_document_upload={closeUploadModalSuccess}
+            document-id={documentId}
+            record-id={recordId}
+            file-number={fileNumber}
+            files-count={filesCount}>
+        </c-mortgages-upload-document-modal>
+    </template>
+</template>

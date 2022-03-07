@@ -1,0 +1,26 @@
+<apex:page standardController="Opportunity" extensions="MortgagesSubmissionDashboardController">
+<apex:includeScript value="/lightning/lightning.out.js" />
+<div id="submission"></div>
+<apex:outputPanel rendered="{!submission.isRefinance}">
+    <script>
+        $Lightning.use("c:CustomApp", function() {
+            $Lightning.createComponent("c:MortgagesRefinanceSubmissionComponent",
+                { submissionUuid : "{!submission.uuid}", env: "{!submission.env}", enableEncompassQueue: {!submission.settings.enableEncompassQueue}, enableReKey: {!submission.settings.enableReKey} },
+                "submission",
+                function(cmp) { console.log("Submission was created"); }
+            );
+        });
+    </script>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!submission.isPurchase}">
+    <script>
+        $Lightning.use("c:CustomApp", function() {
+            $Lightning.createComponent("c:MortgagesPurchaseSubmissionComponent",
+                { recordId : "{!recordId}" , submissionUuid : "{!submission.uuid}", env: "{!submission.env}", enableEncompassQueue: {!submission.settings.enableEncompassQueue}, enableReKey: {!submission.settings.enableReKey} },
+                "submission",
+                function(cmp) { console.log("Submission was created"); }
+            );
+        });
+    </script>
+</apex:outputPanel>
+</apex:page>

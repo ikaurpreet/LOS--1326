@@ -1,0 +1,22 @@
+.thumbnail-image {
+  min-width: 30px;
+}
+
+.main-fields span:after,
+.main-fields a:after {
+  content: " ";
+}
+
+.main-fields .secondary-fields {
+  color: rgb(62, 62, 60);
+}
+
+.main-fields .secondary-fields span:after {
+  content: "\2022";
+  margin: 0 5px;
+}
+
+.main-fields .secondary-fields span:last-child:after {
+  content: "";
+  margin: 0;
+}

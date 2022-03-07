@@ -1,0 +1,114 @@
+<template>
+  <c-mortgage-los-section title={propertyCardTitle} icon={propertyCardIcon} del-action={openDeleteModal}>
+    <c-mortgage-los-section-controller uncontrolled>
+      <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-bottom_medium" flexibility="auto" padding="horizontal-small">
+
+          <c-mortgage-los-real-estate-section-subtitle subtitle-text={sectionSubtitle} ownership={property.ownership}></c-mortgage-los-real-estate-section-subtitle>
+          <div class="slds-form" role="list">
+            <c-mortgage-los-form-element-control if:true={subjectPropertyToggleEdit} label={formFields.ownership}>
+              <lightning-combobox variant="label-hidden" onchange={handleChange} data-name-input="ownership" value={property.ownership}
+                 placeholder="Select an option" options={formOwnershipEnum}></lightning-combobox>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-input-view-mode if:false={subjectPropertyToggleEdit} label={formFields.ownership} value={parsedOwnership} variant="no-border">
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-form-element-control label={formFields.addressLine1}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="addressLine1" value={property.addressLine1}
+                type="text"></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.addressUnit}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="addressUnit" value={property.addressUnit}
+                type="text"></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.addressCity}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="addressCity" value={property.addressCity}
+                type="text"></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.addressStateCode}>
+              <lightning-combobox variant="label-hidden" onchange={handleChange} data-name-input="addressStateCode" value={property.addressStateCode}
+                 placeholder="Select an option" options={formStateCodeEnum}></lightning-combobox>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.addressZipCode}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="addressZipCode" value={property.addressZipCode}
+                type="text"></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.occupancyType}>
+              <lightning-combobox variant="label-hidden" onchange={handleChange} data-name-input="occupancyType" value={property.occupancyType}
+                 placeholder="Select an option" options={formOccupancyTypeEnum}></lightning-combobox>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.numberOfUnits}>
+              <lightning-combobox variant="label-hidden" onchange={handleChange} data-name-input="numberOfUnits" value={property.numberOfUnits}
+                 placeholder="Select an option" options={formUnitNumberEnum}></lightning-combobox>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.status}>
+              <lightning-combobox variant="label-hidden" onchange={handleChange} data-name-input="status" value={property.status}
+                 placeholder="Select an option" options={formStatusEnum}></lightning-combobox>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.propertyType}>
+              <lightning-combobox variant="label-hidden" onchange={handleChange} data-name-input="propertyType" value={property.propertyType}
+                 placeholder="Select an option" options={formPropertyTypeEnum}></lightning-combobox>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.purchasePrice}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="purchasePrice" value={property.purchasePrice}
+                type="number"></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.dateAcquired}>
+                <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="dateAcquired" value={property.dateAcquired}
+                  type="date" message-when-range-overflow="RangeOverflow"></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.yearBuilt}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="yearBuilt" value={property.yearBuilt}
+                type="text" pattern="([0-9]{1,4})" message-when-pattern-mismatch="Your entry is not a valid year."></lightning-input>
+            </c-mortgage-los-form-element-control>
+          </div>
+
+          <c-mortgage-los-real-estate-section-subtitle subtitle-text="Mortgage Information" ownership={property.ownership}></c-mortgage-los-real-estate-section-subtitle>
+          <div class="slds-form" role="list">
+            <c-mortgage-los-real-estate-tradelines label={formFields.tradelines} property={property}
+              tradelines={allTradelines} mode="editMode"></c-mortgage-los-real-estate-tradelines>
+            <c-mortgage-los-form-element-control label={formFields.propertyValue}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="propertyValue" value={property.propertyValue}
+                type="number" step=".01" message-when-step-mismatch="Invalid decimal precision."></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-input-view-mode label={formFields.mortgageBalance} value={property.mortgageBalance} formatter={currencyFormatter} variant="no-border"></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label={formFields.mortgagePayment} value={property.mortgagePayment} formatter={currencyFormatter} variant="no-border"></c-mortgage-los-input-view-mode>
+            <c-mortgage-los-form-element-control if:true={subjectPropertyToggleEdit} label={formFields.insTaxesAssociationDues}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="insTaxesAssociationDues" value={property.insTaxesAssociationDues}
+                 type="number" step=".01" message-when-step-mismatch="Invalid decimal precision."></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-input-view-mode if:false={subjectPropertyToggleEdit} label={formFields.insTaxesAssociationDues} value={property.insTaxesAssociationDues}
+              formatter={currencyFormatter} variant="no-border"></c-mortgage-los-input-view-mode>
+          </div>
+
+          <c-mortgage-los-real-estate-section-subtitle subtitle-text="Rental Information" ownership={property.ownership}></c-mortgage-los-real-estate-section-subtitle>
+          <div class="slds-form" role="list">
+            <c-mortgage-los-form-element-control label={formFields.grossRentalIncome}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="grossRentalIncome" value={property.grossRentalIncome}
+                type="number" step=".01" message-when-step-mismatch="Invalid decimal precision."></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.percentageOfRental}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="percentageOfRental" value={property.percentageOfRental}
+                type="number" step=".01" message-when-step-mismatch="Invalid decimal precision."></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label={formFields.participationPercent}>
+              <lightning-input variant="label-hidden" onchange={handleChange} data-name-input="participationPercent" value={property.participationPercent}
+                type="number" step=".01" message-when-step-mismatch="Invalid decimal precision."></lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-input-view-mode label={formFields.netIncomeLoss} value={property.netIncomeLoss} formatter={currencyFormatter} variant="no-border"></c-mortgage-los-input-view-mode>
+          </div>
+
+        </lightning-layout-item>
+      </lightning-layout>
+      <div class="c-container">
+        <lightning-layout horizontal-align="center">
+          <button onclick={handleCancel} class="slds-button slds-button_neutral">Cancel</button>
+          <button onclick={handleSave} class="slds-button slds-button_brand">Save</button>
+        </lightning-layout>
+      </div>
+    </c-mortgage-los-section-controller>
+  </c-mortgage-los-section>
+
+  <c-mortgage-los-modal if:true={showingModal} details="deleteProperty" onclosemodal={closeDeleteModal} action-label="Delete" title="Delete Property">
+    <div class="slds-text-align_center">Are you sure you want to delete this property?</div>
+  </c-mortgage-los-modal>
+</template>

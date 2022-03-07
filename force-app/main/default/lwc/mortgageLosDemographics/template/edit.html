@@ -1,0 +1,21 @@
+<template>
+    <c-mortgage-los-section-controller uncontrolled>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item if:true={showBorrower} class="slds-size_1-of-2" flexibility="auto"
+                padding="horizontal-small">
+                <c-mortgage-los-demographics-edit-mode oneditparticipant={handleParticipantChange}
+                    participant={borrowerInfo} icon-url={BorrowerIconURL} role="borrower" section-subtitle="Demographics - Borrower">
+                </c-mortgage-los-demographics-edit-mode>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={showCoBorrower} class="slds-size_1-of-2" flexibility="auto"
+                padding="horizontal-small">
+                <c-mortgage-los-demographics-edit-mode oneditparticipant={handleParticipantChange}
+                    participant={coBorrowerInfo} icon-url={CoBorrowerIconURL} role="coBorrower"
+                    section-subtitle="Demographics - Co-Borrower">
+                </c-mortgage-los-demographics-edit-mode>
+            </lightning-layout-item>
+        </lightning-layout>
+        <c-mortgage-los-section-actions oncancelevent={handleCancelClick} onsaveevent={handleSaveClick}>
+        </c-mortgage-los-section-actions>
+    </c-mortgage-los-section-controller>
+</template>

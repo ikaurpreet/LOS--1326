@@ -1,0 +1,236 @@
+<template>
+    <div class="slds-grid slds-grid_vertical">
+        <div class="slds-col slds-m-vertical_small">
+            <c-mortgage-los-section title="Request Details">
+                <c-mortgage-los-section-controller data-id='propertysection'>
+                    <lightning-layout>
+                        <lightning-layout-item class="slds-p-bottom_medium" padding="horizontal-small"
+                            flexibility="auto">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr class="">
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Account Name">Details</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Control">Value</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="slds-hint-parent" onclick={onDoubleClickEdit}>
+                                        <td class="slds-size_3-of-10" data-label="InstitutionName">
+                                            Zipcode
+                                        </td>
+                                        <td class="slds-size_3-of-10" data-label="Type">
+                                            {zipCode}
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent" ondblclick={onDoubleClickEdit}>
+                                        <td class="slds-size_3-of-10" data-label="InstitutionName">
+                                            Property Type
+                                        </td>
+                                        <td class="slds-size_3-of-10" data-label="Type">
+                                            {propertyType}
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent" ondblclick={onDoubleClickEdit}>
+                                        <td class="slds-size_3-of-10" data-label="InstitutionName">
+                                            Property Usage
+                                        </td>
+                                        <td class="slds-size_3-of-10" data-label="Type">
+                                            {occupancyType}
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent" ondblclick={onDoubleClickEdit}>
+                                        <td class="slds-size_3-of-10" data-label="InstitutionName">
+                                            VPA Status
+                                        </td>
+                                        <td class="slds-size_3-of-10" data-label="Type">
+                                            {vpaStatus}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <template if:true={showElig}>
+                        <lightning-layout>
+                            <lightning-layout-item class="slds-p-bottom_medium" padding="horizontal-small"
+                                flexibility="auto">
+                                <template if:false={showEligError}>
+                                    <div class="slds-box slds-theme_success">
+                                        <p>
+                                            <strong>Max Loan Amount: </strong>
+                                            <lightning-formatted-number value={loanAmount} format-style="currency"
+                                                currency-code="USD">
+                                            </lightning-formatted-number>
+                                        </p>
+                                    </div>
+                                    <lightning-button variant="brand" label="Push to client dashboard"
+                                        title="Push to client dashboard" onclick={handlePushToDashboard}
+                                        class="slds-m-left_x-small"></lightning-button>
+                                </template>
+                                <template if:true={showEligError}>
+                                    <div class="slds-box slds-theme_error">
+                                        <p>
+                                            Error has Occured. Please contact support.
+                                        </p>
+                                    </div>
+                                </template>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </template>
+                </c-mortgage-los-section-controller>
+            </c-mortgage-los-section>
+        </div>
+        <div class="slds-col slds-m-vertical_small">
+            <c-mortgage-los-section title="Income">
+                <c-mortgage-los-section-controller data-id='incomesection'>
+                    <lightning-layout>
+                        <lightning-layout-item class="slds-p-bottom_medium" padding="horizontal-small"
+                            flexibility="auto">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr class="">
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Account Name">Asset Name</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Control">Frequency</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Control">Amount</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Job Type">Verified Amount</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={incomes} for:item="item" for:index="indexVar">
+                                        <tr key={item.key} class="slds-hint-parent" onclick={onDoubleClickIncomesEdit}>
+                                            <td class="slds-size_3-of-10" data-label="InstitutionName">
+                                                {item.incomeType}
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-label="Type">
+                                                {item.paymentTermType}
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-label="Amount">
+                                                <lightning-formatted-number value={item.amount} format-style="currency"
+                                                    currency-code="USD"></lightning-formatted-number>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-label="VerifiedAmount">
+                                                <template if:false={isIncomesEdited}>
+                                                    <a onclick={onDoubleClickIncomesEdit}>
+                                                        <lightning-formatted-number value={item.provedAmount}
+                                                            format-style="currency" currency-code="USD">
+                                                        </lightning-formatted-number>
+                                                    </a>
+                                                </template>
+                                                <template if:true={isIncomesEdited}>
+                                                    <lightning-input type="number" data-id={item.key}
+                                                        value={item.provedAmount} formatter="currency" step="0.01"
+                                                        onchange={calcSumIncomesEvt}></lightning-input>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                            <br />
+                            <div class="slds-text-heading_small">Qualifying Income: {sumIncomes}</div>
+                            <div class="slds-clearfix slds-align_absolute-center">
+                                <template if:true={isIncomesEdited}>
+                                    <lightning-button variant="brand" label="Save" title="Save"
+                                        onclick={handleIncomesSave} class="slds-m-left_x-small"></lightning-button>
+                                    <lightning-button variant="brand" label="Cancel" title="Cancel"
+                                        onclick={handleIncomesCancel} class="slds-m-left_x-small"></lightning-button>
+                                </template>
+                                <template if:false={isIncomesEdited}>
+                                    <lightning-button variant="brand" label="Edit" title="Edit"
+                                        onclick={onDoubleClickIncomesEdit} class="slds-m-left_x-small">
+                                    </lightning-button>
+                                </template>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </c-mortgage-los-section-controller>
+            </c-mortgage-los-section>
+        </div>
+        <div class="slds-col slds-m-vertical_small">
+            <c-mortgage-los-section title="Assets">
+                <c-mortgage-los-section-controller data-id='assetssection'>
+                    <lightning-layout>
+                        <lightning-layout-item class="slds-p-bottom_medium" padding="horizontal-small"
+                            flexibility="auto">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr class="">
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Account Name">Asset Name</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Control">Type</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Control">Amount</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Job Type">Verified Amount</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={assets} for:item="item" for:index="indexVar">
+                                        <tr key={item.uuid} class="slds-hint-parent" onclick={onDoubleClickAssetsEdit}>
+                                            <td class="slds-size_3-of-10" data-label="InstitutionName">
+                                                {item.institutionName}
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-label="Type">
+                                                {item.assetType}
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-label="Amount">
+                                                <lightning-formatted-number value={item.amount} format-style="currency"
+                                                    currency-code="USD"></lightning-formatted-number>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-label="VerifiedAmount">
+                                                <template if:false={isAssetsEdited}>
+                                                    <lightning-formatted-number value={item.provedAmount}
+                                                        format-style="currency" currency-code="USD">
+                                                    </lightning-formatted-number>
+                                                </template>
+                                                <template if:true={isAssetsEdited}>
+                                                    <lightning-input key={item.uuid} data-id={item.uuid} type="number"
+                                                        name="input7" value={item.provedAmount} formatter="currency"
+                                                        step="0.01" onchange={calcSumAssetsEvt}></lightning-input>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                            <br />
+                            <div class="slds-text-heading_small">Qualifying assets: {sumAssets} </div>
+                            <div class="slds-clearfix slds-align_absolute-center">
+                                <template if:true={isAssetsEdited}>
+                                    <lightning-button variant="brand" label="Save" title="Save"
+                                        onclick={handleAssetsSave} class="slds-m-left_x-small"></lightning-button>
+                                    <lightning-button variant="brand" label="Cancel" title="Cancel"
+                                        onclick={handleAssetsCancel} class="slds-m-left_x-small"></lightning-button>
+                                </template>
+                                <template if:false={isAssetsEdited}>
+                                    <lightning-button variant="brand" label="Edit" title="Edit"
+                                        onclick={onDoubleClickAssetsEdit} class="slds-m-left_x-small">
+                                    </lightning-button>
+                                </template>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </c-mortgage-los-section-controller>
+            </c-mortgage-los-section>
+        </div>
+        <lightning-button variant="brand" label="ReEligibility" title="ReEligibility" onclick={handleReRun}
+            class="slds-m-left_x-small"></lightning-button>
+    </div>
+</template>

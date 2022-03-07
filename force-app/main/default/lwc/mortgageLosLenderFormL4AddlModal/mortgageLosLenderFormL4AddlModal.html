@@ -1,0 +1,19 @@
+<template>
+    <c-mortgage-los-modal variant="noOverflow" details={additionalCredits} title='Add Additional Credit'
+        onclosemodal={handleClose}>
+        <div class="slds-text-heading_small slds-m-bottom_medium">Add Additional Credit</div>
+        <fieldset class="slds-form-element slds-form-element_compound">
+            <div class="slds-form-element__row">
+                <div class="slds-size_1-of-3">
+                    <lightning-combobox required value={additionalCredits.creditType} options={addlCreditType}
+                        onchange={handleInputChange} data-name-input="creditType" label="Select Credit Type">
+                    </lightning-combobox>
+                </div>
+                <div class="slds-size_1-of-3">
+                    <lightning-input onchange={handleMoneyChange} data-name-input="amount" label="Enter Value">
+                    </lightning-input>
+                </div>
+            </div>
+        </fieldset>
+    </c-mortgage-los-modal>
+</template>

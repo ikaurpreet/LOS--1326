@@ -1,0 +1,72 @@
+<template>
+    <template for:each={employments} for:item="employment">
+        <div key={employment.key} class="slds-m-bottom_small">
+            <c-mortgage-los-section-subtitle text={sectionTitle} icon={iconUrl}>
+            </c-mortgage-los-section-subtitle>
+
+            <c-mortgage-los-input-view-mode label="Employer" value={employment.employerName} handle-edit={handleEdit}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Address" value={employment.fullAddress} handle-edit={handleEdit}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="B. Phone" value={employment.businessPhone} handle-edit={handleEdit}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Position" value={employment.position} handle-edit={handleEdit}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="Start Date" value={employment.formattedStartDate}
+                handle-edit={handleEdit}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="End Date" value={employment.formattedEndDate}
+                handle-edit={handleEdit}>
+            </c-mortgage-los-input-view-mode>
+            <c-mortgage-los-input-view-mode label="How long with the previous employer"
+                value={employment.timeInLineOfWork} handle-edit={handleEdit}>
+            </c-mortgage-los-input-view-mode>
+
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class={editClass}>
+                        <span class="slds-form-element__label" for={employment.key}>I am employed by a
+                            family member, property seller, real estate agent, or other party to the transaction</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                <span class="slds-checkbox">
+                                    <input type="checkbox" data-credible-id="isEmployerPartyToTransaction"
+                                        data-credible-checked={employment.isEmployerPartyToTransaction}
+                                        id={employment.key} name="label" value="option"
+                                        checked={employment.isEmployerPartyToTransaction} disabled="" />
+                                    <span class="slds-checkbox_faux"></span>
+                                </span>
+                            </div>
+                            <c-mortgage-los-edit-btn oneditevent={handleEdit}>
+                            </c-mortgage-los-edit-btn>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form" role="list">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class={editClass}>
+                            <span class="slds-form-element__label" for="checkbox-same-as-current-address">Check if
+                                you are the Business Owner or Self-Employed</span>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">
+                                    <span class="slds-checkbox">
+                                        <input data-credible-id="selfEmployment"
+                                            data-credible-checked={employment.selfEmployment} type="checkbox"
+                                            name="label" value="option" checked={employment.selfEmployment}
+                                            disabled="" />
+                                        <span class="slds-checkbox_faux"></span>
+                                    </span>
+                                </div>
+                                <c-mortgage-los-edit-btn oneditevent={handleEdit}>
+                                </c-mortgage-los-edit-btn>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

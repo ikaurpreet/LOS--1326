@@ -1,0 +1,62 @@
+<aura:component controller="MortgagesApplicationConfigController" extends="c:MortgagesGraphQLComponent" implements="flexipage:availableForAllPageTypes"
+  access="global">
+  <aura:attribute name="env" type="String" default="DEVELOP" />
+  <aura:attribute name="envs" type="Array" />
+  <aura:attribute name="states" type="Array" />
+  <aura:attribute name="error" type="Array" />
+  <aura:attribute name="loading" type="Boolean" default="false" />
+  <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+  <aura:if isTrue="{!v.loading}">
+    <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+  </aura:if>
+
+  <aura:if isTrue="{!v.error != null}">
+    <ui:message title="Error" severity="error">
+      {!v.error}
+    </ui:message>
+  </aura:if>
+  <lightning:tabset selectedTabId="states">
+    <lightning:tab label="States" id="states">
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" title="State Name">State Name</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="State Code">State Code</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Tax Rate">Tax Rate</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Active">Active</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <aura:iteration items="{!v.states}" var="item">
+              <tr class="slds-hint-parent">
+                <th data-label="State Name" scope="row">
+                  <div class="slds-truncate" title="{!item.name}">{!item.name}</div>
+                </th>
+                <td data-label="State Code">
+                  <div class="slds-truncate" title="{!item.code}">{!item.code}</div>
+                </td>
+                <td data-label="Tax Rate">
+                  <div class="slds-truncate" title="{!item.taxRate}">{!item.taxRate}</div>
+                </td>
+                <td data-label="Active">
+                  <ui:inputCheckbox name="{!item.code}" value="{!item.approved}" change="{!c.onChangeStatus}" />
+                </td>
+              </tr>
+            </aura:iteration>
+          </tbody>
+        </table>
+    </lightning:tab>
+    <lightning:tab label="Mortgages Team" id="mortgages-team">
+        <c:MortgagesTeamMembersComponent env="{!v.env}" envs="{!v.envs}"/>
+    </lightning:tab>
+  </lightning:tabset>
+</aura:component>

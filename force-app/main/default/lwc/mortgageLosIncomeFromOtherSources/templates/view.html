@@ -1,0 +1,11 @@
+<template>
+    <c-mortgage-los-section-controller>
+        <lightning-layout>
+            <lightning-layout-item class="slds-p-bottom_medium" padding="horizontal-small" flexibility="auto">
+                <c-mortgage-los-income-from-other-sources-view-mode show-borrower={showBorrower}
+                    show-coborrower={showCoBorrower} save={handleSaveClick} income-sources={incomeSources}>
+                </c-mortgage-los-income-from-other-sources-view-mode>
+            </lightning-layout-item>
+        </lightning-layout>
+    </c-mortgage-los-section-controller>
+</template>

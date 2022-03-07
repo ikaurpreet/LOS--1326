@@ -1,0 +1,23 @@
+<template>
+  <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+  </template>
+  <template if:true={error}>
+    <c-mortgages-error error={error}></c-mortgages-error>
+  </template>
+  <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+    <template for:each={data} for:item="group">
+      <lightning-accordion-section name={group.name} label={group.label} key={group.name}>
+        <c-mortgages-documents-data-table
+            key-field="id"
+            data={group.items}
+            hide-checkbox-column	
+            sorted-by={sortBy}
+            sorted-direction={sortDirection}
+            onsort={handleSortdata}	
+            columns={columns}>
+        </c-mortgages-documents-data-table>
+      </lightning-accordion-section>
+    </template>
+  </lightning-accordion>
+</template>

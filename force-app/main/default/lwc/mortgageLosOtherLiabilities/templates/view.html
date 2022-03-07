@@ -1,0 +1,11 @@
+<template>
+    <c-mortgage-los-section-controller>
+        <lightning-layout>
+            <lightning-layout-item class="slds-p-bottom_medium" padding="horizontal-small" flexibility="auto">
+                <c-mortgage-los-other-liabilities-view-mode save={handleSaveClick} borrower-uuid={borrowerUuid}
+                coborrower-uuid={coBorrowerUuid} role={role} liabilities={liabilities}>
+                </c-mortgage-los-other-liabilities-view-mode>
+            </lightning-layout-item>
+        </lightning-layout>
+    </c-mortgage-los-section-controller>
+</template>

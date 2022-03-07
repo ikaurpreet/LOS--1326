@@ -1,0 +1,7 @@
+lightning-tab .slds-grid .slds-col:first-child {
+  margin-top: 0;
+}
+
+lightning-tab .slds-grid .slds-col:last-child {
+  margin-bottom: 0;
+}

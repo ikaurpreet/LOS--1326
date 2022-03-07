@@ -1,0 +1,124 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <c-mortgage-los-form-element-control label="Mortgage Type Applied For">
+                <lightning-combobox variant="label-hidden" disabled options={loanTypeOptions}
+                    value={lenderData.selectedProduct.loanType} onchange={handleChange}
+                    data-name-input="selectedProduct.loanType">
+                </lightning-combobox>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Amoritization Type">
+                <lightning-combobox variant="label-hidden" value={lenderData.selectedProduct.amortizationType}
+                    options={amortizationTypeOptions} onchange={handleChange}
+                    data-name-input="selectedProduct.amortizationType">
+                </lightning-combobox>
+            </c-mortgage-los-form-element-control>
+
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Terms of Loan">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-form-element-control if:true={isPurchase} data-testid="purchasePrice"
+                label="Purchase Price">
+                <lightning-input variant="label-hidden" type="text" onchange={handleMoneyChange}
+                    data-name-input="property.estimatedValue" value={lenderData.property.estimatedValueWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Total Loan Amount">
+                <lightning-input variant="label-hidden" type="text" data-name-input="selectedProduct.totalLoanAmount"
+                    onchange={handleMoneyChange} value={lenderData.selectedProduct.totalLoanAmountWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Note Rate">
+                <div class="slds-form-element slds-m-bottom_none">
+                    <label class="slds-form-element__label" for="rate">%</label>
+                    <div class="slds-form-element__control">
+                        <input type="number" min="0" max="100" data-name-input="selectedProduct.rate" id="rate"
+                            class="slds-input" onchange={handleChange} value={lenderData.selectedProduct.rate} />
+                    </div>
+                </div>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control if:true={showQualRate} data-testid="qualRate" label="Qual Rate">
+                <div class="slds-form-element slds-m-bottom_none">
+                    <label class="slds-form-element__label" for="qualifyingInterestRate">%</label>
+                    <div class="slds-form-element__control">
+                        <input type="number" min="0" max="100" data-name-input="selectedProduct.qualifyingInterestRate"
+                            id="qualifyingInterestRate" class="slds-input" onchange={handleChange}
+                            value={lenderData.selectedProduct.qualifyingInterestRate} />
+                    </div>
+                </div>
+            </c-mortgage-los-form-element-control>
+
+            <c-mortgage-los-form-element-control label="Loan Term">
+                <div class="slds-form-element slds-m-bottom_none">
+                    <label class="slds-form-element__label" for="loanTerm">Years</label>
+                    <div class="slds-form-element__control">
+                        <input type="number" min=0 data-name-input="selectedProduct.loanTerm" id="loanTerm"
+                            class="slds-input" onchange={handleChange} value={lenderData.selectedProduct.loanTerm} />
+                    </div>
+                </div>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control if:true={showDueIn} label="Due in">
+                <div class="slds-form-element slds-m-bottom_none">
+                    <label class="slds-form-element__label" for="armFixedTerm">Years</label>
+                    <div class="slds-form-element__control">
+                        <input type="number" min=0 data-name-input="selectedProduct.armFixedTerm" id="armFixedTerm"
+                            class="slds-input" onchange={handleChange}
+                            value={lenderData.selectedProduct.armFixedTerm} />
+                    </div>
+                </div>
+            </c-mortgage-los-form-element-control>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-size_1-of-2 slds-p-horizontal_small slds-p-bottom_small" flexibility="auto">
+            <div class="slds-text-title_bold">
+                <c-mortgage-los-section-subtitle text="Proposed Monthly Payment for Property">
+                </c-mortgage-los-section-subtitle>
+            </div>
+
+            <c-mortgage-los-form-element-control label="First Mortgage (P&I)">
+                <lightning-input data-testid="principalInterest" variant="label-hidden" type="text" disabled
+                    data-name-input="selectedProduct.principalInterest" onchange={handleMoneyChange}
+                    value={lenderData.selectedProduct.principalInterestWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Subordinate Lien(s) (P&I)">
+                <lightning-input variant="label-hidden" disabled type="text"
+                    data-name-input="property.resubordinatedLiens" onchange={handleMoneyChange}
+                    value={lenderData.property.resubordinatedLiensWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Homeowner's Insurance">
+                <lightning-input variant="label-hidden" type="text" data-name-input="property.monthlyInsuranceFee"
+                    onchange={handleMoneyChange} value={lenderData.property.monthlyInsuranceFeeWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Property Taxes">
+                <lightning-input variant="label-hidden" type="text" onchange={handleMoneyChange}
+                    data-name-input="property.monthlyTaxes" value={lenderData.property.monthlyTaxesWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Mortgage Insurance">
+                <lightning-input variant="label-hidden" type="text" onchange={handleMoneyChange}
+                    data-name-input="selectedProduct.pmiMonthlyPayment"
+                    value={lenderData.selectedProduct.pmiMonthlyPaymentWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Association/Project Dues (Condo, Co-Op, PUD)">
+                <lightning-input variant="label-hidden" type="text" onchange={handleMoneyChange}
+                    data-name-input="property.monthlyHomeownersFee"
+                    value={lenderData.property.monthlyHomeownersFeeWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Other">
+                <lightning-input variant="label-hidden" type="text" onchange={handleMoneyChange}
+                    data-name-input="property.otherMonthlyCosts" value={lenderData.property.otherMonthlyCostsWithMask}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+            <c-mortgage-los-form-element-control label="Total">
+                <lightning-input variant="label-hidden" type="text" disabled value={total}>
+                </lightning-input>
+            </c-mortgage-los-form-element-control>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

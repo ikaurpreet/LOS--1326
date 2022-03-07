@@ -1,0 +1,23 @@
+th {
+  background-color: rgb(250, 250, 249);
+}
+
+td,
+th {
+  border: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+  padding: 5px 12px;
+}
+
+tr th, tr td {
+  width: 16.6%;
+}
+
+tr:first-child {
+  border-top: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+  border-left: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+  border-right: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+}
+
+.tradeline-row:not(:last-child) {
+  padding-bottom: 8px;
+}

@@ -1,0 +1,62 @@
+<template>
+  <c-mortgage-los-section-subtitle text={sectionSubtitle} icon={iconUrl}>
+  </c-mortgage-los-section-subtitle>
+
+  <div class="slds-form">
+    <lightning-radio-group value={serviceStateValue} variant="label-inline" label={statusLabel}
+      onchange={handleStateChange} name={sectionSubtitle} options={options} type="radio">
+    </lightning-radio-group>
+
+    <fieldset if:true={showOptions}
+      class="slds-form-element slds-form-element_horizontal slds-is-editing slds-form-element_stacked">
+      <legend class="slds-form-element__legend slds-form-element__label"><abbr class="slds-required" title="required">*
+        </abbr>{descriptionLabel}</legend>
+      <div class="slds-form-element__control">
+        <div class="slds-var-m-bottom_x-small">
+          <div class="slds-checkbox">
+            <input type="checkbox" name="isCurrentlyServing" onchange={handleDescriptionChange} id="isCurrentlyServing"
+              value="isCurrentlyServing" checked={isCurrentlyServing} />
+            <label class="slds-checkbox__label" for="isCurrentlyServing">
+              <span class="slds-checkbox_faux"></span>
+              <span class="slds-form-element__label">Currently serving on active duty</span>
+            </label>
+          </div>
+          <div if:true={showDatePicker} class="slds-m-left_large">
+            <label class="slds-form-element__label" for="expiration-date-input-id">Expiration date of
+              service/tour</label>
+            <lightning-input required onchange={handleDateChange} min={today} id="expiration-date-input-id" type="date"
+              variant="label-hidden" label="Expiration date of service/tour" data-name-input="expirationDate"
+              value={expirationDate}>
+            </lightning-input>
+          </div>
+        </div>
+        <div class="slds-checkbox slds-var-m-bottom_x-small">
+          <input type="checkbox" name="isRetired" id="isRetired" onchange={handleDescriptionChange} value="isRetired"
+            checked={isRetired} />
+          <label class="slds-checkbox__label" for="isRetired">
+            <span class="slds-checkbox_faux"></span>
+            <span class="slds-form-element__label">Currently retired, discharged, or separated from service</span>
+          </label>
+        </div>
+        <div class="slds-checkbox slds-var-m-bottom_x-small">
+          <input type="checkbox" name="isReserve" id="isReserve" onchange={handleDescriptionChange} value="isReserve"
+            checked={isReserve} />
+          <label class="slds-checkbox__label" for="isReserve">
+            <span class="slds-checkbox_faux"></span>
+            <span class="slds-form-element__label">Only period of service was as a non-activated member of the Reserve
+              or National Guard</span>
+          </label>
+        </div>
+        <div class="slds-checkbox slds-var-m-bottom_x-small">
+          <input type="checkbox" name="isSurvivingSpouse" onchange={handleDescriptionChange} id="isSurvivingSpouse"
+            value="isSurvivingSpouse" checked={isSurvivingSpouse} />
+          <label class="slds-checkbox__label" for="isSurvivingSpouse">
+            <span class="slds-checkbox_faux"></span>
+            <span class="slds-form-element__label">Surviving spouse</span>
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+</template>

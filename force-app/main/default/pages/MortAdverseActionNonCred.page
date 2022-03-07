@@ -1,0 +1,580 @@
+<apex:page docType="html-5.0" applyHtmlTag="false" applyBodyTag="false"
+           showHeader="false" sidebar="false" standardStylesheets="false" title="Unused Title" standardController="Lead">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>credible</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 "/>
+    <meta name="format-detection" content="telephone=no"/>
+    <!--[if !mso]><!-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300" rel="stylesheet" type="text/css" />
+    <!--<![endif]-->
+    <style type="text/css">
+      body {
+      -webkit-text-size-adjust: 100% !important;
+      -ms-text-size-adjust: 100% !important;
+      -webkit-font-smoothing: antialiased !important;
+      }
+      img {
+      border: 0 !important;
+      outline: none !important;
+      }
+      p {
+      Margin: 10px !important;
+      Padding: 0px !important;
+      }
+      table {
+      border-collapse: collapse;
+      mso-table-lspace: 0px;
+      mso-table-rspace: 0px;
+      }
+      td, a, span {
+      border-collapse: collapse;
+      mso-line-height-rule: exactly;
+      }
+      .ExternalClass * {
+      line-height: 100%;
+      }
+      .em_blck1 a {
+      color:#686868; 
+      text-decoration:none;
+      }
+      .em_blck a {
+      color:#7B7B7B; 
+      text-decoration:none;
+      }
+      span.MsoHyperlink {
+      mso-style-priority: 99;
+      color: inherit;
+      }
+      span.MsoHyperlinkFollowed {
+      mso-style-priority: 99;
+      color: inherit;
+      }
+      @media only screen and (min-width:481px) and (max-width:599px) {
+      table[class=em_main_table] {
+      width: 100% !important;
+      }
+      table[class=em_wrapper] {
+      width: 100% !important;
+      }
+      table[class=em_wrapper2] {
+      width: 220px !important;
+      }
+      table[class=em_wrapper1] {
+      width: 210px !important;
+      }
+      td[class=em_hide], br[class=em_hide],table[class=em_hide] {
+      display: none !important;
+      }
+      img[class=em_full_img] {
+      width: 100% !important;
+      height: auto !important;
+      }
+      td[class=em_pad_top1]{
+      padding-top:0px !important;
+      }
+      td[class=em_pad_top]{
+      padding-top:20px !important;
+      }
+      td[class=em_pad_bottom]{
+      padding-bottom:20px !important;
+      }
+      td[class=em_aside]{
+      padding-left:15px !important;
+      padding-right:15px !important;
+      }
+      td[class=em_height1]{
+      height: 15px !important;
+      }
+      td[class=em_height]{
+      height: 20px !important;
+      }
+      td[class=em_space]{
+      width:20px !important;  
+      }
+      td[class=em_font_22]{
+      font-size:25px !important;
+      line-height:33px !important;
+      }
+      td[class=em_space_1]{
+      width:10px !important;  
+      }
+      table[class=em_tab] {
+      border:#e3dfdf solid 1px !important;
+      }
+      td[class=em_bg_non]{
+      background-color:#ffffff !important;
+      }
+      table[class=em_tbl1] {
+      width:44px !important;
+      clear: none !important;
+      }
+      table[class=em_tbl_3] {
+      width:10px !important;
+      clear: none !important;
+      }
+      table[class=em_tbl3] {
+      width:15px !important;
+      clear: none !important;
+      }
+      table[class=em_tbl2] {
+      width:141px !important;
+      clear: none !important;
+      }
+      table[class=em_tbl_1] {
+      width:54px !important;
+      clear: none !important;
+      }
+      table[class=em_tb_l1] {
+      width:33px !important;
+      clear: none !important;
+      }
+      table[class=em_tb_l3] {
+      width:26px !important;
+      clear: none !important;
+      }
+      table[class=em_tb_l2] {
+      width:64% !important;
+      clear: none !important;
+      }
+      td[class=em_left] {
+      text-align:left !important;
+      font-size: 16px !important;
+      line-height: 21px !important;
+      }
+      td[class=em_txt_cent]{
+      text-align:center !important;
+      } 
+      }
+      @media only screen and (max-width:480px) {
+      span[class=em_brk] {
+      display: block !important;
+      }
+      table[class=em_main_table] {
+      width: 100% !important;
+      }
+      table[class=em_tab_250] {
+      width:280px !important;
+      }
+      table[class=em_tab] {
+      border:#e3dfdf solid 1px !important;
+      }
+      td[class=em_height1]{
+      height: 15px !important;
+      }
+      table[class=em_wrapper] {
+      width: 100% !important;
+      }
+      table[class=em_wrapper1] {
+      width: 210px !important;
+      }
+      table[class=em_wrapper2] {
+      width: 220px !important;
+      }
+      td[class=em_hide], br[class=em_hide] ,table[class=em_hide] {
+      display: none !important;
+      }
+      img[class=em_full_img] {
+      width: 100% !important;
+      height: auto !important;
+      }
+      td[class=em_font_22]{
+      font-size:25px !important;
+      line-height:33px !important;
+      }
+      td[class=em_bg_non]{
+      background-color:#ffffff !important;
+      }
+      td[class=em_pad_top]{
+      padding-top:20px !important;
+      }
+      td[class=em_pad_bottom]{
+      padding-bottom:20px !important;
+      }
+      td[class=em_height]{
+      height: 20px !important;
+      }
+      td[class=em_aside]{
+      padding-left:15px !important;
+      padding-right:15px !important;
+      } 
+      td[class=em_space_1]{
+      width:10px !important;  
+      }
+      td[class=em_space]{
+      width:20px !important;  
+      }
+      table[class=em_tbl_width] {
+      width: 200px !important;
+      }
+      td[class=em_width_50] {
+      width: 90px !important;
+      }
+      td[class=em_left] {
+      text-align:left !important;
+      }
+      table[class=em_tbl1] {
+      width:44px !important;
+      clear: none !important;
+      }
+      table[class=em_tbl3] {
+      width:15px !important;
+      clear: none !important;
+      }
+      table[class=em_tbl2] {
+      width:141px !important;
+      clear: none !important;
+      }
+      table[class=em_tbl_1] {
+      width:54px !important;
+      clear: none !important;
+      }
+      table[class=em_tb_l1] {
+      width:33px !important;
+      clear: none !important;
+      }
+      table[class=em_tb_l3] {
+      width:26px !important;
+      clear: none !important;
+      }
+      table[class=em_tb_l2] {
+      width:64% !important;
+      clear: none !important;
+      }
+      table[class=em_tbl_3] {
+      width:10px !important;
+      clear: none !important;
+      }
+      td[class=em_txt_cent]{
+      text-align:center !important;
+      }
+      td[class=em_pad_top1]{
+      padding-top:15px !important;
+      }
+      }
+    </style>
+  </head>
+  <body style="margin:0px; padding:0px;" bgcolor="#ffffff">
+    <!--Full width table start-->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+      <tbody>
+        <tr>
+          <td align="center" valign="top">
+            <!--Template Body Start-->
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="em_main_table" style="table-layout:fixed;">
+              <!-- === PRE-HEADER SECTION === -->
+              <tbody>
+                <tr>
+                  <td valign="top" align="center">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#ffffff">
+                      <tbody>
+                        <tr>
+                          <td width="17" class="em_space_1">&nbsp;</td>
+                          <td valign="top" align="center">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+                              <tbody>
+                                <tr>
+                                  <td valign="top">
+                                    <table width="" cellpadding="0" cellspacing="0" border="0" align="left" class="em_wrapper">
+                                      <tbody>
+                                        <tr>
+                                          <td height="10" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="em_txt_cent" valign="middle" align="left" style="font-family:'Open Sans', Arial, sans-serif; font-size:9px; line-height:10px; color:#252B32; "></td>
+                                        </tr>
+                                        <tr>
+                                          <td height="10" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                          <td height="4" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    <table width="" cellpadding="0" cellspacing="0" border="0" align="right" class="em_wrapper">
+                                      <tbody>
+                                        <tr>
+                                          <td height="10" style="line-height:1px; font-size:1px;" class="em_hide">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="em_txt_cent" valign="middle" align="right" style="font-family:'Open Sans', Arial, sans-serif; font-size:9px; line-height:10px; color:#252B32; "><a href="%%view_email_url%%" target="_blank" style="text-decoration:none; color:#252B32;"> View in browser</a></td>
+                                        </tr>
+                                        <tr>
+                                          <td height="10" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                          <td width="17" class="em_space_1">&nbsp;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <!-- === // PRE-HEADER SECTION === -->
+                <!--===logo section ===-->     
+                <tr>
+                  <td align="center" valign="top" bgcolor="#2b54a1">
+                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                      <!--=== SPACER ===-->
+                      <tbody>
+                        <tr>
+                          <td style="line-height:0px; font-size:0px;" width="600" class="em_hide" bgcolor="#2b54a1"><img src="http://image.email.credible.com/lib/fe42157075640578751072/m/1/25eaacc3-ad80-4c64-be24-33737a7dfc4a.gif" height="1" width="600" style="max-height:1px; min-height:1px; display:block; width:600px; min-width:600px;" border="0" alt=""/></td>
+                        </tr>
+                        <!--=== // SPACER ===-->
+                        <tr>
+                          <td height="12" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="center" valign="top">
+                            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                              <tbody>
+                                <tr>
+                                  <td width="15" class="em_space_1">&nbsp;</td>
+                                  <td align="left" valign="top" width="117">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tbody>
+                                        <tr>
+                                          <td height="10" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                          <td><a href="https://www.credible.com" target="_blank" style="text-decoration:none;"><img src="http://image.email.credible.com/lib/fe42157075640578751072/m/1/0d7b7954-4b6f-4965-ae1f-a874cfbb41d5.png" width="110" height="24" alt="credible" style="font-family:Arial,  sans-serif; font-size:14px; line-height:17px; color:#ffffff; font-weight:bold; display:block;" border="0"/></a></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                  <td>&nbsp;</td>
+                                  <td width="172" align="center" valign="top">
+                                    <table width="172" border="0" cellspacing="0" cellpadding="0">
+                                      <tbody>
+                                        <tr>
+                                          <td width="152" align="center" valign="top">
+                                            <table width="152" border="0" cellspacing="0" cellpadding="0">
+                                              <tbody>
+                                                <tr>
+                                                  <td height="15" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td width="152" align="center" valign="top">
+                                            <table width="152" border="0" cellspacing="0" cellpadding="0">
+                                              <tbody>
+                                                <tr>
+                                                  <td height="15" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                  <td width="15" class="em_space_1">&nbsp;</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td height="12" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <!--===//logo section ===-->     
+                <!--===cream section ===-->
+                <tr>
+                  <td valign="top" align="center">
+                    <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="em_wrapper">
+                      <tbody>
+                        <tr>
+                          <td bgcolor="#eaeced">
+                            <table width="600" align="center" border="0" cellspacing="0" cellpadding="0" class="em_wrapper">
+                              <tbody>
+                                <tr>
+                                  <td width="17" class="em_space_1">&nbsp;</td>
+                                  <td>
+                                    <table width="567" border="0" cellspacing="0" cellpadding="0" class="em_wrapper">
+                                      <tbody>
+                                        <tr>
+                                          <td height="18" class="em_height1" style="line-height:0px; font-size:0px;">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                          <td align="center" valign="top" bgcolor="#ffffff">
+                                            <table width="567" align="center" border="0" cellspacing="0" cellpadding="0" class="em_wrapper">
+                                              <tbody>
+                                                <tr>
+                                                  <td width="45" class="em_space">&nbsp;</td>
+                                                  <td align="center" valign="top">
+                                                    <table width="476" border="0" cellspacing="0" cellpadding="0" class="em_wrapper">
+                                                      <tbody>
+                                                        <!-- header-->
+                                                        <tr>
+                                                          <td align="center" valign="top">
+                                                            <table width="476" border="0" cellspacing="0" cellpadding="0" class="em_wrapper">
+                                                              <tbody>
+                                                                <tr>
+                                                                  <td height="32">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td align="left" valign="top" style=" font-family: 'Open Sans', Arial,  sans-serif; font-size:13px; letter-spacing:0px; line-height:20px; color:#4EAADC; font-weight: bold;"> Credible Mortgages</td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td height="4" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td height="1" bgcolor="#e6e7e8" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td height="16" style="line-height:1px; font-size:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; " >
+                                                                    <p style="font-size: 14pt; font-family: arial; ">
+                                                                      <apex:outputText value="{0,date,M/d/yyyy}"> <apex:param value="{!Lead.Adverse_Action_Sent_Date__c}" /> </apex:outputText>
+                                                                      <br/><br/>
+                                                                      {!Lead.Name},<br/>
+                                                                      
+                                                                    </p>
+                                                                    <p style="font-size: 12pt; font-family: arial; ">
+                                                                      Thank you for your request for prequalified rates from the lenders on the Credible marketplace. After careful consideration, we regret to inform you that we were unable to identify prequalified rates for you from the lenders on our marketplace based on the lenders’ eligibility criteria. 
+                                                                    </p>
+                                                                    <p style="font-size: 12pt; font-family: arial; ">
+                                                                      The principal reasons(s) for the decision are:<br/>
+                                                                      {!IF(Lead.mortgage_AA_Reason_1__c == "" ,"", "1. "&Lead.mortgage_AA_Reason_1__c)}<br/>
+                                                                      {!IF(Lead.mortgage_AA_Reason_2__c == "" ,"", "2. "&Lead.mortgage_AA_Reason_2__c)}<br/>
+                                                                      {!IF(Lead.mortgage_AA_Reason_3__c == "", "", "3. "&Lead.mortgage_AA_Reason_3__c)}<br/>
+                                                                      {!IF(Lead.mortgage_AA_Reason_4__c == "", "", "4. "&Lead.mortgage_AA_Reason_4__c)}<br/>
+                                                                    </p>
+                                                                    <p style="font-size: 12pt; font-family: arial; ">
+                                                                      <input name="credit" value="Y" type="checkbox" disabled="True" unchecked="True"/> If this box is checked, our determination was based in whole or in part on information obtained in a report from the consumer reporting agency(ies) listed below.  You have a right under the Fair Credit Reporting Act to know the information contained in your credit file at the consumer reporting agency(ies).  The reporting agency(ies) played no part in our determination and is(are) unable to supply specific reasons why we were unable to identify prequalified rates for you.  You also have a right to a free copy of your report(s) from the reporting agency(ies), if you request it(them) no later than 60 days after you receive this notice.  In addition, if you find that any information contained in the report(s) you received is inaccurate or incomplete, you have the right to dispute the matter with the reporting agency(ies).
+                                                                    </p>
+                                                                    <p style="font-size: 12pt; font-family: arial; ">
+                                                                      
+                                                                      <input name="credit" value="Y" type="checkbox" unchecked="True" disabled="True"/> 
+                                                                      If this box is checked, we also obtained your credit score(s) from the consumer reporting agency(ies) listed below and used it(them) in making our determination.  Your credit score is a number that reflects the information in your consumer report.  Your credit score can change, depending on how the information in your consumer report changes.
+                                                                    </p>
+                                                                    
+                                                                    
+                                                                    <p style="font-size: 12pt; font-family: arial; "><input name="credit" value="Y" type="checkbox" unchecked="True" disabled="True"/>      
+                                                                      If this box is checked, our credit decision was based in whole or in part on information obtained from an affiliate or from an outside source other than a consumer reporting agency.  Under the Fair Credit Reporting Act, you have the right to make a written request, no later than 60 days after you receive this notice, for disclosure of the nature of this information.
+                                                                    </p>
+                                                                    <p style="font-size: 12pt; font-family: arial; ">
+                                                                      If you have any questions regarding this notice, please contact Credible at 855-413-9441 or mortgages@credible.com. Please retain a copy of this notice for your records.
+                                                                    </p>
+                                                                    <p style="font-size: 12pt; font-family: arial; ">
+                                                                      <b>Notice:</b>
+                                                                      The Federal Equal Credit Opportunity Act prohibits creditors from discriminating against credit applicants on the basis of race, color, religion, national origin, sex, marital status, age (provided the applicant has the capacity to enter into a binding contract); because all or part of the applicant’s income derives from any public assistance program; or because the applicant has in good faith exercised any right under the Consumer Credit Protection Act.  The Federal agency that administers compliance with this law concerning Credible is the Federal Trade Commission, Equal Credit Opportunity, Washington, D.C. 20580.<br/><br/> 
+                                                                    </p>
+                                                                    <p style="font-size: 12pt; font-family: arial; ">- Credible Operations<br/><br/>
+                                                                      320 Blackwell St. Ste 200<br/>
+                                                                      Durham, NC 27701<br/>
+                                                                      (855) 413-9441<br/><br/>
+                                                                      NMLS #1681276</p>
+                                                                  </td></tr>
+                                                                <tr>
+                                                                  <td height="40" class="em_height">&nbsp;</td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                        <!-- help and signature -->
+                                                        <tr>
+                                                          <td align="center" valign="top">
+                                                            <table width="476" border="0" cellspacing="0" cellpadding="0" class="em_wrapper">
+                                                              <tbody>
+                                                                <!--left img  section -->
+                                                                <tr>
+                                                                  <td align="center" valign="top">
+                                                                    <table width="476" border="0" cellspacing="0" cellpadding="0" class="em_wrapper">
+                                                                      <tbody>
+                                                                        <tr>
+                                                                        </tr>
+                                                                      </tbody>
+                                                                    </table>
+                                                                  </td>
+                                                                </tr>
+                                                                <!--//left img  section -->
+                                                                <tr>
+                                                                  <td height="39">&nbsp;</td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                  <td width="45" class="em_space">&nbsp;</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                        <!--blue bg section -->
+                                        <!--//blue bg section -->
+                                        <tr>
+                                          <td height="39">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                          <td align="center" valign="top" class="em_blck" style=" font-family: 'Open Sans', Arial,  sans-serif; font-size:12px; line-height:18px; color:#7B7B7B;  ">
+                                            <p><span style="font-style:italic;">Copyright © 2019 Credible Labs Inc.</span><br/><span style="font-weight:bold;">Our address is </span><br/>%%=ContentBlockbyKey("SFAddress")=%%<br/> <br/>If you do not wish to receive future emails, <a class="msgFooter" href="%%profile_center_url%%">click here</a>.</p>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td height="44" class="em_height">&nbsp;</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <!--//footer -->
+                              </tbody>
+                            </table>
+                          </td>
+                          <td width="16" class="em_space_1">&nbsp;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td height="20" class="em_height">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="left" valign="top" class="em_blck" style=" font-family: 'Open Sans', Arial,  sans-serif; font-size:10px; line-height:12px; color:#7B7B7B;  ">
+                    <p>This email should not be considered advice. We remind you that nothing in the Credible Service is intended to provide financial or investment advice. You alone are solely responsible for determining whether any product or service is appropriate or suitable for you based on your personal and financial situation. If you have any questions regarding issues specifically related to your personal and financial situation, please consult with your own professional advisor.</p>
+                    <p>Interest rates are based on those provided by lenders and are not final until your refinancing is complete. Total cost includes both principal and interest that you would pay over the life of the loan. Credible recommends that you carefully review the terms of any offer (which are provided by the lenders) and seek advice to make an informed decision based on your own financial circumstances.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <!--===cream section===-->    
+      </tbody>
+    </table>
+    <!--Template Body End-->
+    
+  </body>
+</html>
+
+</apex:page>

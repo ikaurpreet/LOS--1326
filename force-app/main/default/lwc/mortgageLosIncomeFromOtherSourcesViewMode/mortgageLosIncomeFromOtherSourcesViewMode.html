@@ -1,0 +1,130 @@
+<template>
+    <template if:true={showIncomeTable}>
+        <div class="los-c__income-sources_title-container">
+            <div class="los-c__income-sources">
+                <img class="slds-m-right_xx-small" src={borrowerIcon}> + <img
+                    class="slds-m-right_xx-small slds-m-left_xx-small" src={coBorrowerIcon}>
+                <p>Income from Other Sources - Borrower or Co-Borrower</p>
+            </div>
+        </div>
+
+        <table
+            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_striped slds-m-bottom_small"
+            aria-label=" Example headless table of Opportunities with cell content truncated ">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Owner">Owner</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Income Source">Income Source</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Cash or Market Value">Cash or Market Value</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Action"></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={incomeSources} for:item="income">
+                    <tr key={income.key} class="slds-hint-parent" data-testid="incomeRecord">
+                        <td class="slds-cell-wrap">
+                            <div class="slds-truncate" title="">{income.owner}</div>
+                        </td>
+                        <td class="slds-cell-wrap">
+                            <div class="slds-truncate" title="">{income.incomeType}</div>
+                        </td>
+                        <td data-label="Typical Column Header">
+                            <div class="slds-truncate" title="">{income.amount}</div>
+                        </td>
+                        <td class="slds-text-align_right">
+                            <button onclick={handleDelete} style="vertical-align: top" data-details={income.incomeType}
+                                data-owner={income.ownerValue} class="slds-button slds-button_icon slds-m-right_medium"
+                                title='Delete'>
+                                <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                    <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                                </svg>
+                            </button>
+
+                            <c-mortgage-los-edit-btn detail={income} oneditevent={handleEdit}>
+                            </c-mortgage-los-edit-btn>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </template>
+
+    <c-mortgage-los-modal if:true={showingModal} details={updateIncome} variant="noOverflow"
+        onclosemodal={handleCloseEditModal} title="Other Income">
+        <div class="slds-text-heading_small slds-m-bottom_medium">Other Income Information</div>
+        <fieldset class="slds-form-element slds-form-element_compound">
+            <div class="slds-form-element__row">
+                <div class="slds-size_1-of-2">
+                    <lightning-combobox disabled required value={updateIncome.ownerValue} data-field="ownerValue"
+                        onchange={handleChange} label="Owner" options={OwnerOptions}>
+                    </lightning-combobox>
+                </div>
+            </div>
+            <div class="slds-form-element__row">
+                <div class="slds-size_1-of-2">
+                    <lightning-combobox value={updateIncome.incomeValue} disabled={ableToEditIncomeTypeInput} required
+                        data-field="incomeValue" onchange={handleChange} label="Income Source"
+                        options={editParticipantIncomeTypes}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <lightning-input value={updateIncome.amount} required data-field="amount"
+                        onchange={handleAmountChange} label="Cash or Market Value (/mo)">
+                    </lightning-input>
+                </div>
+            </div>
+        </fieldset>
+    </c-mortgage-los-modal>
+
+    <c-mortgage-los-modal if:true={adding} details={addIncome} variant="noOverflow" onclosemodal={handleCloseAddModal}
+        title="Other Income">
+        <div class="slds-text-heading_small slds-m-bottom_medium">Other Income Information</div>
+        <fieldset class="slds-form-element slds-form-element_compound">
+            <div class="slds-form-element__row">
+                <div class="slds-size_1-of-2">
+                    <lightning-combobox disabled={disabledOwnerOptions} required value={addIncome.ownerValue}
+                        data-field="ownerValue" onchange={handleNewOwnerChange} label="Owner" options={OwnerOptions}>
+                    </lightning-combobox>
+                </div>
+            </div>
+            <div class="slds-form-element__row">
+                <div class="slds-size_1-of-2">
+                    <lightning-combobox value={addIncome.incomeValue} disabled={ableToAddIncomeTypeInput} required
+                        data-field="incomeValue" onchange={handleNewIncomeChange} label="Income Source"
+                        options={addParticipantIncomeTypes}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <lightning-input value={addIncome.amount} required data-field="amount"
+                        onchange={handleNewIncomeAmountChange} label="Cash or Market Value (/mo)">
+                    </lightning-input>
+                </div>
+            </div>
+        </fieldset>
+    </c-mortgage-los-modal>
+
+    <c-mortgage-los-modal if:true={isDeleting} details={deletingIncome} onclosemodal={handleCloseDeleteModal}
+        action-label="Delete" title="Delete Other Income">
+        <div class="slds-text-align_center">Are you sure you want to delete this other income?</div>
+    </c-mortgage-los-modal>
+
+    <div class="info_container slds-align_absolute-center slds-m-vertical_large" if:false={showIncomeTable}>
+        <lightning-icon size="small" class="slds-m-right_small" icon-name="utility:info" alternative-text="Info icon"
+            title="No additional income"></lightning-icon>
+        <p>No additional income added by the borrower</p>
+    </div>
+
+    <button class="slds-button slds-button_neutral" onclick={showAddIncomeModal}>
+        <lightning-icon size="x-small" class="add-icon slds-m-right_x-small" icon-name="utility:new"
+            alternative-text="New icon" title="Add Previous Employment"></lightning-icon>
+        Add Additional Other Income
+    </button>
+</template>
